@@ -1,10 +1,11 @@
 <?php
 
+use App\Http\Controllers\DisclaimerController;
+use App\Http\Controllers\ContactController;
+use App\Http\Controllers\ConsultController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
-use App\Http\Controllers\ConsultController;
-use App\Http\Controllers\DisclaimerController;
 
 Route::get('/', function () {
     return Inertia::render('Welcome', [
@@ -29,3 +30,5 @@ Route::resource('disclaimer', DisclaimerController::class)->only(['index', 'stor
 
 Route::middleware(\App\Http\Middleware\DisclaimerMiddleware::class)
     ->resource('consult', ConsultController::class)->parameters(['consult' => 'sku']);
+
+Route::resource('contacts', ContactController::class);
