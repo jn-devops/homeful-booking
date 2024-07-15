@@ -64,4 +64,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function routeNotificationForEngageSpark()
+    {
+        return $this->mobile;
+    }
 }
