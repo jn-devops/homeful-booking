@@ -1,8 +1,6 @@
 <?php
 
-use App\Http\Controllers\DisclaimerController;
-use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ConsultController;
+use App\Http\Controllers\ProfileController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -16,19 +14,12 @@ Route::get('/', function () {
     ]);
 });
 
-Route::middleware([
-    'auth:sanctum',
-    config('jetstream.auth_session'),
-    'verified',
-])->group(function () {
-    Route::get('/dashboard', function () {
-        return Inertia::render('Dashboard');
-    })->name('dashboard');
+Route::get('/dashboard', [\App\Http\Controllers\LoanCalculatorController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+
+Route::middleware('auth')->group(function () {
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::resource('disclaimer', DisclaimerController::class)->only(['index', 'store']);
-
-Route::middleware(\App\Http\Middleware\DisclaimerMiddleware::class)
-    ->resource('consult', ConsultController::class)->parameters(['consult' => 'sku']);
-
-Route::resource('contacts', ContactController::class);
+require __DIR__.'/auth.php';
