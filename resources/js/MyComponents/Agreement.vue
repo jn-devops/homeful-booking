@@ -1,24 +1,36 @@
 <script setup>
-import { ref, watch} from 'vue';
+import {reactive, ref, watch} from 'vue';
 
 const props = defineProps({
-    checkbox: Boolean
+    modelValue: Boolean
 });
 
-// Create a local reactive variable to handle checkbox state
-const isChecked = ref(props.checkbox);
+
+const emit = defineEmits(['update:modelValue']);
 
 // Watch for changes in props.chkbox and update local isChecked
-watch(() => props.checkbox, (newValue) => {
-  isChecked.value = newValue;
-});
+// watch(() => form.checkBox, (newValue) => {
+//   isChecked.value = newValue;
+//   console.log('status:', props.checkbox);
+// });
 
-console.log('status:', props.checkbox);
+function handleInput(event) {
+    emit('update:modelValue', event.target.checked);
+}
+
+// Todo: udate ui when button disable
+// const computedClass = computed(() => ({
+//     'active-class': props.modelValue,
+// }))
+
 </script>
 <template>
     <div class="flex gap-2 p-3 justify-center">
         <div>
-            <input type="checkbox" v-model="isChecked">
+            <input type="checkbox"
+                   :checked="modelValue"
+                   @input="handleInput"
+            />
         </div>
         <div class="">
             <p>

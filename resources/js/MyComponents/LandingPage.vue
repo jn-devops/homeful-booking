@@ -55,6 +55,8 @@ const updateConsultingContent = (newVal) =>{
     consultingContent.value = newVal;
 }
 
+const isDisclaimerChecked = ref(false);
+
 // Data
 const props = defineProps({
     propertyDetail: Object,
@@ -109,7 +111,7 @@ const formatCurrency = (value) => {
             </Timeline>
     </template>
     <template #policy_terms>
-        <Agreement>
+        <Agreement v-model="isDisclaimerChecked">
             <template #agreement_context>
                 By clicking Proceed, you agree to Homeful.ph's
             </template>
@@ -124,8 +126,11 @@ const formatCurrency = (value) => {
                 Cancel
             </button>
             <MyPrimaryButton
-            @click="showConsoCalculator"
-            class="rounded-full p-4 mt-4 w-96 text-sm md:text-md"
+                :disabled="!isDisclaimerChecked"
+                @click="showConsoCalculator"
+                :class="[
+                    'rounded-full p-4 mt-4 w-96 text-sm md:text-md'
+                  ]"
             >
                 I Agree & Continue
             </MyPrimaryButton>
@@ -165,7 +170,7 @@ const formatCurrency = (value) => {
     <template #policy_terms>
         <!-- <p class=text-transparent> Lorem, ipsum dolor sit amet consectetur adipisicing elit. </p> -->
         <!-- <div class="py-1 px-6 border-b-2 h-80 overflow-auto"> -->
-       <ConsultationCalculator :calculator="calculator" />
+       <ConsultationCalculator :calculator="calculator" :formatCurrency="formatCurrency" />
        <!-- <Collapsible>
             <div>
                 a

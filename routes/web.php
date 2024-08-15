@@ -13,13 +13,37 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
+Route::middleware('auth', 'verified')->group(function (){
+    Route::get('/dashboard', [\App\Http\Controllers\LoanCalculatorController::class, 'dashboard'])->name('dashboard');
+    Route::get('/loan-calculation', [\App\Http\Controllers\LoanCalculatorController::class, 'calculate_loan'])->name('calculate.loan');
 
-Route::get('/dashboard', [\App\Http\Controllers\LoanCalculatorController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+Route::get('/proceed', function () {
+    return Inertia::render('Proceed');
+});
+
+Route::get('/details', function () {
+    return Inertia::render('Details');
+});
+
+Route::get('/payments', function () {
+    return Inertia::render('PaymentDetails');
+});
+
+Route::get('/creditdetails', function () {
+    return Inertia::render('CreditCard');
+});
+
+Route::get('/paymentsuccessful', function () {
+    return Inertia::render('PaymentSuccessful');
 });
 
 require __DIR__.'/auth.php';
