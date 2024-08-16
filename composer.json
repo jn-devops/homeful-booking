@@ -10,7 +10,7 @@
         "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
         "inertiajs/inertia-laravel": "^1.0",
-        "jn-devops/contacts": "^1.3",
+        "jn-devops/contacts": "^1.4",
         "jn-devops/mortgage": "dev-main",
         "laravel/fortify": "*",
         "laravel/framework": "^11.9",

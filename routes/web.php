@@ -22,4 +22,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
+
+
 require __DIR__.'/auth.php';
