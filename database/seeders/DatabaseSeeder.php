@@ -23,6 +23,7 @@ class DatabaseSeeder extends Seeder
            SuffixSeeder::class,
            CivilStatusSeeder::class,
 
+           UserSeeder::class,
            CurrentPostionSeeder::class,
            EmploymentStatusSeeder::class,
            EmploymentTypeSeeder::class,
