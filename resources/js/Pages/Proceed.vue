@@ -31,6 +31,9 @@ const myFunc = () =>{
                     </div>
                 </div>
             </div>
+            <div>
+                Sign up with your phone number and email to receive notification about your consultation and concerns.
+            </div>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-xl px-3 py-8">
                     <!-- <Welcome /> -->
