@@ -5,6 +5,8 @@ import MyPrimaryButton from '../MyComponents/MyPrimaryButton.vue';
 import Timeline from '@/MyComponents/Timeline.vue';
 import Agreement from '@/MyComponents/Agreement.vue';
 import {ref} from 'vue';
+import ConsultingHeaderImg from '@/Logos/ConsultingHeaderImg.vue';
+import CircularProgress from '@/MyComponents/CircularProgress.vue';
 
 const chkbox = ref(false);
 
@@ -13,34 +15,34 @@ const myFunc = () =>{
 }
 </script>
 <template>
-    <div class="bg_layout">
-        <div class="container mx-auto px-4">
-            <div class="w-1/2 mx-auto pt-6">
-                <HomefulLogo class="mx-auto"/>
-            </div>
-            <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2">
-                <div class="bg-white overflow-hidden shadow-xl sm:rounded-xl p-3">
-                    <!-- <Welcome /> -->
-                     <!-- <LandingPage /> -->
-                      <BiometricLogo class="mx-auto"/>
-                      <div class="text-center pt-6">
-                        <h1 class="text-2xl font-bold">Verification Successful</h1>
-                        <p class="pt-4">You will be redirected to the Buyer Information Form to provide additional details for your application. </p>
-                      </div>
+    <div class="bg_layout p-0">
+        <div class="w-full bg-green-200">
+            <ConsultingHeaderImg class="w-full" />
+        </div>
+        <div class="container mx-auto px-2 py-1">
+            <div class="flex flex-row p-5">
+                <CircularProgress :currentProgress="1" />
+                <div class="ps-5 flex flex-col justify-center">
+                    <div class="text-md font-semibold text-[#CC035C]">
+                        Step 1:
+                    </div>
+                    <div class="text-3xl font-extrabold">
+                        Register
+                    </div>
                 </div>
             </div>
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 py-2">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-xl px-3 py-8">
                     <!-- <Welcome /> -->
                      <!-- <LandingPage /> -->
-                      <Agreement
+                      <!-- <Agreement
                       :checkbox="chkbox"
                       
                       >
                         <template #agreement_context>
                             I hereby acknowledge that I have read and understood the
                         </template>
-                      </Agreement>
+                      </Agreement> -->
 
                      <!-- <div class="flex">
                         <div class="  grow w-8 flex justify-center py-2">
@@ -97,7 +99,6 @@ const myFunc = () =>{
 
 <style scoped>
 .bg_layout{
-    background: url('../..img/BG.png') center no-repeat ;
     background-size: cover;
     z-index: 1;
 }

@@ -99,12 +99,12 @@ const debouncedUpdate = debounce(() => {
 watch(() => form.age, (newValue, oldValue) => {
     debouncedUpdate();
 })
-watch(() => form.gross_monthly_income, (newValue, oldValue) => {
-    debouncedUpdate();
-})
-watch(() => form.balance_payment_term, (newValue, oldValue) => {
-    debouncedUpdate();
-})
+// watch(() => form.gross_monthly_income, (newValue, oldValue) => {
+//     debouncedUpdate();
+// })
+// watch(() => form.balance_payment_term, (newValue, oldValue) => {
+//     debouncedUpdate();
+// })
 
 watch (
     () => usePage().props.flash.event,
@@ -219,26 +219,26 @@ const subSliderValue = (propName, decrement = 1) => {
             <div class="block md:hidden">
                 <div class="mt-4">
                     <div class="flex gap-2 items-center">
-                    <div class="w-32">
-                        <p class="font-bold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
-                        <p class="text-gray-500 text-sm">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
-                    </div>
-                    <div class="grow w-62">
-                        <div class="bg-amber-50 p-3 rounded-lg flex gap-0 items-center overflow-hidden">
-                        <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
-                            <div class="default_text-color font-bold flex py-1">
-                            <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
-                            <p class="font-normal">/ month</p>
+                        <div class="w-32">
+                            <p class="font-bold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
+                            <p class="text-gray-500 text-sm">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
+                        </div>
+                        <div class="grow w-62">
+                            <div class="bg-[#F6F6F6] p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
+                                <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
+                                    <div class="default_text-color font-bold flex py-1">
+                                    <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
+                                    <p class="font-normal">/ month</p>
+                                    </div>
+                                    <p class="py-1 text-sm">Payable in {{ loan_data.down_payment_term }} months</p>
+                                </div>
+                                <!-- <div>
+                                    <RoundedButton @click="showBtnDetails('downpayment')">
+                                    <CollapsibleArrowLogo />
+                                    </RoundedButton>
+                                </div> -->
                             </div>
-                            <p class="py-1 text-sm">Payable in {{ loan_data.down_payment_term }} months</p>
                         </div>
-                        <div>
-                            <RoundedButton @click="showBtnDetails('downpayment')">
-                            <CollapsibleArrowLogo />
-                            </RoundedButton>
-                        </div>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 <div class="mt-4">
@@ -272,7 +272,7 @@ const subSliderValue = (propName, decrement = 1) => {
                             <p class="text-gray-500 text-sm">Partial Miscellaneous Fee</p>
                         </div>
                         <div class="grow w-62">
-                            <div class="bg-amber-50 p-3 rounded-lg flex gap-0 items-center overflow-hidden">
+                            <div class="bg-[#F6F6F6]  p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
                             <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
                                 <div class="default_text-color font-bold flex py-1">
                                 <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
@@ -291,126 +291,76 @@ const subSliderValue = (propName, decrement = 1) => {
                     </div>
                 <div class="mt-4">
                     <div class="flex gap-2 items-center">
-                    <div class="w-32">
-                        <p class="font-bold">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
-                        <p class="text-gray-500 text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
-                    </div>
-                    <div class="grow w-62">
-                        <div class="bg-amber-50 p-3 rounded-lg flex gap-0 items-center overflow-hidden">
-                        <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
-                            <div class="default_text-color font-bold flex py-1">
-                            <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++</p>
-                            <p class="font-normal">/ month</p>
+                        <div class="w-32">
+                            <p class="font-bold">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+                            <p class="text-gray-500 text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
+                        </div>
+                        <div class="grow w-62">
+                            <div class="bg-[#F6F6F6] p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
+                                <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
+                                    <div class="default_text-color font-bold flex py-1">
+                                    <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++</p>
+                                    <p class="font-normal">/ month</p>
+                                    </div>
+                                    <p class="py-1 text-sm">{{ loan_data.balance_payment_term }} years to pay <br />after loan takeout </p>
+                                </div>
+                                <!-- <div>
+                                    <RoundedButton @click="showBtnDetails('balance')">
+                                        <CollapsibleArrowLogo />
+                                    </RoundedButton>
+                                </div> -->
                             </div>
-                            <p class="py-1 text-sm">{{ loan_data.balance_payment_term }} years monthly <br />starting
-                                on the <br />14th month</p>
+                            <div class="p-1 px-5 text-sm">
+                                <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="mt-4 border-t-2">
+                    <div class="">
+                        <p class="font-semibold text-lg pt-3">Customize by Age:</p>
+                        <div class="flex justify-between mb-6">
+                            <div class="text-left">
+                                <p class="default_text-color font-bold">
+                                    {{ form.age }} years old
+                                </p>
+                                <p>Age</p>
+                            </div>
+                            <div class="">
+                                <div class="flex gap-2">
+                                    <button @click="subSliderValue('age')" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">-</button>
+                                    <button @click="addSliderValue('age')" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">+</button>
+                                </div>
+                            </div>
                         </div>
                         <div>
-                            <RoundedButton @click="showBtnDetails('balance')">
-                            <CollapsibleArrowLogo />
-                            </RoundedButton>
+                            <SliderRange v-model="form.age" :min="18" :max="60" />
                         </div>
+                        <div class="flex gap-4 pt-4">
+                            <div>
+                                <p class="default_text-color font-bold">
+                                    {{ formatCurrency(loan_data.guess_monthly_amortization) }}
+                                </p>
+                                <p class="text-sm">Required Monthly Amortization</p>
+                            </div>
+                            <div>
+                                <p class="default_text-color font-bold">
+                                    {{ formatCurrency(loan_data.gross_monthly_income) }}
+                                </p>
+                                <p class="text-sm">Required Monthly Income</p>
+
+                            </div>
+                        </div>
+                        <div class="mt-16">
+                            <p class="text-center">Need Help in deciding what product to buy?</p>
+                            <button class="w-full p-5 mt-3 text-center border-2 border-[#5F002A] rounded-[100px] text-[#CC035C]">
+                                Go to Home Assistant
+                            </button>
+                            <p class="py-5 text-center">or</p>
                         </div>
                     </div>
-                    </div>
                 </div>
-                <div class="border-top-2">
-                    <Collapsible >
-                        <template #collapsibleName>
-                                <p class="text-right">Customize</p>
-                        </template>
-                        <div class="mt-4">
-                            <div class="">
-                                <div class="flex justify-between mb-6">
-                                    <div class="text-left">
-                                        <p class="default_text-color font-bold">
-                                            {{ form.age }} years old
-                                        </p>
-                                        <p>Age</p>
-                                    </div>
-                                    <div class="">
-                                        <div class="flex gap-2">
-                                            <button @click="subSliderValue('age')" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">-</button>
-                                            <button @click="addSliderValue('age')" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- <div class="w-full h-4 bg-gray-200 rounded-lg relative z-10"> -->
-                                    <!-- <div class="absolute -top-3 w-8 h-8 bg-gray-500 rounded-full z-20 left-1/2 transform -translate-x-1/2">
-                                    </div> -->
-                                <!-- </div> -->
-                                 <div>
-                                    <SliderRange v-model="form.age" :min="18" :max="60" />
-                                 </div>
-                            </div>
-                            <div class="mt-4">
-                                <div class="flex justify-between mb-6">
-                                    <div class="text-left">
-                                        <p class="default_text-color font-bold">
-                                            {{ formatCurrency(form.gross_monthly_income) }}
-                                        </p>
-                                        <p>Gross Monthly Income</p>
-                                    </div>
-                                    <div class="">
-                                        <div class="flex gap-2">
-                                            <button @click="subSliderValue('gross_monthly_income', 1000)" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">-</button>
-                                            <button @click="addSliderValue('gross_monthly_income', 1000)" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- <div class="w-full h-4 bg-gray-200 rounded-lg relative z-10"> -->
-                                    <!-- <div class="absolute -top-3 w-8 h-8 bg-gray-500 rounded-full z-20 left-1/2 transform -translate-x-1/2">
-                                    </div> -->
-                                <!-- </div> -->
-                                 <div>
-                                    <SliderRange v-model="form.gross_monthly_income" :min="0" :max="200000" />
-                                 </div>
-                            </div>
-                            <div class="mt-4">
-                                <div class="flex gap-2 items-center justify-between">
-                                    <p class="text-blue-600 text-md">Your Income is enough to own a property.</p>
-                                    <button
-                                    @click="showAddIncome"
-                                    class="default_text-color font-bold bg-blue-50 p-2 rounded-lg">Add Income</button>
-                                </div>
-                            </div>
-                            <div class="mt-4">
-                                <div class="flex justify-between mb-6">
-                                    <div class="text-left">
-                                        <p class="default_text-color font-bold">
-                                            {{ form.balance_payment_term }} years to pay
-                                        </p>
-                                        <p>Terms</p>
-                                    </div>
-                                    <div class="">
-                                        <div class="flex gap-2">
-                                            <button @click="subSliderValue('balance_payment_term')" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">-</button>
-                                            <button @click="addSliderValue('balance_payment_term')" class="default_text-color font-bold text-3xl border border-amber-400 p-1 w-12 rounded-full">+</button>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-
-                                <!-- <label for="default-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Default range</label> -->
-
-                                <div>
-                                    <!-- <label for="large-range" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Large range</label> -->
-                                   <SliderRange v-model="form.balance_payment_term" :min="1" :max="30" />
-                                </div>
-
-                                <!-- <input id="large-range" type="range" value="0" class="w-full h-3 bg-gray-200 rounded-lg appearance-none cursor-pointer dark:bg-gray-700"> -->
-
-                                <!-- <div class="w-full h-4 bg-gray-200 rounded-lg relative z-10"> -->
-                                    <!-- <div class="absolute -top-3 w-8 h-8 bg-gray-500 rounded-full z-20 left-1/2 transform -translate-x-1/2">
-                                    </div> -->
-                                <!-- </div> -->
-                            </div>
-                        </div>
-                    </Collapsible>
-                </div>
+                
             </div>
 
             <!-- Dekstop -->
@@ -592,13 +542,13 @@ const subSliderValue = (propName, decrement = 1) => {
         <div
         v-if="detailsContent === 'downpayment'"
         >
-            <div class="grid grid-cols-2 gap-2 items-center">
-                <div class="">
+            <div class="grid grid-cols-10 gap-2 items-center">
+                <div class="col-span-4">
                     <p class="font-bold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
                     <p class="text-gray-500">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
                 </div>
-                <div class="">
-                    <div class="bg-amber-50 p-1 rounded-lg ">
+                <div class=" col-span-6">
+                    <div class="bg-amber-50 px-3 py-2 rounded-lg ">
                         <div class="default_text-color font-bold flex gap-2">
                             <p class=" text-xl border-b-2 py-1">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
                             <p class="font-normal">/ month</p>
@@ -609,38 +559,44 @@ const subSliderValue = (propName, decrement = 1) => {
             </div>
             <div class="mt-4">
                 <div class="grid grid-cols-3 gap-3">
-                    <div class="col-span-2 text-gray-400">
-                        <div>
-                            <p>DP Amount</p>
-                            <p>DP Percentage</p>
-                            <p>Terms</p>
-                            <p>Downypayment Monthly Amortization</p>
-                            <p>Miscellaneous Fee(Pay on 13th month)</p>
-                        </div>
-                    </div>
-                    <div class="col-span-1 font-bold">
-                        <p>{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
-                        <p>{{ loan_data.percent_down_payment * 100 }}%</p>
-                        <p>{{ loan_data.down_payment_term }}</p>
-                        <p class="default_text-color">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}</p>
-                        <p class="default_text-color">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
-                    </div>
+                    <table class="w-full col-span-3">
+                        <tr>
+                            <td class="w-4/6">DP Amount</td>
+                            <td class="w-2/6 font-semibold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</td>
+                        </tr>
+                        <tr>
+                            <td>DP Percentage</td>
+                            <td class="font-semibold">{{ loan_data.percent_down_payment * 100 }}%</td>
+                        </tr>
+                        <tr>
+                            <td>Terms</td>
+                            <td class="font-semibold">{{ loan_data.down_payment_term }} months</td>
+                        </tr>
+                        <tr>
+                            <td>Downypayment Monthly Amortization</td>
+                            <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}</td>
+                        </tr>
+                        <tr>
+                            <td>Miscellaneous Fee(Pay on 13th month)</td>
+                            <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</td>
+                        </tr>
+                    </table>
                 </div>
             </div>
         </div>
         <div v-if="detailsContent === 'balance'">
-            <div class="grid grid-cols-2 gap-2 items-center">
-                <div class="">
-                    <p class="font-bold text-xl">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+            <div class="grid grid-cols-10 gap-2 items-center">
+                <div class="col-span-4">
+                    <p class="font-bold ">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
                     <p class="text-gray-500">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
                 </div>
-                <div class="">
+                <div class="col-span-6">
                     <div class="bg-amber-50 p-3 rounded-lg ">
                         <div class="default_text-color font-bold flex gap-2">
                             <p class=" text-2xl border-b-2 py-1">{{ formatCurrency(loan_data.guess_monthly_amortization) }}</p>
                             <p class="font-normal">/ month</p>
                         </div>
-                        <p class="py-1">Payable in {{ loan_data.balance_payment_term }} months</p>
+                        <p class="py-1">Payable in {{ loan_data.balance_payment_term }} years</p>
                     </div>
                 </div>
             </div>

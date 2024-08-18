@@ -46,4 +46,7 @@ Route::get('/paymentsuccessful', function () {
     return Inertia::render('PaymentSuccessful');
 });
 
+Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'test'])->name('test');
+
+
 require __DIR__.'/auth.php';

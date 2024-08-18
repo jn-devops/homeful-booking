@@ -55,7 +55,7 @@ const closeModal = (param) =>{
           </div>
           <div 
           v-if="$slots.img || $slots.modalcontent"
-          class="grid grid-rows-1 md:grid-cols-2 pt-6 pb-6 gap-4 px-6 border-b-2">
+          class="grid grid-rows-1 md:grid-cols-2 py-4 gap-4 px-0 border-b-2">
             <div v-if="$slots.img"  class="px-2">
                 <slot name="img" />
               <!-- <img :src="viewDetailed.url_links.facade" class="object-fit w-full h-full" alt="Detail Image" srcset=""> -->

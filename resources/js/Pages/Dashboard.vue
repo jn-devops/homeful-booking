@@ -6,8 +6,12 @@ import { ref } from 'vue';
 
 defineProps({
     property_details: Object,
-    calculator: Object
+    calculator: Object,
+    supplementaryData: Object,
 })
+
+
+
 </script>
 
 <template>
@@ -18,11 +22,12 @@ defineProps({
             </h2>
         </template>
 
+
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">
                     <!-- <Welcome /> -->
-                     <LandingPage :property-detail="property_details" :calculator="calculator" />
+                     <LandingPage :property-detail="property_details" :calculator="calculator" :supplementaryData="supplementaryData" />
                 </div>
             </div>
         </div>

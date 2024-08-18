@@ -1,6 +1,20 @@
+<script setup>
+import { computed, defineProps } from 'vue';
+const props = defineProps({
+    isDisabled: {
+        type: Boolean,
+        default: false
+    }
+});
+const buttonClass = computed(() =>
+    props.isDisabled
+        ? 'bg-gradient-to-r from-[#FCB115] to-[#CC035C] opacity-70'
+        : 'bg-gradient-to-r from-[#FCB115] to-[#CC035C]'
+);
+</script>
 <template>
 
-    <button class="bg_color text-white">
+    <button :class="['text-white', buttonClass]">
         <slot />
     </button>
 </template>
