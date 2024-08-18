@@ -24,5 +24,20 @@ Route::middleware('auth')->group(function () {
 
 Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
 
+Route::get('/proceed', function () {
+    return Inertia::render('Proceed');
+});
+
+Route::get('/details', function () {
+    return Inertia::render('Details');
+});
+
+Route::get('/payments', function () {
+    return Inertia::render('PaymentDetails');
+});
+
+Route::get('/creditdetails', function () {
+    return Inertia::render('CreditCard');
+});
 
 require __DIR__.'/auth.php';
