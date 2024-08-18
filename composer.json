@@ -4,27 +4,21 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
-    "repositories": [
-        {
-            "type": "path",
-            "url": "../mortgage",
-            "options": {
-                "symlink": true
-            }
-        }
-    ],
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.316",
+        "bezhansalleh/filament-shield": "^3.2",
+        "filament/filament": "^3.2",
         "inertiajs/inertia-laravel": "^1.0",
-        "jn-devops/contacts": "^1.3",
+        "jn-devops/contacts": "^1.4",
         "jn-devops/mortgage": "dev-main",
         "laravel/fortify": "*",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "lbhurtado/engagespark": "^3.7",
-        "tightenco/ziggy": "^2.0"
+        "tightenco/ziggy": "^2.0",
+        "woenel/prpcmblmts": "^1.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.23",
@@ -50,7 +44,8 @@
     "scripts": {
         "post-autoload-dump": [
             "Illuminate\\Foundation\\ComposerScripts::postAutoloadDump",
-            "@php artisan package:discover --ansi"
+            "@php artisan package:discover --ansi",
+            "@php artisan filament:upgrade"
         ],
         "post-update-cmd": [
             "@php artisan vendor:publish --tag=laravel-assets --ansi --force"
