@@ -8,13 +8,13 @@ const props = defineProps({
 });
 const buttonClass = computed(() =>
     props.isDisabled
-        ? 'bg-gradient-to-r from-[#FCB115] to-[#CC035C] opacity-70'
-        : 'bg-gradient-to-r from-[#FCB115] to-[#CC035C]'
+        ? 'bg-transparent border-solid border-2 border[#CC035C] opacity-70'
+        : 'bg-transparent border-solid border-2 border[#CC035C]'
 );
 </script>
 <template>
 
-    <button :class="['text-white flex items-center justify-center', buttonClass]">
+    <button :class="['text-[#CC035C] flex items-center justify-center', buttonClass]">
         <slot />
     </button>
 </template>

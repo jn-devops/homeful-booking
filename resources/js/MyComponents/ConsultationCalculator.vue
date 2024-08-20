@@ -135,86 +135,7 @@ const subSliderValue = (propName, decrement = 1) => {
 
 </script>
 <template>
-     <div class="py-1 px-0 md:px-4 h-80 overflow-auto md:h-auto md:overflow-hidden">
-     <!-- <div class="py-1 h-80 overflow-auto px-4"> -->
-            <!-- <div class="mt-4">
-                <p class="font-bold text-xs md:text-sm">A. Downpayment</p>
-                <div class="grid grid-cols-2 gap-4 mt-3">
-                    <div class="mt-3">
-                        <select id="civil_status" name="civil_status" class="block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        >
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
-                        <select id="civil_status" name="civil_status" class="block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        >
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
-                    </div>
-                    <div class="bg-blue-50 text-sm p-3">
-                        <p class="font-bold ">₱9,583</p>
-                        <p>Downpayment</p>
-                        <p>Monthly Amortization</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-2 gap-4 mt-3">
-                    <div class="mt-3">
-                        <p class="font-bold text-xs md:text-sm">B. Partial Miscellaneous Fee</p>
-                    </div>
-                    <div class="bg-blue-50 text-sm p-3">
-                        <p class="font-bold ">₱9,583</p>
-                    </div>
-                </div>
-                <div class="grid grid-rows-1 mt-3 w-full sm:w-32">
-                    <div class="mt-3">
-                        <p class="font-bold text-xs md:text-sm">B. Balance Payment Financial Institution</p>
-                    </div>
-                    <div class="mt-3">
-                        <p class="font-bold ">₱9,583</p>
-                        <p class="text-xs">Balance Payment</p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4">
-                <div class="grid grid-cols-2 gap-4 mt-3">
-                    <div class="mt-3">
-                        <select id="civil_status" name="civil_status" class="block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        >
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
-                        <select id="civil_status" name="civil_status" class="block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                        >
-                            <option value="Single">Single</option>
-                            <option value="Married">Married</option>
-                            <option value="Widowed">Widowed</option>
-                        </select>
-                    </div>
-                    <div class="bg-blue-50 text-sm p-3 grid grid-rows-1 items-center">
-                        <p class="font-bold ">₱19,887</p>
-                        <p>Monthly Amortization</p>
-                    </div>
-                </div>
-                <div class="grid grid-cols-1 gap-4 mt-3">
-                    <div class="mt-3">
-                        <p class="font-bold text-xs md:text-sm">D. Required Gross Monthly Income</p>
-                    </div>
-                    <div class="grid grid-cols-2">
-                       <div>
-                        <p class="font-bold ">May 27,2024</p>
-                        <p class="text-gray-600 text-sm">Reservation Date</p>
-                       </div>
-                       <div>
-                        <p class="font-bold ">June 15,2024</p>
-                        <p class="text-gray-600 text-sm">Document Completion Date</p>
-                       </div>
-                    </div>
-                </div>
-            </div> -->
+     <div class="py-1 px-0 md:px-4 h-[500px] overflow-auto md:h-auto md:overflow-hidden">
             <!-- Mobile -->
             <div class="block md:hidden">
                 <div class="mt-4">
@@ -232,40 +153,11 @@ const subSliderValue = (propName, decrement = 1) => {
                                     </div>
                                     <p class="py-1 text-sm">Payable in {{ loan_data.down_payment_term }} months</p>
                                 </div>
-                                <!-- <div>
-                                    <RoundedButton @click="showBtnDetails('downpayment')">
-                                    <CollapsibleArrowLogo />
-                                    </RoundedButton>
-                                </div> -->
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="mt-4">
-                    <!-- <div class="flex gap-2 items-center">
-                        <div class="grow">
-                            <p class="font-bold">{{ calculator.miscfee }}</p>
-                            <p class="text-gray-500 w-36">Partial Miscellaneous Fee</p>
-                        </div>
-                        <div class="grow w-64">
-                            <div class="bg-amber-50 p-3 rounded-lg flex gap-1 items-center">
-                                <div class="text-sm ">
-                                    <div class="default_text-color font-bold flex py-1">
-                                        <p class="text-xl border-b-2 py-0 text-md">{{ calculator.miscfee }}</p>
-
-                                    </div>
-                                    <p class="py-1 text-sm">Payable in 12 months</p>
-                                </div>
-                                <div>
-                                    <RoundedButton
-                                    @click="showBtnDetails('downpayment')">
-                                        <CollapsibleArrowLogo />
-                                    </RoundedButton>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div> -->
                     <div class="flex gap-2 items-center">
                         <div class="w-32">
                             <p class="font-bold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
@@ -273,54 +165,44 @@ const subSliderValue = (propName, decrement = 1) => {
                         </div>
                         <div class="grow w-62">
                             <div class="bg-[#F6F6F6]  p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
-                            <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
-                                <div class="default_text-color font-bold flex py-1">
-                                <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
-                                <!-- <p class="font-normal">/ month</p> -->
-                                </div>
-                                <p class="py-1 text-sm">Pay on 13th month</p>
-                            </div>
-                            <!-- <div>
-                                <RoundedButton @click="showBtnDetails('miscfee')">
-                                <CollapsibleArrowLogo class="" />
-                                </RoundedButton>
-                            </div> -->
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                <div class="mt-4">
-                    <div class="flex gap-2 items-center">
-                        <div class="w-32">
-                            <p class="font-bold">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
-                            <p class="text-gray-500 text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
-                        </div>
-                        <div class="grow w-62">
-                            <div class="bg-[#F6F6F6] p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
                                 <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
                                     <div class="default_text-color font-bold flex py-1">
-                                    <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++</p>
-                                    <p class="font-normal">/ month</p>
+                                    <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
                                     </div>
-                                    <p class="py-1 text-sm">{{ loan_data.balance_payment_term }} years to pay <br />after loan takeout </p>
+                                    <p class="py-1 text-sm">Pay on 13th month</p>
                                 </div>
-                                <!-- <div>
-                                    <RoundedButton @click="showBtnDetails('balance')">
-                                        <CollapsibleArrowLogo />
-                                    </RoundedButton>
-                                </div> -->
                             </div>
-                            <div class="p-1 px-5 text-sm">
-                                <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
-                            </div>
+                            
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 border-t-2">
+                <div class="mt-4">
+                    <div class="flex gap-2 items-center">
+                    <div class="w-32">
+                        <p class="font-bold">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+                        <p class="text-gray-500 text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment<br>Tru Bank Financing</p>
+                    </div>
+                    <div class="grow w-62">
+                        <div class="bg-[#F6F6F6]  p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
+                            <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
+                                <div class="default_text-color font-bold flex py-1">
+                                <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++</p>
+                                <p class="font-normal">/ month</p>
+                                </div>
+                                <p class="py-1 text-sm">{{ loan_data.balance_payment_term }} years to pay <br />after loan takeout</p>
+                            </div>
+                        </div>
+                        <div class="p-1 px-5 text-sm">
+                            <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                <div class="mt-4 border-t-2 border-t-slate-200">
                     <div class="">
                         <p class="font-semibold text-lg pt-3">Customize by Age:</p>
                         <div class="flex justify-between mb-6">
-                            <div class="text-left">
+                            <div class="text-left pt-4">
                                 <p class="default_text-color font-bold">
                                     {{ form.age }} years old
                                 </p>
@@ -533,168 +415,168 @@ const subSliderValue = (propName, decrement = 1) => {
             </div>
         </div>
 
-<!-- MyModal -->
- <MyModal
- :modal-show="btnDetails"
-@updatemodalShow="updateBtnDetails"
- >
-    <template #content_noborder>
-        <div
-        v-if="detailsContent === 'downpayment'"
+        <!-- MyModal -->
+        <MyModal
+        :modal-show="btnDetails"
+        @updatemodalShow="updateBtnDetails"
         >
-            <div class="grid grid-cols-10 gap-2 items-center">
-                <div class="col-span-4">
-                    <p class="font-bold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
-                    <p class="text-gray-500">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
-                </div>
-                <div class=" col-span-6">
-                    <div class="bg-amber-50 px-3 py-2 rounded-lg ">
-                        <div class="default_text-color font-bold flex gap-2">
-                            <p class=" text-xl border-b-2 py-1">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
-                            <p class="font-normal">/ month</p>
-                        </div>
-                        <p class="py-1">Payable in {{ loan_data.down_payment_term }} months</p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4">
-                <div class="grid grid-cols-3 gap-3">
-                    <table class="w-full col-span-3">
-                        <tr>
-                            <td class="w-4/6">DP Amount</td>
-                            <td class="w-2/6 font-semibold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</td>
-                        </tr>
-                        <tr>
-                            <td>DP Percentage</td>
-                            <td class="font-semibold">{{ loan_data.percent_down_payment * 100 }}%</td>
-                        </tr>
-                        <tr>
-                            <td>Terms</td>
-                            <td class="font-semibold">{{ loan_data.down_payment_term }} months</td>
-                        </tr>
-                        <tr>
-                            <td>Downypayment Monthly Amortization</td>
-                            <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}</td>
-                        </tr>
-                        <tr>
-                            <td>Miscellaneous Fee(Pay on 13th month)</td>
-                            <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</td>
-                        </tr>
-                    </table>
-                </div>
-            </div>
-        </div>
-        <div v-if="detailsContent === 'balance'">
-            <div class="grid grid-cols-10 gap-2 items-center">
-                <div class="col-span-4">
-                    <p class="font-bold ">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
-                    <p class="text-gray-500">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
-                </div>
-                <div class="col-span-6">
-                    <div class="bg-amber-50 p-3 rounded-lg ">
-                        <div class="default_text-color font-bold flex gap-2">
-                            <p class=" text-2xl border-b-2 py-1">{{ formatCurrency(loan_data.guess_monthly_amortization) }}</p>
-                            <p class="font-normal">/ month</p>
-                        </div>
-                        <p class="py-1">Payable in {{ loan_data.balance_payment_term }} years</p>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-4">
-                <div class="grid grid-cols-3 gap-3">
-                    <div class="col-span-2 text-gray-400">
-                        <div>
-                            <p>Balance Payment Amount:</p>
-                            <p>Balance Miscellaneous Fee:</p>
-                            <p>Total Balance(BP+MF):</p>
-                            <p>Terms</p>
-                            <p>Monthly Amortization</p>
-                        </div>
-                    </div>
-                    <div class="col-span-1 font-bold">
-                        <p>{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
-                        <p>{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
-                        <p>{{ formatCurrency(loan_data.guess_balance_payment +  loan_data.guess_partial_miscellaneous_fees) }}</p>
-                        <p class="">{{ loan_data.balance_payment_term }} years</p>
-                        <p class="default_text-color">{{  formatCurrency(loan_data.guess_monthly_amortization)  }}</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </template>
-    <template #buttons>
-        <div class="w-1/2 mx-auto">
-            <DefaultGrayButton
-            @click="showBtnDetails"
-            class="rounded-full p-4 mt-4 font-bold w-full"
-            >
-                Close
-            </DefaultGrayButton>
-        </div>
-    </template>
- </MyModal>
-
- <!-- Add Income Modal -->
-  <MyModal
-   :modal-show="addIncome"
-@updatemodalShow="updateAddIncome"
-  >
-    <template #titeNoBorder>
-        Add Income
-    </template>
-    <template #content_noborder class="">
-        <div class="pt-2">
-            <div class="mb-3">
-                <input type="text"
-                placeholder="₱5,000"
-                class="focus:border-current focus:ring-0 border-t-0 border-l-0 border-r-0 border-gray-400 w-full text-center text-2xl font-bold"/>
-            </div>
-            <div class="flex gap-2">
+            <template #content_noborder>
                 <div
-                :class="{'isActive': activeButton === 'wages'}"
-                class="border border-gray-400 py-1 px-4 rounded-xl font-bold text-gray-400 text-sm md:text-md">
-                    <button
-                    @click="incomeDetails('wages')"
-                    >Wages</button>
-                </div>
-                <div
-                :class="{'isActive': activeButton === 'co_borrower'}"
-                class="border border-gray-400 py-1 px-4 rounded-xl font-bold text-gray-400 text-sm md:text-md">
-                    <button
-
-                    @click="incomeDetails('co_borrower')"
-                    >Co-borrower</button>
-                </div>
-                <div
-                :class="{'isActive': activeButton === 'other_income'}"
-                class="border border-gray-400 py-1 px-4 rounded-xl font-bold text-gray-400 text-sm md:text-md">
-                    <button
-                    @click="incomeDetails('other_income')"
-                    >Other Income</button>
-                </div>
-            </div>
-        </div>
-    </template>
-    <template #buttons>
-        <div class="flex gap-2">
-            <div class=" w-1/2 mx-auto ">
-                <DefaultGrayButton
-                @click="showAddIncome"
-                class="w-full rounded-full p-4 mt-4"
+                v-if="detailsContent === 'downpayment'"
                 >
-                    Close
-                </DefaultGrayButton>
-            </div>
-            <div class="w-1/2 mx-auto">
-                <MyPrimaryButton
-                class="w-full rounded-full p-4 mt-4"
-                >
-                    Add Income
-                </MyPrimaryButton>
-            </div>
-        </div>
-    </template>
-  </MyModal>
+                    <div class="grid grid-cols-10 gap-2 items-center">
+                        <div class="col-span-4">
+                            <p class="font-bold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
+                            <p class="text-gray-500">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
+                        </div>
+                        <div class=" col-span-6">
+                            <div class="bg-amber-50 px-3 py-2 rounded-lg ">
+                                <div class="default_text-color font-bold flex gap-2">
+                                    <p class=" text-xl border-b-2 py-1">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
+                                    <p class="font-normal">/ month</p>
+                                </div>
+                                <p class="py-1">Payable in {{ loan_data.down_payment_term }} months</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <table class="w-full col-span-3">
+                                <tr>
+                                    <td class="w-4/6">DP Amount</td>
+                                    <td class="w-2/6 font-semibold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>DP Percentage</td>
+                                    <td class="font-semibold">{{ loan_data.percent_down_payment * 100 }}%</td>
+                                </tr>
+                                <tr>
+                                    <td>Terms</td>
+                                    <td class="font-semibold">{{ loan_data.down_payment_term }} months</td>
+                                </tr>
+                                <tr>
+                                    <td>Downypayment Monthly Amortization</td>
+                                    <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}</td>
+                                </tr>
+                                <tr>
+                                    <td>Miscellaneous Fee(Pay on 13th month)</td>
+                                    <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                <div v-if="detailsContent === 'balance'">
+                    <div class="grid grid-cols-10 gap-2 items-center">
+                        <div class="col-span-4">
+                            <p class="font-bold ">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+                            <p class="text-gray-500">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
+                        </div>
+                        <div class="col-span-6">
+                            <div class="bg-amber-50 p-3 rounded-lg ">
+                                <div class="default_text-color font-bold flex gap-2">
+                                    <p class=" text-2xl border-b-2 py-1">{{ formatCurrency(loan_data.guess_monthly_amortization) }}</p>
+                                    <p class="font-normal">/ month</p>
+                                </div>
+                                <p class="py-1">Payable in {{ loan_data.balance_payment_term }} years</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-4">
+                        <div class="grid grid-cols-3 gap-3">
+                            <div class="col-span-2 text-gray-400">
+                                <div>
+                                    <p>Balance Payment Amount:</p>
+                                    <p>Balance Miscellaneous Fee:</p>
+                                    <p>Total Balance(BP+MF):</p>
+                                    <p>Terms</p>
+                                    <p>Monthly Amortization</p>
+                                </div>
+                            </div>
+                            <div class="col-span-1 font-bold">
+                                <p>{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+                                <p>{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
+                                <p>{{ formatCurrency(loan_data.guess_balance_payment +  loan_data.guess_partial_miscellaneous_fees) }}</p>
+                                <p class="">{{ loan_data.balance_payment_term }} years</p>
+                                <p class="default_text-color">{{  formatCurrency(loan_data.guess_monthly_amortization)  }}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template #buttons>
+                <div class="w-1/2 mx-auto">
+                    <DefaultGrayButton
+                    @click="showBtnDetails"
+                    class="rounded-full p-4 mt-4 font-bold w-full"
+                    >
+                        Close
+                    </DefaultGrayButton>
+                </div>
+            </template>
+        </MyModal>
+
+        <!-- Add Income Modal -->
+        <MyModal
+        :modal-show="addIncome"
+        @updatemodalShow="updateAddIncome"
+        >
+            <template #titeNoBorder>
+                Add Income
+            </template>
+            <template #content_noborder class="">
+                <div class="pt-2">
+                    <div class="mb-3">
+                        <input type="text"
+                        placeholder="₱5,000"
+                        class="focus:border-current focus:ring-0 border-t-0 border-l-0 border-r-0 border-gray-400 w-full text-center text-2xl font-bold"/>
+                    </div>
+                    <div class="flex gap-2">
+                        <div
+                        :class="{'isActive': activeButton === 'wages'}"
+                        class="border border-gray-400 py-1 px-4 rounded-xl font-bold text-gray-400 text-sm md:text-md">
+                            <button
+                            @click="incomeDetails('wages')"
+                            >Wages</button>
+                        </div>
+                        <div
+                        :class="{'isActive': activeButton === 'co_borrower'}"
+                        class="border border-gray-400 py-1 px-4 rounded-xl font-bold text-gray-400 text-sm md:text-md">
+                            <button
+
+                            @click="incomeDetails('co_borrower')"
+                            >Co-borrower</button>
+                        </div>
+                        <div
+                        :class="{'isActive': activeButton === 'other_income'}"
+                        class="border border-gray-400 py-1 px-4 rounded-xl font-bold text-gray-400 text-sm md:text-md">
+                            <button
+                            @click="incomeDetails('other_income')"
+                            >Other Income</button>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template #buttons>
+                <div class="flex gap-2">
+                    <div class=" w-1/2 mx-auto ">
+                        <DefaultGrayButton
+                        @click="showAddIncome"
+                        class="w-full rounded-full p-4 mt-4"
+                        >
+                            Close
+                        </DefaultGrayButton>
+                    </div>
+                    <div class="w-1/2 mx-auto">
+                        <MyPrimaryButton
+                        class="w-full rounded-full p-4 mt-4"
+                        >
+                            Add Income
+                        </MyPrimaryButton>
+                    </div>
+                </div>
+            </template>
+        </MyModal>
 </template>
 
 

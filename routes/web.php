@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ProceedController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -26,9 +27,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/proceed', function () {
-    return Inertia::render('Proceed');
-});
+Route::get('/proceed', [ProceedController::class, 'proceed'])->name('proceed');
 
 Route::get('/details', function () {
     return Inertia::render('Details');
@@ -50,21 +49,5 @@ Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'tes
 
 
 Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
-
-Route::get('/proceed', function () {
-    return Inertia::render('Proceed');
-});
-
-Route::get('/details', function () {
-    return Inertia::render('Details');
-});
-
-Route::get('/payments', function () {
-    return Inertia::render('PaymentDetails');
-});
-
-Route::get('/creditdetails', function () {
-    return Inertia::render('CreditCard');
-});
 
 require __DIR__.'/auth.php';

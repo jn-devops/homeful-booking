@@ -21,6 +21,8 @@
     },
     "dependencies": {
         "lodash": "^4.17.21",
+        "lottie-colorify": "^0.8.0",
+        "lottie-web": "^5.12.2",
         "preline": "^2.4.1"
     }
 }
