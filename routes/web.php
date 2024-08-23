@@ -48,8 +48,12 @@ Route::get('/paymentsuccessful', function () {
 
 Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'test'])->name('test');
 
+//
+//Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
 
-Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
+Route::get('/client-information', [\App\Http\Controllers\ClientInformationController::class, 'show'])->name('client-information.show');
+Route::post('/client-information/store', [\App\Http\Controllers\ClientInformationController::class, 'store'])->name('client-information.store');
+
 
 Route::get('/proceed', function () {
     return Inertia::render('Proceed');

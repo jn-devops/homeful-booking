@@ -1,83 +1,73 @@
 <script setup>
-import {watch} from 'vue';
+import { watch, toRefs } from 'vue';
+
 const props = defineProps({
+    currentStep: {
+        type: Number,
+        required: true
+    },
     employmentDetails: Boolean
 });
 
-// watch(props.employmentDetailsPage, (oldVal, NewVal) =>{
-//     console.log('oldVal:', oldVal);
-//     console.log('NewVal:', NewVal);
-// })
-console.log('header employmentDetailsPage: ', props.employmentDetails);
+const { currentStep } = toRefs(props);
+
+watch(currentStep, (newVal, oldVal) => {
+    console.log('Step changed from', oldVal, 'to', newVal);
+});
 </script>
+
 <template>
     <div class="block md:hidden bg-blue-50 pt-10 pb-4 px-4">
         <div class="flex gap-2 justify-around items-center">
-            <div 
-            v-if="!employmentDetails"
-            class="bg-top-right-green w-16 h-16 rounded-full relative flex justify-center items-center">
-                <div
-                class="bg-white rounded-full w-14 h-14 flex items-center justify-center">
-                    1 of 3
+            <!-- Step 1 -->
+            <div v-if="currentStep === 0" class="relative size-20">
+                <svg class="size-full -rotate-90" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-stone-300" stroke-width="2"></circle>
+                    <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-600 " stroke-width="2" stroke-dasharray="100" stroke-dashoffset="66.67" stroke-linecap="square"></circle>
+                </svg>
+                <div class="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                    <span class="text-center text-xs font-bold">1 of 3</span>
                 </div>
             </div>
-            <div 
-                v-if="employmentDetails"
-                class="bg-top-left-green w-16 h-16 rounded-full relative flex justify-center items-center">
-                <div
-                    class="bg-white rounded-full w-14 h-14 flex items-center justify-center">
-                    2 of 3
+
+            <!-- Step 2 -->
+            <div v-if="currentStep === 1" class="relative size-20">
+                <svg class="size-full -rotate-90" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-stone-300 dark:text-neutral-700" stroke-width="2"></circle>
+                    <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-600 dark:text-blue-500" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="33.33" stroke-linecap="round"></circle>
+                </svg>
+                <div class="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                    <span class="text-center text-xs font-bold ">2 of 3</span>
+                </div>
+            </div>
+
+            <!-- Step 3 -->
+            <div v-if="currentStep === 2" class="relative size-20">
+                <svg class="size-full -rotate-90" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-stone-300 dark:text-neutral-700" stroke-width="2"></circle>
+                    <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-600 dark:text-blue-500" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="0" stroke-linecap="round"></circle>
+                </svg>
+                <div class="absolute top-1/2 start-1/2 transform -translate-y-1/2 -translate-x-1/2">
+                    <span class="text-center text-xs font-bold">3 of 3</span>
                 </div>
             </div>
             <div class="text-right">
-               <div v-if="!employmentDetails">
+                <div v-if="currentStep === 0">
                     <h1 class="font-bold">Personal Information</h1>
-                    <p class="text-xs/relaxed">Next Emplyoment Information</p>
-               </div>
-               <div v-if="employmentDetails">
+                    <p class="text-xs/relaxed">Next Employment Information</p>
+                </div>
+                <div v-if="currentStep === 1">
                     <h1 class="font-bold">Employment Information</h1>
                     <p class="text-xs/relaxed">Next Payment</p>
-               </div>
+                </div>
+                <div v-if="currentStep === 2">
+                    <h1 class="font-bold">Payment Information</h1>
+                    <p class="text-xs/relaxed">Review and Submit</p>
+                </div>
             </div>
         </div>
     </div>
-    <div class="hidden md:block bg-gray-50 pt-10 pb-4 px-4">
-        <div class="flex justify-between">
-            <div class="flex gap-4 items-center">
-                <div 
-                v-if="!employmentDetails"
-                class="bg-top-right-green w-16 h-16 rounded-full relative flex justify-center items-center">
-                    <div
-                    class="bg-gray-100 rounded-full w-14 h-14 flex items-center justify-center">
-                        1 of 3
-                    </div>
-                </div>
-                <div 
-                    v-if="employmentDetails"
-                    class="bg-top-left-green w-16 h-16 rounded-full relative flex justify-center items-center">
-                    <div
-                        class="bg-white rounded-full w-14 h-14 flex items-center justify-center">
-                        2 of 3
-                    </div>
-                </div>
-                <div class="">
-                   <div v-if="!employmentDetails">
-                        <h1 class="font-bold">Personal Information</h1>
-                        <p class="text-xs/relaxed">Next Emplyoment Information</p>
-                   </div>
-                   <div v-if="employmentDetails">
-                        <h1 class="font-bold">Employment Information</h1>
-                        <p class="text-xs/relaxed">Next Payment</p>
-                   </div>
-                </div>
-            </div>
-            <div 
-            v-if="$slots.btnNavigation"
-            class="">
-                <slot name="btnNavigation"/>
-            </div>
-        </div>
-    </div>
+    <!-- The desktop version can be similarly updated -->
 </template>
 
 <style>

@@ -16,10 +16,11 @@
           class="hidden">
           <option value="">{{ placeholder }}</option>
           <option
-            v-for="option in Object.keys(options).map(key => ({ id: options[key], name: key }))"
-            :key="option.id"
-            :value="option.id">{{ option.name }}
+            v-for="internalOptions in Object.keys(internalOptions).map(key => ({ id: internalOptions[key], name: key }))"
+            :key="internalOptions.id"
+            :value="internalOptions.id">{{ internalOptions.name }}
           </option>
+
         </select>
       </div>
       <p v-if="errorMessage" class="mt-2 text-sm text-red-600" :id="`${id}-helper`">
@@ -82,8 +83,9 @@ export default {
   data() {
     return {
       hsSelectInstance: null,
-      uniqueKey: 0, // A key to force re-render
-      inputValue: ref(this.modelValue) // Initialize ref for input value
+      uniqueKey: 0,
+      inputValue: ref(this.modelValue),
+      internalOptions: ref(this.options)
     };
   },
   computed: {
@@ -105,10 +107,83 @@ export default {
   },
   watch: {
     options: {
-      handler() {
-        this.reinitializeSelect();
+      handler(newOptions,oldOptions) {
+
+        this.internalOptions = newOptions;
+
+        // const checkExist = setInterval(() => {
+        //     try {
+        //         const escapedId = this.escapeForQuerySelector(this.id);
+        //         const selectElement = document.querySelector(`#${escapedId}`);
+        //         const select = window.HSSelect.getInstance(selectElement);
+
+        //         if (selectElement && select) {
+        //             if (select.selectOptions && select.selectOptions.length > 0) {
+        //                 const currentOptions = select.selectOptions.map(option => option.val);
+        //                 select.removeOption(currentOptions);
+        //             }
+        //             const optionsArray = Object.keys(this.internalOptions).map(key => ({
+        //                 title: this.internalOptions[key],
+        //                 val: key
+        //             }));
+        //             select.addOption(optionsArray);
+        //             clearInterval(checkExist); // Stop checking once the element is found
+        //         }
+        //     } catch (error) {
+        //         console.error(error);
+        //         clearInterval(checkExist); // Stop checking if an error occurs
+        //     }
+        // }, 300); // Check every 300ms
+        try {
+            const escapedId = this.escapeForQuerySelector(this.id);
+            const selectElement = document.querySelector(`#${escapedId}`);
+            const select = window.HSSelect.getInstance(selectElement);
+
+            if (selectElement && select) {
+                try {
+                    if (select.selectOptions && select.selectOptions.length > 0) {
+                        try {
+                            while (select.selectOptions.length > 0) {
+                                const currentOptions = select.selectOptions.map(option => option.val);
+                                console.log('currentOptions', currentOptions);
+                                select.removeOption(currentOptions);
+                            }
+                        } catch (removeError) {
+                            // console.error("Error removing options, continuing to add new options...", removeError);
+                        }
+                    }
+
+                    if (newOptions && Object.keys(newOptions).length > 0) {
+                        const optionsArray = Object.keys(newOptions).map(key => ({
+                            title: newOptions[key],
+                            val: key
+                        }));
+
+                        let addedSuccessfully = false;
+                        while (!addedSuccessfully) {
+                            try {
+                                select.addOption(optionsArray);
+
+                                // Validate if the new options have been added successfully
+                                const currentSelections = select.selectOptions.map(option => option.val);
+                                if (currentSelections.length === optionsArray.length && currentSelections.every(val => optionsArray.some(option => option.val === val))) {
+                                    addedSuccessfully = true; // Set to true only if validation passes
+                                }
+                            } catch (e) {
+                                // console.error("Error adding options, retrying...", e);
+                            }
+                        }
+                    }
+                } catch (error) {
+                    // console.error("Error processing options:", error);
+                }
+            }
+        } catch (error) {
+            // console.error(error);
+        }
       },
       deep: true,
+      immediate: true,
     },
     modelValue(newValue) {
       this.inputValue = newValue;
@@ -118,17 +193,25 @@ export default {
     }
   },
   mounted() {
-    this.initializeSelect();
+    // this.initializeSelect();
+
   },
   methods: {
+    escapeForQuerySelector(id) {
+      return id.replace(/([#;&,.+*~':"!^$[\]()=>|\/\\])/g, '\\$1');
+    },
     initializeSelect() {
-      this.destroySelect();
-      this.$nextTick(() => {
-        if (!this.$refs.selectElement) {
-          this.hsSelectInstance = new HSSelect(this.$refs.selectElement);
-          this.hsSelectInstance.on('change', this.onInputChange);
-        }
-      });
+    //   this.destroySelect();
+    //   this.$nextTick(() => {
+    //     const escapedId = this.escapeForQuerySelector(this.id);
+    //     const selectElement = document.querySelector(`#${escapedId}`);
+    //     if (selectElement) {
+    //         this.hsSelectInstance = new HSSelect(selectElement);
+    //         console.log(this.hsSelectInstance);
+    //         this.hsSelectInstance.on('change', this.onInputChange);
+    //         this.hsSelectInstance.refresh();
+    //     }
+    //   });
     },
     destroySelect() {
       if (this.hsSelectInstance) {
@@ -145,6 +228,7 @@ export default {
     onInputChange(event) {
         this.$emit('update:modelValue', event.target.value);
     },
+
   },
 };
 </script>

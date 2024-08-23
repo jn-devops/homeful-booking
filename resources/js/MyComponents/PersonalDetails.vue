@@ -1,5 +1,7 @@
 <script setup>
 import InputLabel from '@/Components/InputLabel.vue';
+
+
 </script>
 <template>
     <form class="h-auto block md:hidden">
@@ -9,39 +11,39 @@ import InputLabel from '@/Components/InputLabel.vue';
         <div class="mt-4">
             <div class="mt-3">
                 <InputLabel for="first_name" value="First Name" class="font-bold" />
-                <input 
+                <input
                     id="first_name"
                     type="text"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3">
                 <InputLabel for="middle_name" value="Middle Name" class="font-bold" />
-                <input 
+                <input
                     id="first_name"
                     type="text"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3 flex gap-2 items-center">
-                <input 
+                <input
                     id="middle_name"
                     type="checkbox"
-                    class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                 <p class="text-sm font-bold">I have no middle name</p>
             </div>
             <div class="mt-3">
                 <InputLabel for="last_name" value="Last Name" class="font-bold" />
-                <input 
+                <input
                     id="last_name"
                     type="text"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3">
                 <InputLabel for="civil_status" value="Civil Status" />
-                <select id="civil_status" name="civil_status" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="civil_status" name="civil_status" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Single">Single</option>
                     <option value="Married">Married</option>
@@ -61,15 +63,15 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="date_birth" value="Date of Birth" />
-                <input 
+                <input
                     id="last_name"
                     type="date"
-                    class="mt-2 block w-full rounded-full border-0  text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0  text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3">
                 <InputLabel for="nationality" value="Nationality" />
-                <select id="nationality" name="nationality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="nationality" name="nationality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Filipino">Filipino</option>
                     <option value="Others">Others</option>
@@ -83,24 +85,24 @@ import InputLabel from '@/Components/InputLabel.vue';
         <div class="mt-4">
             <div class="mt-3">
                 <InputLabel for="email" value="Email" class="font-bold" />
-                <input 
+                <input
                     id="email"
                     type="text"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3">
                 <InputLabel for="mobile_number" value="Mobile Number" class="font-bold" />
-                <input 
+                <input
                     id="mobile_number"
                     type="number"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <p class="font-bold text-sm mt-2">Present Address</p>
             <div class="mt-3">
                 <InputLabel for="country" value="Country" />
-                <select id="country" name="country" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="country" name="country" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -109,7 +111,7 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="province" value="Province" />
-                <select id="province" name="province" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="province" name="province" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -118,7 +120,7 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="municipality" value="Municipality" />
-                <select id="municipality" name="municipality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="municipality" name="municipality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -127,7 +129,7 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="barangay" value="Barangay" />
-                <select id="barangay" name="barangay" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="barangay" name="barangay" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -136,31 +138,31 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="zip_code" value="Zip Code" class="font-bold" />
-                <input 
+                <input
                     id="zip_code"
                     type="number"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3">
                 <InputLabel for="address" value="Address" class="font-bold" />
-                <input 
+                <input
                     id="address"
                     type="text"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3 flex gap-2 items-center">
-                <input 
+                <input
                     id="middle_name"
                     type="checkbox"
-                    class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                 <p class="text-sm font-bold">Permanent Address?</p>
             </div>
             <div class="mt-3">
                 <InputLabel for="province1" value="Province" />
-                <select id="province1" name="province1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="province1" name="province1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -169,7 +171,7 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="municipality1" value="Municipality" />
-                <select id="municipality1" name="municipality1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="municipality1" name="municipality1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -178,7 +180,7 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="barangay1" value="Barangay" />
-                <select id="barangay1" name="barangay1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="barangay1" name="barangay1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -187,7 +189,7 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="home_ownership" value="Home Ownership" />
-                <select id="home_ownership" name="home_ownership" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                <select id="home_ownership" name="home_ownership" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 >
                     <option value="Philippines">Philippines</option>
                     <option value="Others">Others</option>
@@ -196,18 +198,18 @@ import InputLabel from '@/Components/InputLabel.vue';
             </div>
             <div class="mt-3">
                 <InputLabel for="stayed" value="Years Stayed in Present Address" class="font-bold" />
-                <input 
+                <input
                     id="stayed"
                     type="number"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
             <div class="mt-3 text-transparent">
                 <InputLabel for="stayed" value="Years Stayed in Present Address" class="font-bold" />
-                <input 
+                <input
                     id="stayed"
                     type="number"
-                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
             </div>
         </div>
@@ -227,39 +229,39 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="first_name" value="First Name" class="font-bold" />
-                    <input 
+                    <input
                         id="first_name"
                         type="text"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3">
                     <InputLabel for="middle_name" value="Middle Name" class="font-bold" />
-                    <input 
+                    <input
                         id="first_name"
                         type="text"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3 flex gap-2 items-center">
-                    <input 
+                    <input
                         id="middle_name"
                         type="checkbox"
-                        class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                     <p class="text-sm font-bold">I have no middle name</p>
                 </div>
                 <div class="mt-3">
                     <InputLabel for="last_name" value="Last Name" class="font-bold" />
-                    <input 
+                    <input
                         id="last_name"
                         type="text"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3">
                     <InputLabel for="civil_status" value="Civil Status" />
-                    <select id="civil_status" name="civil_status" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="civil_status" name="civil_status" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Single">Single</option>
                         <option value="Married">Married</option>
@@ -279,15 +281,15 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="date_birth" value="Date of Birth" />
-                    <input 
+                    <input
                         id="last_name"
                         type="date"
-                        class="mt-2 block w-full rounded-full border-0  text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0  text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3">
                     <InputLabel for="nationality" value="Nationality" />
-                    <select id="nationality" name="nationality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="nationality" name="nationality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Filipino">Filipino</option>
                         <option value="Others">Others</option>
@@ -301,24 +303,24 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="email" value="Email" class="font-bold" />
-                    <input 
+                    <input
                         id="email"
                         type="text"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3">
                     <InputLabel for="mobile_number" value="Mobile Number" class="font-bold" />
-                    <input 
+                    <input
                         id="mobile_number"
                         type="number"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <p class="font-bold text-sm mt-2">Present Address</p>
                 <div class="mt-3">
                     <InputLabel for="country" value="Country" />
-                    <select id="country" name="country" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="country" name="country" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -327,7 +329,7 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="province" value="Province" />
-                    <select id="province" name="province" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="province" name="province" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -336,7 +338,7 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="municipality" value="Municipality" />
-                    <select id="municipality" name="municipality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="municipality" name="municipality" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -345,7 +347,7 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="barangay" value="Barangay" />
-                    <select id="barangay" name="barangay" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="barangay" name="barangay" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -354,33 +356,33 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="zip_code" value="Zip Code" class="font-bold" />
-                    <input 
+                    <input
                         id="zip_code"
                         type="number"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
             </div>
             <div class="mt-4">
                 <div class="mt-3">
                     <InputLabel for="address" value="Address" class="font-bold" />
-                    <input 
+                    <input
                         id="address"
                         type="text"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3 flex gap-2 items-center">
-                    <input 
+                    <input
                         id="middle_name"
                         type="checkbox"
-                        class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="rounded-full border-0 p-3 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                     <p class="text-sm font-bold">Permanent Address?</p>
                 </div>
                 <div class="mt-3">
                     <InputLabel for="province1" value="Province" />
-                    <select id="province1" name="province1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="province1" name="province1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -389,7 +391,7 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="municipality1" value="Municipality" />
-                    <select id="municipality1" name="municipality1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="municipality1" name="municipality1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -398,7 +400,7 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="barangay1" value="Barangay" />
-                    <select id="barangay1" name="barangay1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="barangay1" name="barangay1" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -407,7 +409,7 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="home_ownership" value="Home Ownership" />
-                    <select id="home_ownership" name="home_ownership" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                    <select id="home_ownership" name="home_ownership" class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                     >
                         <option value="Philippines">Philippines</option>
                         <option value="Others">Others</option>
@@ -416,18 +418,18 @@ import InputLabel from '@/Components/InputLabel.vue';
                 </div>
                 <div class="mt-3">
                     <InputLabel for="stayed" value="Years Stayed in Present Address" class="font-bold" />
-                    <input 
+                    <input
                         id="stayed"
                         type="number"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
                 <div class="mt-3 text-transparent">
                     <InputLabel for="stayed" value="Years Stayed in Present Address" class="font-bold" />
-                    <input 
+                    <input
                         id="stayed"
                         type="number"
-                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6" 
+                        class="mt-2 block w-full rounded-full border-0 py-1.5 pl-3 pr-10 text-gray-900 ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-indigo-600 sm:text-sm sm:leading-6"
                         >
                 </div>
             </div>
