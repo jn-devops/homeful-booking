@@ -4,7 +4,7 @@
             <LottiefileAnimation v-if="homefulAnimation" :animationData="homefulAnimation" />
         </div>
     </div> <!-- End If -->
-    <div v-else> <!-- Else -->
+    <div v-else class="md:w-[415px] md:mx-auto"> <!-- Else -->
         <ReturnToPage />
         <div class="bg_layout p-0 ">
             <div class="w-full">
@@ -12,8 +12,10 @@
             </div>
             <div class="py-1 w-full">
                 <div class="flex flex-row p-5">
-                    <CircularProgress :currentProgress="1" />
-                    <div class="ps-5 flex flex-col justify-center">
+                    <div class="basis-1/5">
+                        <CircularProgress :currentProgress="1" />
+                    </div>
+                    <div class="ps-5 basis-4/5 flex flex-col justify-center">
                         <div class="text-md font-semibold text-[#CC035C]">
                             Step 1:
                         </div>
@@ -34,7 +36,7 @@
                         </Agreement>
                     </div>
                     <div class="mb-4">
-                        <a href="/details">
+                        <Link href="/kwyc-verify">
                             <MyPrimaryButton
                                 :disabled="!isAgreementChecked"
                                 :isDisabled="!isAgreementChecked"
@@ -50,11 +52,11 @@
                                     </div>
                                 </div>
                             </MyPrimaryButton>
-                        </a>
+                        </Link>
                     </div>
                 </div>
                 <div class="max-w-7xl sm:px-6 lg:px-8 py-2 bg-slate-100">
-                    <div class="overflow-hidden shadow-xl sm:rounded-xl px-3 py-4">
+                    <div class="shadow-xl sm:rounded-xl px-3 py-4">
                         <p class="mb-4 ms-4">Status:</p>
                         <FiveStepTimeline :currrentStep="1" />
                     </div>
@@ -94,7 +96,6 @@
             <template #buttons>
                 <div class="container mx-auto p-4">
                 <div class="flex justify-center">
-
                     <MyPrimaryButton
                         :disabled="!isDisclaimerChecked"
                         :isDisabled="!isDisclaimerChecked"
@@ -132,7 +133,7 @@
                             <p class="text-sm text-gray-500">Total Contract Price</p>
                         </div>
                         <div>
-                            <button class="underline underline-offset-1 default_text-color text-sm bg-[#F6FAFF] p-3 rounded-full">
+                            <button @click="showSelectUnitLoc" class="underline underline-offset-1 default_text-color text-sm bg-[#F6FAFF] p-3 rounded-full">
                                 Change
                             </button>
                         </div>
@@ -268,17 +269,65 @@
                 <ConsultingContent :pdfUrl="supplementaryData.consulting_content_link" />
             </template>
             <template #buttons>
-                <a
-                href="/"
+                <MyPrimaryButton
+                class="w-full rounded-full p-4 mt-4"
+                @click="closeAllModals"
                 >
-                    <MyPrimaryButton
-                    class="w-full rounded-full p-4 mt-4"
-                    >
-                        I Agree & Continue
-                    </MyPrimaryButton>
-                </a>
+                    I Agree & Continue
+                </MyPrimaryButton>
             </template>
         </MyModal>
+
+
+        <!-- Select Unit Location -->
+        <MyModal
+        :modal-show="unitLocation"
+        @updatemodalShow="updateUnitLocation"
+        >
+            <template #title>
+                <div class="flex items-center gap-2" @click="updateUnitLocation(false)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left text-[#FCB115]">
+                        <path d="m12 19-7-7 7-7"/>
+                        <path d="M19 12H5"/>
+                    </svg>
+                    <span>
+                        Select Phase Block Lot
+                    </span>
+                </div>
+            </template>
+            <template #content_noborder>
+                <div class="w-full space-y-3">
+                    <input type="text" class="py-3 px-4 block w-full border-slate-200 rounded-lg text-sm disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500 dark:focus:ring-neutral-600" placeholder="Search">
+                    <ul class="w-full px-5 flex flex-col divide-y divide-slate-200 dark:divide-neutral-700">
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                        <li class="inline-flex items-center gap-x-2 py-3 text-sm font-medium text-slate-800">
+                            Phase [X] Block [X] Lot [X]
+                        </li>
+                    </ul>
+                </div>
+            </template>
+        </MyModal>
+
+        <!-- Success Modal -->
+         <SuccessModal ref="successRefModal" />
+        <!-- End of Success Modal -->
 
 
     </div>  <!-- End Else -->
@@ -309,6 +358,8 @@ import ThreeLogo from '@/Logos/3Logo.vue';
 import FourLogo from '@/Logos/4Logo.vue';
 import FiveLogo from '@/Logos/5Logo.vue';
 import ConsultingContent from  '@/Logos/ConsultingContent.vue';
+import { Link } from '@inertiajs/vue3'
+import SuccessModal from '@/MyComponents/SuccessModal.vue';
 
 
 const props = defineProps({
@@ -321,14 +372,20 @@ const loading = ref(true);
 const chkbox = ref(false);
 const lottieJson = ref(null);
 const homefulAnimation = ref(null);
+
+// For Modals:
 const disclaimerStatus = ref(true);
-const isDisclaimerChecked = ref(false);
-const isAgreementChecked = ref(false);
 const consoCalculator = ref(false);
 const quickGuide = ref(false);
 const consultingContent = ref(false);
+const unitLocation = ref(false);
+const successRefModal = ref(null);
+
+const isDisclaimerChecked = ref(false);
+const isAgreementChecked = ref(false);
 
 const updatemodalShow = (newVal) => {
+    console.log("xxx", newVal);
     disclaimerStatus.value = newVal;
 }
 const showConsoCalculator = () => {
@@ -348,8 +405,22 @@ const showConsultingContent = () =>{
     quickGuide.value = false;
     consultingContent.value = !consultingContent.value;
 }
-const updateConsultingContent = (newVal) =>{
+const updateConsultingContent = (newVal) => {
     consultingContent.value = newVal;
+}
+const updateUnitLocation = (newVal) => {
+    unitLocation.value = newVal;
+}
+const showSelectUnitLoc = () => {
+    unitLocation.value = !unitLocation.value;
+}
+
+const closeAllModals = () => {
+    disclaimerStatus.value = false;
+    consoCalculator.value = false;
+    quickGuide.value = false;
+    consultingContent.value = false;
+    unitLocation.value = false;
 }
 
 const formatCurrency = (value) => {
@@ -359,6 +430,7 @@ const formatCurrency = (value) => {
     });
     return formatter.format(value);
 };
+
 onMounted(async () => {
     setTimeout(() => {
         loading.value = false;

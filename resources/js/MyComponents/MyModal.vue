@@ -7,7 +7,7 @@ const props = defineProps({
 
 const emit = defineEmits(['updatemodalShow'])
 
-console.log('modalSiteVisit:', props.modalShow);
+// console.log('modalSiteVisit:', props.modalShow);
 const closeModal = (param) =>{
     
     emit('updatemodalShow', param)

@@ -4,29 +4,11 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-use Brick\Money\Money;
-use Homeful\Borrower\Borrower;
-use Homeful\Common\Classes\Input;
-use Homeful\Mortgage\Mortgage;
-use Homeful\Payment\Class\Term;
-use Homeful\Payment\Payment;
-use Homeful\Property\Property;
-use Illuminate\Support\Arr;
-use Illuminate\Support\Carbon;
-use Illuminate\Support\Facades\Validator;
-use Whitecube\Price\Price;
-use function DI\string;
 
-
-class ProceedController extends Controller
+class ClientInformationController extends Controller
 {
-    function index(){
-        $property_details = collect([
-            'unit_location' => 'Phase 2 Block 7 Unit 2',
-            'regional' => false,
-            'price' => 2500000,
-            'consulting_fee' => 10000
-        ]);
+    public function index()
+    {
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -95,54 +77,9 @@ class ProceedController extends Controller
                     </article>",
                 'term_of_use' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             ],
-            'consulting_content_link' => asset('test.pdf'),
         ]);
-
-        $calculator = [];
-
-        $property = (new Property)
-            ->setTotalContractPrice(new Price(Money::of($tcp = $property_details['price'], 'PHP')))
-            ->setAppraisedValue(new Price(Money::of($tcp, 'PHP')));
-        $params = [
-            Input::WAGES => 110000,
-            Input::TCP => $tcp,
-            Input::PERCENT_DP => 5 / 100,
-            Input::DP_TERM => 12,
-            Input::BP_INTEREST_RATE => 7 / 100,
-            Input::PERCENT_MF => 8.5 / 100,
-            Input::LOW_CASH_OUT => 0.0,
-            Input::BP_TERM => 20,
-            Input::DOWN_PAYMENT => 100000,
-
-        ];
-
-        with(Mortgage::createWithTypicalBorrower($property, $params), function (Mortgage $mortgage) use ($params, &$calculator, $property_details) {
-
-            $calculator = [
-                'guess_down_payment_amount' => (int)((string)$mortgage->getDownPayment()->getPrincipal()->inclusive()->getAmount()),
-                'guess_dp_amortization_amount' => (int)((string)$mortgage->getDownPayment()->getMonthlyAmortization()->inclusive()->getAmount()),
-                'guess_partial_miscellaneous_fees' => (int)((string)$mortgage->getPartialMiscellaneousFees()->inclusive()->getAmount()),
-                'guess_balance_payment' => (int)((string)$mortgage->getLoan()->getPrincipal()->inclusive()->getAmount()),
-                'age' => $mortgage->getDefaultAge(),
-                'guess_gross_monthly_income' => (int)((String)$mortgage->getBorrower()->getGrossMonthlyIncome()->base()->getAmount()),
-                'down_payment_term' => $mortgage->getDownPayment()->getTerm()->monthsToPay(),
-                'balance_payment_term' => $mortgage->getBalancepaymentTerm(),
-                'percent_down_payment' => $mortgage->getPercentDownPayment(),
-                'regional' =>  $property_details['regional'],
-                'total_contract_price' => $property_details['price'],
-                'percent_miscellaneous_fees' => $mortgage->getPercentMiscellaneousFees(),
-            ];
-            $year_term = $mortgage->getDownPayment()->getTerm()->monthsToPay();
-            with($mortgage->getLoan()->setTerm(new Term($year_term)), function (Payment $loan) use(&$calculator) {
-                $calculator['guess_monthly_amortization'] = (int)((string)$loan->getMonthlyAmortization()->inclusive()->getAmount());
-            });
-
-        });
-
-        return Inertia::render('Proceed', [
+        return Inertia::render('ClientInformation', [
             'supplementaryData' => $supplementaryData,
-            'calculator' => $calculator,
-            'propertyDetail' => $property_details,
         ]);
     }
 }

@@ -1,5 +1,5 @@
 <template>
-    <div class="flex px-6 md:px-60">
+    <div class="flex px-6">
         <div class="space-y-6 border-l-2 border-solid border-[#DFDFDF]">
             <!-- Step 1 -->
             <div class="relative w-full">

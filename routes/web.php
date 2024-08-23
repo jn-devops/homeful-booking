@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProceedController;
+use App\Http\Controllers\ClientInformationController;
+use App\Http\Controllers\KWYCController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
@@ -14,11 +16,11 @@ Route::get('/', function () {
         'phpVersion' => PHP_VERSION,
     ]);
 });
-Route::middleware('auth', 'verified')->group(function (){
-    Route::get('/dashboard', [\App\Http\Controllers\LoanCalculatorController::class, 'dashboard'])->name('dashboard');
-    Route::get('/loan-calculation', [\App\Http\Controllers\LoanCalculatorController::class, 'calculate_loan'])->name('calculate.loan');
 
-});
+// Route::middleware('auth', 'verified')->group(function (){
+// });
+Route::get('/dashboard', [\App\Http\Controllers\LoanCalculatorController::class, 'dashboard'])->name('dashboard');
+Route::get('/loan-calculation', [\App\Http\Controllers\LoanCalculatorController::class, 'calculate_loan'])->name('calculate.loan');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,7 +29,11 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/proceed', [ProceedController::class, 'proceed'])->name('proceed');
+Route::get('/proceed', [ProceedController::class, 'index'])->name('proceed'); // Step 1
+
+Route::get('/kwyc-verify', [KWYCController::class, 'index'])->name('kwyc.verify'); // Step 2
+
+Route::get('/client-info', [ClientInformationController::class, 'index'])->name('client.info'); // Step 3
 
 Route::get('/details', function () {
     return Inertia::render('Details');

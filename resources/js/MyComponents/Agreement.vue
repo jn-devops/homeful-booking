@@ -8,6 +8,10 @@ const props = defineProps({
     agreementType: String,
 });
 
+const emit = defineEmits([
+    'update:modelValue',
+]);
+
 const isPrivacyPolicyShow = ref(false);
 const isTermOfUseShow = ref(false);
 const isTermOfServicesShow = ref(false);
@@ -32,8 +36,6 @@ const updateTermOfServicesModal = () =>{
 const showModalTermOfServicesModal = () =>{
     isTermOfServicesShow.value = !isTermOfServicesShow.value;
 }
-
-const emit = defineEmits(['update:modelValue']);
 
 function handleInput(event) {
     emit('update:modelValue', event.target.checked);
