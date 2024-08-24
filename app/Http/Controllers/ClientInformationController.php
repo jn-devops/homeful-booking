@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\CivilStatus;
+use App\Models\HomeOwnership;
 use App\Models\NameSuffix;
 use App\Models\Nationality;
 use App\Models\PhilippineBarangay;
@@ -44,11 +45,13 @@ class ClientInformationController extends Controller
             'name_suffixes'=>NameSuffix::all()->pluck('code','description')->toArray(),
             'nationalities'=>Nationality::all()->pluck('code','description')->toArray(),
             'civil_statuses'=>CivilStatus::all()->pluck('code','description')->toArray(),
+            'home_ownerships'=>HomeOwnership::all()->pluck('code','description')->toArray(),
             'regions'=>PhilippineRegion::all()->pluck('region_code','region_description')->toArray(),
             'genders'=>['Male'=>'Male','Female'=>'Female'],
             'provinces' => $provinces,
             'cities' => $cities,
             'barangays' => $barangays,
+
         ]);
     }
 

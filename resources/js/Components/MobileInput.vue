@@ -1,8 +1,8 @@
 <template>
     <div class="mb-4 w-full">
       <label :for="id" class="block text-sm font-medium mb-2 dark:text-white">
-        <span v-if="required" class="text-red-600">*</span>
-        {{ label }}
+          {{ label }}
+          <span v-if="required" class="text-red-600">*</span>
       </label>
       <div class="relative">
         <div class="flex">

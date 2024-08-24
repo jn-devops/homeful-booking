@@ -56,16 +56,16 @@ watch(inputValue, (newValue) => {
 <template>
     <div class="mb-4 w-full">
         <label :for="id" class="block text-sm font-medium mb-2 dark:text-white">
-            <span v-if="required" class="text-red-600">*</span>
             {{ label }}
+            <span v-if="required" class="text-red-600">*</span>
         </label>
         <div class="relative">
             <input
                 :id="id"
-                type="text"
+                :type="type"
                 :placeholder="placeholder"
                 :required="required"
-                class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400"
+                class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
                 :class="{
                     'border-red-500 focus:border-red-500 focus:ring-red-500': errorMessage,
                     'border-teal-500 focus:border-teal-500 focus:ring-teal-500': !errorMessage && inputValue.length > 0,

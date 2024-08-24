@@ -16,6 +16,7 @@ const props = defineProps({
     provinces: Object,
     cities: Object,
     barangays: Object,
+    home_ownerships: Object,
 });
 
 const currentStep = ref(0);
@@ -49,6 +50,10 @@ const presentAddress = reactive({
     province: '',
     city: '',
     barangay: '',
+    zip_code: '',
+    home_ownership: '',
+    years_at_present_address: '',
+    address: '',
     provinces:({}),
     cities:({}),
     barangays:({}),
@@ -233,7 +238,7 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                 </div>
             </div>
             <div class="mt-4 w-full">
-                <h2 class="text-base text-pink-700 uppercase">Personal Contact Information</h2>
+                <h2 class="text-base text-pink-700 uppercase">Contact Information</h2>
                 <div class="mt-3 w-full">
                     <TextInput
                         id="buyer.email"
@@ -307,6 +312,49 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                     :required="true"
                     :errorMessage="errors?.value?.presentAddress.barangay"
                     :searchable="true"
+                    />
+                </div>
+                <div class="mt-3 w-full">
+                    <TextInput
+                        id="presentAddress.zip_code"
+                        label="Zip Code"
+                        type="text"
+                        v-model="presentAddress.zip_code"
+                        :errorMessage="errors?.value?.presentAddress.zip_code"
+                        :required="true"
+                    />
+                </div>
+                <div class="mt-3 w-full">
+                    <SelectInput
+                    id="presentAddress.home_ownership"
+                    label="Home Ownership"
+                    :options="props.home_ownerships"
+                    v-model="presentAddress.home_ownership"
+                    placeholder=""
+                    helperText=""
+                    :required="true"
+                    :errorMessage="errors?.value?.presentAddress.home_ownership"
+                    />
+                </div>
+                <div class="mt-3 w-full">
+                    <TextInput
+                        id="presentAddress.years_at_present_address"
+                        label="Years at Present Address"
+                        type="number"
+                        v-model="presentAddress.years_at_present_address"
+                        :errorMessage="errors?.value?.presentAddress.years_at_present_address"
+                        :required="true"
+                    />
+                </div>
+                <div class="mt-3 w-full">
+                    <TextInput
+                        id="presentAddress.address"
+                        label="Address"
+                        type="text"
+                        v-model="presentAddress.address"
+                        :errorMessage="errors?.value?.presentAddress.address"
+                        :required="true"
+                        placeholder="Unit Number, House Number/Building/Street No. Street Name"
                     />
                 </div>
             </div>
