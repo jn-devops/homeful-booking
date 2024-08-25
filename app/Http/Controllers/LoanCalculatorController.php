@@ -21,7 +21,7 @@ use function DI\string;
 class LoanCalculatorController extends Controller
 {
     function dashboard(){
-        return redirect()->route('dashboard');
+        return redirect()->route('proceed');
     }
 
     function calculate_loan(Request $request){

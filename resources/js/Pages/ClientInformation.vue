@@ -58,7 +58,7 @@
         </div>
     </div>
     <SuccessModal ref="successRefModal">
-        Payment Successful
+        Payment Successful <!-- TODO: Update the text -->
     </SuccessModal>
 </template>
 
