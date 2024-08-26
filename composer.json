@@ -13,6 +13,7 @@
         "inertiajs/inertia-laravel": "^1.0",
         "jn-devops/contacts": "^1.4",
         "jn-devops/mortgage": "dev-main",
+        "jn-devops/paymate": "^1.1",
         "laravel/fortify": "*",
         "laravel/framework": "^11.9",
         "laravel/sanctum": "^4.0",
