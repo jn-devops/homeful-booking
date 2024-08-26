@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>"; 
+    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>";
 });
 
 // Route::middleware('auth', 'verified')->group(function (){
@@ -32,7 +32,7 @@ Route::get('/kwyc-verify', [KWYCController::class, 'index'])->name('kwyc.verify'
 Route::get('/client-info', [ClientInformationController::class, 'index'])->name('client.info'); // Step 3
 
 Route::get('/payment-choices', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 3
-Route::get('/payment-choices/credit-debit-card', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card'); 
+Route::get('/payment-choices/credit-debit-card', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');
 
 Route::get('/details', function () {
     return Inertia::render('Details');
@@ -55,6 +55,7 @@ Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'tes
 //
 //Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
 
+Route::get('/client-info', [\App\Http\Controllers\ClientInformationController::class, 'clienInfoLanding'])->name('client-information.clienInfoLanding');
 Route::get('/client-information', [\App\Http\Controllers\ClientInformationController::class, 'show'])->name('client-information.show');
 Route::post('/client-information/store', [\App\Http\Controllers\ClientInformationController::class, 'store'])->name('client-information.store');
 

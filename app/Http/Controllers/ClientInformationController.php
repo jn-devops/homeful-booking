@@ -17,6 +17,7 @@ class ClientInformationController extends Controller
 {
     public function show()
     {
+
         $provinces = PhilippineProvince::all()->map(function($province) {
             return [
                 'region_code' => $province->region_code,
@@ -51,38 +52,10 @@ class ClientInformationController extends Controller
             'provinces' => $provinces,
             'cities' => $cities,
             'barangays' => $barangays,
-
         ]);
     }
 
-    public function store(Request $request)
-    {
-        // Validate the request data
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'address.present.city' => 'required|string|max:255',
-        ]);
-
-        if($validated){
-            dd($validated);
-        }
-
-        return redirect()->back()->with('success', 'Form submitted successfully.');
-    }
-}
-<?php
-
-namespace App\Http\Controllers;
-
-use Illuminate\Http\Request;
-use Inertia\Inertia;
-
-class ClientInformationController extends Controller
-{
-    public function index()
-    {
+    public function clienInfoLanding(){
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -152,8 +125,26 @@ class ClientInformationController extends Controller
                 'term_of_use' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
             ],
         ]);
-        return Inertia::render('ClientInformation', [
+        return Inertia::render('ClientInformationLanding', [
             'supplementaryData' => $supplementaryData,
         ]);
     }
+
+    public function store(Request $request)
+    {
+        // Validate the request data
+        $validated = $request->validate([
+            'first_name' => 'required|string|max:255',
+            'middle_name' => 'nullable|string|max:255',
+            'last_name' => 'required|string|max:255',
+            'address.present.city' => 'required|string|max:255',
+        ]);
+
+        if($validated){
+            dd($validated);
+        }
+
+        return redirect()->back()->with('success', 'Form submitted successfully.');
+    }
 }
+
