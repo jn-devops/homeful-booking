@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProceedController;
 use App\Http\Controllers\ClientInformationController;
+use App\Http\Controllers\GetQualifiedController;
 use App\Http\Controllers\PaymentChoicesController;
 use App\Http\Controllers\KWYCController;
 use Illuminate\Foundation\Application;
@@ -31,8 +32,10 @@ Route::get('/kwyc-verify', [KWYCController::class, 'index'])->name('kwyc.verify'
 
 Route::get('/client-info', [ClientInformationController::class, 'index'])->name('client.info'); // Step 3
 
-Route::get('/payment-choices', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 3
+Route::get('/payment-choices', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 4
 Route::get('/payment-choices/credit-debit-card', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');
+
+Route::get('/get-qualified', [GetQualifiedController::class, 'index'])->name('get.qualified'); // Step 5
 
 Route::get('/details', function () {
     return Inertia::render('Details');

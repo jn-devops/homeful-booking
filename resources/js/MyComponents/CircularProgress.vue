@@ -19,7 +19,7 @@ switch(props.currentProgress){
     case 4:
         percentProgress = 20
         break
-    case 4:
+    case 5:
         percentProgress = 0
         break
     default:
