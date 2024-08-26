@@ -87,6 +87,7 @@ onMounted(async () => {
     successRefModal.value.openSuccessModal();
     const response = await fetch('/animation/proceed.json');
     lottieJson.value = await response.json();
+    console.log('response json:', lottieJson.value);
 });
 </script>
 

@@ -8,7 +8,7 @@
       <template #default="{ togglePopover }">
         <button
           type="button"
-          class="py-3 px-4 block w-full rounded-lg text-left text-sm border-2 border-stone-300 focus:ring-1 focus:ring-opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400"
+          class="py-3 px-4 block w-full rounded-lg text-left text-sm border border-stone-300 focus:ring-1 focus:ring-opacity-50 dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400"
           @click="togglePopover"
         >
        {{  date.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) }}

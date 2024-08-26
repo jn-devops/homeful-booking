@@ -20,7 +20,7 @@
             @keypress="validateInput"
             @paste="validateInput"
             maxlength="10"
-            class="py-3 block w-full text-sm border-stone-300 rounded-r-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500"
+            class="py-3 border block w-full text-sm border-stone-300 rounded-r-lg focus:border-blue-500 focus:ring-blue-500 dark:bg-neutral-900 dark:border-neutral-700 dark:text-neutral-400 dark:placeholder-neutral-500"
           />
         </div>
       </div>

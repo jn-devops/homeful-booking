@@ -31,7 +31,7 @@
                     <div class="pt-3">
                         <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.agreement" agreementType="TermOfServices">
                             <template #agreement_context>
-                                By clicking the button below you are agreeing to the 
+                                By clicking the button below you are agreeing to the
                             </template>
                         </Agreement>
                     </div>
@@ -111,7 +111,7 @@
             </div>
         </template>
         </MyModal>
-        
+
         <!-- Consultation Calculator-->
         <MyModal
         :modal-show="consoCalculator"
@@ -421,6 +421,7 @@ const closeAllModals = () => {
     quickGuide.value = false;
     consultingContent.value = false;
     unitLocation.value = false;
+
 }
 
 const formatCurrency = (value) => {
