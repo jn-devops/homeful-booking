@@ -3,6 +3,7 @@ import DetailsHeader from '@/MyComponents/DetailsHeader.vue';
 import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/Choices.vue';
 import DatePicker from '@/Components/DatePicker.vue';
+import RadioInput from '@/Components/RadioInput.vue';
 import { ref, watch,reactive } from 'vue';
 import { router } from '@inertiajs/vue3';
 import MobileInput from '@/Components/MobileInput.vue';
@@ -20,7 +21,7 @@ const props = defineProps({
 });
 
 const currentStep = ref(0);
-const buyer = ref({
+const buyer = reactive({
     first_name: '',
     last_name: '',
     middle_name: '',
@@ -41,6 +42,7 @@ const buyer = ref({
         nationality: '',
         email: '',
         mobile:'',
+        address_same_as_buyer:'No'
     },
 });
 
@@ -54,10 +56,27 @@ const presentAddress = reactive({
     home_ownership: '',
     years_at_present_address: '',
     address: '',
+    same_as_permanent_address: 'No',
     provinces:({}),
     cities:({}),
     barangays:({}),
 });
+
+const spousePresentAddress = reactive({
+    region: '',
+    province: '',
+    city: '',
+    barangay: '',
+    zip_code: '',
+    home_ownership: '',
+    years_at_present_address: '',
+    address: '',
+    same_as_permanent_address: 'No',
+    provinces:({}),
+    cities:({}),
+    barangays:({}),
+});
+
 
 
 const errors = ref({});
@@ -92,6 +111,14 @@ const onSelectChange = (value) => {
     // You can update the buyer object here if needed
     // buyer.value.someField = value;
 };
+
+watch(
+  () => buyer.civil_status,
+  (value) => {
+    console.log(`Civil Status is: ${value}`)
+
+  }
+)
 
 
 const updatePresentAddressRegion = (newValue, oldValue) => {
@@ -259,6 +286,7 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                     />
                 </div>
             </div>
+            <!-- Present Address -->
             <div class="mt-4 w-full">
                 <h2 class="text-base text-pink-700 uppercase">PRESENT ADDRESS</h2>
                 <div class="mt-3 w-full">
@@ -357,8 +385,24 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                         placeholder="Unit Number, House Number/Building/Street No. Street Name"
                     />
                 </div>
+                <div class="mt-3 w-full">
+                    <RadioInput
+                    id="presentAddress.same_as_permanent_address"
+                    label="Same as Permanent Address"
+                    name="presentAddress.same_as_permanent_address"
+                    v-model="presentAddress.same_as_permanent_address"
+                    :options="[
+                    { label: 'Yes', value: 'Yes' },
+                    { label: 'No', value: 'No' }
+                    ]"
+                    :required="true"
+                    />
+                </div>
             </div>
-            <div class="mt-4 w-full">
+            <!-- Spouse Details -->
+            <div class="mt-4 w-full" :class="{
+                    'hidden': buyer.civil_status!= props.civil_statuses['Married'],
+                }">
                 <h2 class="text-base text-pink-700 uppercase">SPOUSE PERSONAL DETAILS:</h2>
                 <div class="mt-3 w-full">
                     <TextInput
@@ -396,7 +440,16 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                     />
                 </div>
                <div class="mt-3 w-full">
-                    <SelectInput id="buyer.spouse.gender" label="Gender" :options="props.genders" v-model="buyer.spouse.gender" placeholder="" helperText="" :required="true" :errorMessage="errors?.value?.spouse.gender" />
+                    <SelectInput
+                    id="buyer.spouse.gender"
+                    label="Gender"
+                    :options="props.genders"
+                    v-model="buyer.spouse.gender"
+                    placeholder=""
+                    helperText=""
+                    :required="true"
+                    :errorMessage="errors?.value?.spouse.gender"
+                    />
                </div>
                 <div class="mt-3 w-full">
                     <DatePicker
@@ -421,7 +474,10 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                     </SelectInput>
                 </div>
             </div>
-            <div class="mt-4 w-full">
+            <!-- Spouse Contact Information -->
+            <div  class="mt-4 w-full" :class="{
+                    'hidden': buyer.civil_status!= props.civil_statuses['Married'],
+                }">
                 <h2 class="text-base text-pink-700 uppercase">SPOUSE CONATCT INFORMATION:</h2>
                 <div class="mt-3 w-full">
                     <TextInput id="buyer.spouse.email" label="E-Mail" type="email" v-model="buyer.spouse.email" :errorMessage="errors?.value?.spouse.email" :required="true" />
@@ -430,6 +486,25 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                     <MobileInput id="buyer.spouse.mobile" label="Mobile" v-model="buyer.spouse.mobile" :errorMessage="errors?.value?.spouse.mobile" :required="true" />
                 </div>
             </div>
+            <!-- Spouse Present Address -->
+             <div class="mt-4 w-full" :class="{
+                    'hidden': buyer.civil_status!= props.civil_statuses['Married'],
+                }">
+                <h2 class="text-base text-pink-700 uppercase">SPOUSE PRESENT ADDRESS</h2>
+                <div class="mt-3 w-full">
+                    <RadioInput
+                    id="presentAddress.same_as_permanent_address"
+                    label="Same as Permanent Address"
+                    name="presentAddress.same_as_permanent_address"
+                    v-model="presentAddress.same_as_permanent_address"
+                    :options="[
+                    { label: 'Yes', value: 'Yes' },
+                    { label: 'No', value: 'No' }
+                    ]"
+                    :required="true"
+                    />
+                </div>
+             </div>
             <button type="submit">Submit</button>
         </form>
     </section>
