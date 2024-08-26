@@ -172,7 +172,7 @@ const updatePresentAddressCity = (newValue, oldValue) => {
 
     <section class="flex flex-col items-start px-6 w-full text-sm font-semibold text-black">
 
-        <form @submit.prevent="submit" class="h-auto block w-full">
+        <form id="form" name="form" @submit.prevent="submit" class="h-auto block w-full">
             <div class="mt-4 w-full">
                 <h2 class="text-base text-pink-700 uppercase">Personal Details:</h2>
                 <div class="mt-3 w-full">

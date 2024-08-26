@@ -30,7 +30,7 @@
                     </Agreement>
                 </div>
                 <div class="mb-4">
-                    <Link href="/"> <!-- TODO: Update the link -->
+                    <Link href="/client-information"> <!-- TODO: Update the link -->
                         <MyPrimaryButton
                             :disabled="!isAgreementChecked"
                             :isDisabled="!isAgreementChecked"
@@ -42,9 +42,10 @@
                             <div class="flex items-center space-x-2">
                                 <span>Proceed</span>
                                 <div class="w-8 h-8 flex items-center justify-center p-0 text-white">
-                                    <LottiefileAnimation :animationData="lottieJson"  :class="{
+                                    <!-- <LottiefileAnimation :animationData="lottieJson"  :class="{
                                         'hidden': lottieJson,
-                                    }"/>
+                                    }"/> -->
+                                       <LottiefileAnimation v-if="lottieJson" :animationData="lottieJson" />
                                 </div>
                             </div>
                         </MyPrimaryButton>
@@ -85,8 +86,8 @@ const successRefModal = ref(null);
 const isAgreementChecked = ref(false);
 
 onMounted(async () => {
-    // const response = await fetch('/animation/proceed.json');
-    // lottieJson.value = await response.json();
+    const response = await fetch('/animation/proceed.json');
+    lottieJson.value = await response.json();
 });
 </script>
 

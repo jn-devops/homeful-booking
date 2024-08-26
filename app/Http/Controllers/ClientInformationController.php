@@ -132,19 +132,19 @@ class ClientInformationController extends Controller
 
     public function store(Request $request)
     {
-        // Validate the request data
-        $validated = $request->validate([
-            'first_name' => 'required|string|max:255',
-            'middle_name' => 'nullable|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'address.present.city' => 'required|string|max:255',
-        ]);
+        // // Validate the request data
+        // $validated = $request->validate([
+        //     'first_name' => 'required|string|max:255',
+        //     'middle_name' => 'nullable|string|max:255',
+        //     'last_name' => 'required|string|max:255',
+        //     'address.present.city' => 'required|string|max:255',
+        // ]);
 
-        if($validated){
-            dd($validated);
-        }
+        // if($validated){
+        //     dd($validated);
+        // }
 
-        return redirect()->back()->with('success', 'Form submitted successfully.');
+        return redirect()->route('payment.choices');
     }
 }
 
