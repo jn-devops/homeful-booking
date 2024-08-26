@@ -20,7 +20,7 @@ use function DI\string;
 
 class ProceedController extends Controller
 {
-    function index(){
+    function index($sku){
         $property_details = collect([
             'unit_location' => 'Phase 2 Block 7 Unit 2',
             'regional' => false,

@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
 Route::get('/', function () {
-    return redirect()->route('proceed');
+    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>"; 
 });
 
 // Route::middleware('auth', 'verified')->group(function (){
@@ -25,7 +25,7 @@ Route::middleware('auth')->group(function () {
 });
 
 
-Route::get('/proceed', [ProceedController::class, 'index'])->name('proceed'); // Step 1
+Route::get('/proceed/{sku}', [ProceedController::class, 'index'])->name('proceed'); // Step 1
 
 Route::get('/kwyc-verify', [KWYCController::class, 'index'])->name('kwyc.verify'); // Step 2
 

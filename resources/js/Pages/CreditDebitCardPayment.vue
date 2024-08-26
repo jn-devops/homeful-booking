@@ -1,5 +1,5 @@
 <template>
-    <Return> Credit Card Payment</Return>
+    <Return link="/payment-choices"> Credit Card Payment</Return>
     <div class="bg-stone-100 h-screen">
         &nbsp;
         <div class="mt-24 px-3">
