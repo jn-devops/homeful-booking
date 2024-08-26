@@ -5,15 +5,20 @@ import MyModal from "@/MyComponents/MyModal.vue";
 const props = defineProps({
     modelValue: Boolean,
     agreement: Object,
+    agreementType: String,
 });
+
+const emit = defineEmits([
+    'update:modelValue',
+]);
 
 const isPrivacyPolicyShow = ref(false);
 const isTermOfUseShow = ref(false);
+const isTermOfServicesShow = ref(false);
 
 const updatePrivacyPolicyModal = (newVal) =>{
     isPrivacyPolicyShow.value = newVal;
 }
-
 const showModalPrivacyPolicy = () =>{
     isPrivacyPolicyShow.value = !isPrivacyPolicyShow.value;
 }
@@ -25,8 +30,12 @@ const showModalTermOfUseModal = () =>{
     isTermOfUseShow.value = !isTermOfUseShow.value;
 }
 
-
-const emit = defineEmits(['update:modelValue']);
+const updateTermOfServicesModal = () =>{
+    isTermOfServicesShow.value = !isTermOfServicesShow.value;
+}
+const showModalTermOfServicesModal = () =>{
+    isTermOfServicesShow.value = !isTermOfServicesShow.value;
+}
 
 function handleInput(event) {
     emit('update:modelValue', event.target.checked);
@@ -47,12 +56,19 @@ function handleInput(event) {
             <span v-if="$slots.agreement_context">
                 <slot name="agreement_context" />
             </span>
-            <span class="font-bold" @click="showModalPrivacyPolicy">
-                    Privacy Policy
+            <span v-if="(agreementType == 'TermOfServices')">
+                <span class="font-bold" @click="showModalTermOfServicesModal">
+                    Term of Services
+                </span>
             </span>
-            and
-            <span class="font-bold" @click="showModalTermOfUseModal">
-                    Terms of Use.
+            <span v-else>
+                <span class="font-bold" @click="showModalPrivacyPolicy">
+                        Privacy Policy
+                </span>
+                and
+                <span class="font-bold" @click="showModalTermOfUseModal">
+                        Terms of Use.
+                </span>
             </span>
             </p>
         </div>
@@ -83,6 +99,20 @@ function handleInput(event) {
         </template>
         <template #content_noborder>
             <div class="h-96 overflow-y-scroll" v-html="agreement.term_of_use">
+            </div>
+        </template>
+    </MyModal>
+
+    <!-- TERM OF SERVICES  -->
+    <MyModal
+        :modal-show="isTermOfServicesShow"
+        @updatemodalShow="updateTermOfServicesModal"
+    >
+        <template #title>
+            Term of Services
+        </template>
+        <template #content_noborder>
+            <div class="h-96 overflow-y-scroll px-6" v-html="agreement.term_of_services">
             </div>
         </template>
     </MyModal>

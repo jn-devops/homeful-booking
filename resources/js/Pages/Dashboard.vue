@@ -3,6 +3,7 @@ import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
 import Welcome from '@/Components/Welcome.vue';
 import LandingPage from '@/MyComponents/LandingPage.vue';
 import { ref } from 'vue';
+import SuccessModal from '@/MyComponents/SuccessModal.vue';
 
 defineProps({
     property_details: Object,
@@ -10,7 +11,7 @@ defineProps({
     supplementaryData: Object,
 })
 
-
+const successRefModal = ref(null);
 
 </script>
 
@@ -21,8 +22,6 @@ defineProps({
                 Dashboard
             </h2>
         </template>
-
-
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
                 <div class="bg-white overflow-hidden shadow-xl sm:rounded-lg">

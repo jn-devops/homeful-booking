@@ -1,0 +1,199 @@
+<template>
+    <ReturnToPage />
+    <div class="bg_layout p-0 ">
+        <div class="w-full">
+            <PaymentChoicesImg class="w-full" />
+        </div>
+        <div class="py-1 w-full">
+            <div class="flex flex-row p-5">
+                <div class="basis-1/5">
+                    <CircularProgress :currentProgress="4" />
+                </div>
+                <div class="ps-5 basis-4/5 flex flex-col justify-center">
+                    <div class="text-md font-semibold text-[#CC035C]">
+                        Step 4:
+                    </div>
+                    <div class="text-2xl font-extrabold">
+                        Pay <br> Consulting Fee
+                    </div>
+                </div>
+            </div>
+            <div class="px-5">
+                <p>
+                    Please pay the Consulting Fee. If you choose not to pay within 2 working days, your qualification process will not proceed.
+                </p>
+                <div class="mb-4">
+                    <MyPrimaryButton
+                        @click="updatePaymentOption(true)"
+                        :class="[
+                            'rounded-full p-4 mt-4 w-full text-sm md:text-md',
+                        ]"
+                    >
+                        <div class="flex items-center space-x-2">
+                            <span>Pay Now</span>
+                        </div>
+                    </MyPrimaryButton>
+                </div>
+            </div>
+            <div class="max-w-7xl sm:px-6 lg:px-8 py-2 bg-slate-100">
+                <div class="shadow-xl sm:rounded-xl px-3 py-4">
+                    <p class="mb-4 ms-4">Status:</p>
+                    <FiveStepTimeline :currrentStep="4" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <SuccessModal ref="successRefModal">
+        Payment Successful <!-- TODO: Update the text -->
+    </SuccessModal>
+
+    <!-- Payment Option Modal -->
+    <MyModal
+    :modal-show="paymentOption"
+    @updatemodalShow="updatePaymentOption"
+    >
+        <template #title>
+            Payment Option
+        </template>
+        <template #content_noborder>
+            <div class="flex flex-wrap gap-3 mb-20">
+                <!-- Payment Method 1 -->
+                <TertiaryButton @click="choosePaymentMethod(1)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-credit-card">
+                        <rect width="20" height="14" x="2" y="5" rx="2"/><line x1="2" x2="22" y1="10" y2="10"/>
+                    </svg>
+                    <span>
+                        Credit/Debit Card
+                    </span>
+                </TertiaryButton>
+                <!-- Payment Method 2 -->
+                <TertiaryButton @click="choosePaymentMethod(2)">
+                    <Gcash />
+                    <span>
+                        GCash
+                    </span>
+                </TertiaryButton>
+                <!-- Payment Method 3 -->
+                <TertiaryButton @click="choosePaymentMethod(3)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-qr-code"><rect width="5" height="5" x="3" y="3" rx="1"/>
+                        <rect width="5" height="5" x="16" y="3" rx="1"/><rect width="5" height="5" x="3" y="16" rx="1"/><path d="M21 16h-3a2 2 0 0 0-2 2v3"/><path d="M21 21v.01"/><path d="M12 7v3a2 2 0 0 1-2 2H7"/><path d="M3 12h.01"/><path d="M12 3h.01"/><path d="M12 16v.01"/><path d="M16 12h1"/><path d="M21 12v.01"/><path d="M12 21v-1"/>
+                    </svg>
+                    <span>
+                        InstaPay QRCode
+                    </span>
+                </TertiaryButton>
+            </div>
+        </template>
+    </MyModal>
+
+    <!-- Payment Reminder Modal -->
+    <MyModal
+    :modal-show="paymentReminder"
+    @updatemodalShow="updatePaymentReminder"
+    >
+        <template #title>
+            Payment Reminders
+        </template>
+        <template #modalcontent>
+            <br>
+            <Timeline class="mt-2">
+                <template #success>
+                    Payment of Consulting Fee is non refundable.
+                </template>
+            </Timeline>
+            <Timeline class="mt-2">
+                <template #success>
+                    Payment of Consulting Fee does not guarantee reservation. Reservation is subject to final confirmation.
+                </template>
+            </Timeline>
+            <Timeline class="mt-2">
+                <template #success>
+                    You will receive an SMS notification if payment is successful.
+                </template>
+            </Timeline>
+            <br>
+        </template>
+        <template #policy_terms>
+            <Agreement v-model="isDisclaimerChecked" :agreement="supplementaryData.agreement">
+                <template #agreement_context>
+                    By clicking Proceed, you agree to Homeful.ph's
+                </template>
+            </Agreement>
+        </template>
+        <template #buttons>
+            <div class="container mx-auto p-4">
+                <div class="flex justify-center">
+                    <MyPrimaryButton
+                        :disabled="!isDisclaimerChecked"
+                        :isDisabled="!isDisclaimerChecked"
+                        @click="payNow"
+                        :class="[
+                            'rounded-full p-4 mt-4 w-96 text-sm md:text-md',
+                            isDisclaimerChecked ? '' : 'bg-gray-300'
+                        ]"
+                    >
+                        I Agree & Continue
+                    </MyPrimaryButton>
+                </div>
+            </div>
+        </template>
+    </MyModal>
+
+</template>
+
+<script setup>
+import Gcash from '@/Logos/Gcash.vue';
+import PaymentChoicesImg from '@/Logos/PaymentChoicesImg.vue';
+import Agreement from '@/MyComponents/Agreement.vue';
+import CircularProgress from '@/MyComponents/CircularProgress.vue';
+import FiveStepTimeline from '@/MyComponents/FiveStepTimeline.vue';
+import MyModal from '@/MyComponents/MyModal.vue';
+import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
+import ReturnToPage from '@/MyComponents/ReturnToPage.vue';
+import SuccessModal from '@/MyComponents/SuccessModal.vue';
+import TertiaryButton from '@/MyComponents/TertiaryButton.vue';
+import Timeline from '@/MyComponents/Timeline.vue';
+import { router } from '@inertiajs/vue3';
+import { onMounted, ref, onUpdated, nextTick } from 'vue';
+
+const props = defineProps({
+    supplementaryData: Object,
+});
+
+const paymentOption = ref(false);
+const paymentReminder = ref(false);
+const isDisclaimerChecked = ref(false);
+const selectedPaymentMethod = ref(0);
+const updatePaymentOption = (newVal) => {
+    paymentOption.value = newVal;
+}
+const updatePaymentReminder = (newVal) => {
+    paymentReminder.value = newVal;
+}
+const choosePaymentMethod = (pm) => {
+    updatePaymentReminder(true);
+    selectedPaymentMethod.value = pm;
+}
+
+const payNow = () => {
+    switch(selectedPaymentMethod.value){
+        case 1:
+            router.get('/payment-choices/credit-debit-card');
+            break;
+        case 2:
+            break;
+        case 3:
+            break;
+    }
+}
+
+</script>
+
+<style scoped>
+.bg_layout{
+    z-index: 1;
+}
+.bg-rose {
+  background-color: #ff007f;
+}
+</style>

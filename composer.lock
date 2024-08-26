@@ -991,12 +991,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/aws/aws-sdk-php.git",
-                "reference": "702b9955160d2dacdf2cdf4d4476fcf95eae1aaf"
+                "reference": "8dd47fd0af8450124057b83cbcf727b4735a14d9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/702b9955160d2dacdf2cdf4d4476fcf95eae1aaf",
-                "reference": "702b9955160d2dacdf2cdf4d4476fcf95eae1aaf",
+                "url": "https://api.github.com/repos/aws/aws-sdk-php/zipball/8dd47fd0af8450124057b83cbcf727b4735a14d9",
+                "reference": "8dd47fd0af8450124057b83cbcf727b4735a14d9",
                 "shasum": ""
             },
             "require": {
@@ -1079,9 +1079,9 @@
             "support": {
                 "forum": "https://forums.aws.amazon.com/forum.jspa?forumID=80",
                 "issues": "https://github.com/aws/aws-sdk-php/issues",
-                "source": "https://github.com/aws/aws-sdk-php/tree/3.320.7"
+                "source": "https://github.com/aws/aws-sdk-php/tree/3.320.0"
             },
-            "time": "2024-08-23T18:13:50+00:00"
+            "time": "2024-08-14T18:04:04+00:00"
         },
         {
             "name": "bacon/bacon-qr-code",
@@ -2417,16 +2417,16 @@
         },
         {
             "name": "filament/actions",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/actions.git",
-                "reference": "de5ce76f20ee21af92b951dec2a5c533ecacbc79"
+                "reference": "c4329f82ec0be66c79fdab3f83d339a6377c47c4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/actions/zipball/de5ce76f20ee21af92b951dec2a5c533ecacbc79",
-                "reference": "de5ce76f20ee21af92b951dec2a5c533ecacbc79",
+                "url": "https://api.github.com/repos/filamentphp/actions/zipball/c4329f82ec0be66c79fdab3f83d339a6377c47c4",
+                "reference": "c4329f82ec0be66c79fdab3f83d339a6377c47c4",
                 "shasum": ""
             },
             "require": {
@@ -2466,20 +2466,20 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-08-22T12:07:53+00:00"
+            "time": "2024-08-12T16:38:34+00:00"
         },
         {
             "name": "filament/filament",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/panels.git",
-                "reference": "2675472f2bdd4e765a1f3e533231bda7750a2881"
+                "reference": "c8107895bcade3856b3d38fc7803a694b07673f4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/panels/zipball/2675472f2bdd4e765a1f3e533231bda7750a2881",
-                "reference": "2675472f2bdd4e765a1f3e533231bda7750a2881",
+                "url": "https://api.github.com/repos/filamentphp/panels/zipball/c8107895bcade3856b3d38fc7803a694b07673f4",
+                "reference": "c8107895bcade3856b3d38fc7803a694b07673f4",
                 "shasum": ""
             },
             "require": {
@@ -2531,20 +2531,20 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-08-20T08:32:50+00:00"
+            "time": "2024-08-12T16:38:39+00:00"
         },
         {
             "name": "filament/forms",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/forms.git",
-                "reference": "0f80913deb90bfe9e1850ab35e80a34194cfb652"
+                "reference": "95f58a7f8928d37b75afaa04113178c9498921a5"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/forms/zipball/0f80913deb90bfe9e1850ab35e80a34194cfb652",
-                "reference": "0f80913deb90bfe9e1850ab35e80a34194cfb652",
+                "url": "https://api.github.com/repos/filamentphp/forms/zipball/95f58a7f8928d37b75afaa04113178c9498921a5",
+                "reference": "95f58a7f8928d37b75afaa04113178c9498921a5",
                 "shasum": ""
             },
             "require": {
@@ -2587,11 +2587,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-08-22T12:07:43+00:00"
+            "time": "2024-08-12T16:38:36+00:00"
         },
         {
             "name": "filament/infolists",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/infolists.git",
@@ -2642,7 +2642,7 @@
         },
         {
             "name": "filament/notifications",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/notifications.git",
@@ -2694,16 +2694,16 @@
         },
         {
             "name": "filament/support",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/support.git",
-                "reference": "f00b84d43d157c85837108a7eeaceabbaf6044ab"
+                "reference": "749c4a5901197c54bf09513817962762485b2478"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/filamentphp/support/zipball/f00b84d43d157c85837108a7eeaceabbaf6044ab",
-                "reference": "f00b84d43d157c85837108a7eeaceabbaf6044ab",
+                "url": "https://api.github.com/repos/filamentphp/support/zipball/749c4a5901197c54bf09513817962762485b2478",
+                "reference": "749c4a5901197c54bf09513817962762485b2478",
                 "shasum": ""
             },
             "require": {
@@ -2749,11 +2749,11 @@
                 "issues": "https://github.com/filamentphp/filament/issues",
                 "source": "https://github.com/filamentphp/filament"
             },
-            "time": "2024-08-22T12:08:05+00:00"
+            "time": "2024-08-12T16:38:51+00:00"
         },
         {
             "name": "filament/tables",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/tables.git",
@@ -2805,7 +2805,7 @@
         },
         {
             "name": "filament/widgets",
-            "version": "v3.2.107",
+            "version": "v3.2.99",
             "source": {
                 "type": "git",
                 "url": "https://github.com/filamentphp/widgets.git",
@@ -3855,16 +3855,16 @@
         },
         {
             "name": "jn-devops/contacts",
-            "version": "v1.4.21",
+            "version": "v1.4.16",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/contacts.git",
-                "reference": "69bad2ba57f48f5c48c92d8ce2f79d8ee847a610"
+                "reference": "19ee384780b695a80c032c23fd94bf40a8f1a076"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/69bad2ba57f48f5c48c92d8ce2f79d8ee847a610",
-                "reference": "69bad2ba57f48f5c48c92d8ce2f79d8ee847a610",
+                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/19ee384780b695a80c032c23fd94bf40a8f1a076",
+                "reference": "19ee384780b695a80c032c23fd94bf40a8f1a076",
                 "shasum": ""
             },
             "require": {
@@ -3927,7 +3927,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/contacts/issues",
-                "source": "https://github.com/jn-devops/contacts/tree/v1.4.21"
+                "source": "https://github.com/jn-devops/contacts/tree/v1.4.16"
             },
             "funding": [
                 {
@@ -3935,7 +3935,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-20T06:50:09+00:00"
+            "time": "2024-08-14T06:42:29+00:00"
         },
         {
             "name": "jn-devops/mortgage",

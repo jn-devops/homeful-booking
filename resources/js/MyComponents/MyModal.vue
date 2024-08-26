@@ -7,7 +7,7 @@ const props = defineProps({
 
 const emit = defineEmits(['updatemodalShow'])
 
-console.log('modalSiteVisit:', props.modalShow);
+// console.log('modalSiteVisit:', props.modalShow);
 const closeModal = (param) =>{
     
     emit('updatemodalShow', param)
@@ -29,7 +29,7 @@ const closeModal = (param) =>{
           <div v-if="$slots.logo">
             <slot name="logo" />
           </div>
-          <div v-if="$slots.title" class="w-full p-2 text-right flex justify-between gap-3 items-center border-b-2">
+          <div v-if="$slots.title" class="w-full p-2 text-right flex justify-between gap-3 items-center border-b-2 border-b-slate-200">
             <div>
                 <h1 class="text-2xl font-bold">
                   <slot name="title" />
@@ -37,9 +37,9 @@ const closeModal = (param) =>{
             </div>
             <button
               @click.self="closeModal(false)"
-              class="bg-gray-50 text-gray-400 px-3 py-1 rounded-full text-xl text-right">&times;</button>
+              class="bg-[#F3F4F6] text-[#989898] px-3 py-1 rounded-full text-xl text-right">&times;</button>
           </div>
-          <div v-if="$slots.titleNoBtn" class="w-full p-2 text-right flex justify-center gap-3 items-center border-b-2">
+          <div v-if="$slots.titleNoBtn" class="w-full p-2 text-right flex justify-center gap-3 items-center border-b-2 border-b-slate-200">
             <div class="text-center">
               <h1 class="text-2xl font-bold">
                   <slot name="titleNoBtn" />
@@ -55,7 +55,7 @@ const closeModal = (param) =>{
           </div>
           <div 
           v-if="$slots.img || $slots.modalcontent"
-          class="grid grid-rows-1 md:grid-cols-2 py-4 gap-4 px-0 border-b-2">
+          class="grid grid-rows-1 md:grid-cols-2 py-4 gap-4 px-0 border-b-2 border-b-slate-200">
             <div v-if="$slots.img"  class="px-2">
                 <slot name="img" />
               <!-- <img :src="viewDetailed.url_links.facade" class="object-fit w-full h-full" alt="Detail Image" srcset=""> -->
@@ -87,7 +87,7 @@ const closeModal = (param) =>{
       <!-- <div v-if="modalShow" 
            class="bg-white md:self-center max-w-screen-xl rounded-t-xl p-4 transform transition-transform duration-300 ease-in-out">
         <div class="">
-          <div class="w-full p-2 text-right flex justify-between gap-3 items-center border-b-2">
+          <div class="w-full p-2 text-right flex justify-between gap-3 items-center border-b-2 border-b-slate-200">
             <div v-if="$slots.title">
                 <h1 class="text-2xl font-bold">
                   <slot name="title" />
@@ -97,7 +97,7 @@ const closeModal = (param) =>{
               @click.self="closeModal(false)"
               class="bg-gray-50 text-gray-400 px-3 py-1 rounded-full text-xl text-right">&times;</button>
           </div>
-          <div class="grid grid-rows-1 md:grid-cols-2 pt-6 pb-6 gap-4 px-6 border-b-2">
+          <div class="grid grid-rows-1 md:grid-cols-2 pt-6 pb-6 gap-4 px-6 border-b-2 border-b-slate-200">
             <div v-if="$slots.img"  class="px-2">
                 <slot name="img" />
             </div>
@@ -134,7 +134,7 @@ const closeModal = (param) =>{
           <div v-if="$slots.logo">
             <slot name="logo" />
           </div>
-          <div v-if="$slots.title" class="w-full p-2 text-right flex justify-between gap-3 items-center border-b-2">
+          <div v-if="$slots.title" class="w-full p-2 text-right flex justify-between gap-3 items-center border-b-2 border-b-slate-200">
             <div>
                 <h1 class="text-2xl font-bold">
                   <slot name="title" />
@@ -144,7 +144,7 @@ const closeModal = (param) =>{
               @click.self="closeModal(false)"
               class="bg-gray-50 text-gray-400 px-3 py-1 rounded-full text-xl text-right">&times;</button>
           </div>
-          <div v-if="$slots.titleNoBtn" class="w-full p-2 text-right flex justify-center gap-3 items-center border-b-2">
+          <div v-if="$slots.titleNoBtn" class="w-full p-2 text-right flex justify-center gap-3 items-center border-b-2 border-b-slate-200">
             <div class="text-center">
               <h1 class="text-2xl font-bold">
                   <slot name="titleNoBtn" />
@@ -160,7 +160,7 @@ const closeModal = (param) =>{
           </div>
           <div 
           v-if="$slots.img || $slots.modalcontent"
-          class="grid grid-rows-1 pt-6 pb-6 gap-4 px-4 border-b-2">
+          class="grid grid-rows-1 pt-6 pb-6 gap-4 px-4 border-b-2 border-b-slate-200">
             <div v-if="$slots.img"  class="px-2">
                 <slot name="img" />
               <!-- <img :src="viewDetailed.url_links.facade" class="object-fit w-full h-full" alt="Detail Image" srcset=""> -->

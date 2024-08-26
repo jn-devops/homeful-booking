@@ -87,52 +87,53 @@ const formatCurrency = (value) => {
        class="border bg-gray-100 py-1 px-3">Proceed</a> -->
     </div>
       <!-- MyModal -->
-    <MyModal
-    :modal-show="disclaimerStatus"
-    @updatemodalShow="updatemodalShow"
-    >
-    
-    <template #title>
-        Disclaimer
-    </template>
-    <template #modalcontent>
-        <Timeline class=mt-2>
-            <template #success>
-                Payment of Consulting Fee is non refundable.
+      <MyModal
+        :modal-show="disclaimerStatus"
+        @updatemodalShow="updatemodalShow"
+        >
+            <template #title>
+                Disclaimer
             </template>
-        </Timeline>
-        <Timeline class=mt-2>
-            <template #success>
-                Payment of Consulting Fee does not guarantee reservation. Reservation is subject to final confirmation.
+            <template #modalcontent>
+                <br>
+                <Timeline class=mt-2>
+                    <template #success>
+                        Payment of Consulting Fee is non refundable.
+                    </template>
+                </Timeline>
+                <Timeline class=mt-2>
+                    <template #success>
+                        Payment of Consulting Fee does not guarantee reservation. Reservation is subject to final confirmation.
+                    </template>
+                </Timeline>
+                <br> <br>
             </template>
-        </Timeline>
-    </template>
-    <template #policy_terms>
-        <Agreement v-model="isDisclaimerChecked" :agreement="supplementaryData.agreement">
-            <template #agreement_context>
-                By clicking Proceed, you agree to Homeful.ph's
+            <template #policy_terms>
+                <Agreement v-model="isDisclaimerChecked" :agreement="supplementaryData.agreement">
+                    <template #agreement_context>
+                        By clicking Proceed, you agree to Homeful.ph's
+                    </template>
+                </Agreement>
             </template>
-        </Agreement>
-    </template>
-    <template #buttons>
-        <div class="container mx-auto p-4">
-           <div class="flex justify-center">
+            <template #buttons>
+                <div class="container mx-auto p-4">
+                <div class="flex justify-center">
 
-            <MyPrimaryButton
-                :disabled="!isDisclaimerChecked"
-                :isDisabled="!isDisclaimerChecked"
-                @click="showConsoCalculator"
-                :class="[
-                    'rounded-full p-4 mt-4 w-96 text-sm md:text-md',
-                    isDisclaimerChecked ? '' : 'bg-gray-300'
-                  ]"
-            >
-                I Agree & Continue
-            </MyPrimaryButton>
-           </div>
-        </div>
-    </template>
-    </MyModal>
+                    <MyPrimaryButton
+                        :disabled="!isDisclaimerChecked"
+                        :isDisabled="!isDisclaimerChecked"
+                        @click="showConsoCalculator"
+                        :class="[
+                            'rounded-full p-4 mt-4 w-96 text-sm md:text-md',
+                            isDisclaimerChecked ? '' : 'bg-gray-300'
+                        ]"
+                    >
+                        I Agree & Continue
+                    </MyPrimaryButton>
+                </div>
+            </div>
+        </template>
+        </MyModal>
 
 <!-- MyModal Calculator-->
  <MyModal
