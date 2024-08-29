@@ -46,6 +46,7 @@
                         :class="[
                             'rounded-full p-4 mt-4 w-full text-sm md:text-md',
                         ]"
+                        @click="proceed"
                     >
                         <div class="flex items-center space-x-2">
                             <span>Proceed</span>
@@ -89,6 +90,7 @@ onMounted(async () => {
     lottieJson.value = await response.json();
     console.log('response json:', lottieJson.value);
 });
+
 </script>
 
 <style scoped>
