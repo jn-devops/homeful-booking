@@ -16,12 +16,15 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use Homeful\Contacts\Actions\PersistContactAction;
 use Homeful\Contacts\Models\Contact;
-
+use Illuminate\Validation\ValidationException;
+use Homeful\KwYCCheck\Actions\CreateLeadContactAction;
 class ClientInformationController extends Controller
 {
     public function show(String $kwyc_code)
     {
-        dd($kwyc_code);
+        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'];
+
         $provinces = PhilippineProvince::all()->map(function($province) {
             return [
                 'region_code' => $province->region_code,
@@ -56,13 +59,15 @@ class ClientInformationController extends Controller
             'provinces' => $provinces,
             'cities' => $cities,
             'barangays' => $barangays,
+            'contact' => $lead->contact,
+            'fieldsExtracted' => $fieldsExtracted,
+            'kwyc_code' => $kwyc_code
         ]);
     }
 
     public function clienInfoLanding(String $kwyc_code){
 
-        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
-        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'];
+
 
         $supplementaryData = collect([
             'agreement' => [
@@ -135,26 +140,100 @@ class ClientInformationController extends Controller
         ]);
         return Inertia::render('ClientInformationLanding', [
             'supplementaryData' => $supplementaryData,
-            'contact' => $lead->contact,
-            'fieldsExtracted' => $fieldsExtracted,
+            'kwyc_code' => $kwyc_code
         ]);
     }
 
     public function store(Request $request)
     {
-        // // Validate the request data
-        // $validated = $request->validate([
-        //     'first_name' => 'required|string|max:255',
-        //     'middle_name' => 'nullable|string|max:255',
-        //     'last_name' => 'required|string|max:255',
-        //     'address.present.city' => 'required|string|max:255',
-        // ]);
+        $buyer = $request->input('buyer');
+        $spouse = $buyer['spouse'] ?? [];
 
-        // if($validated){
-        //     dd($validated);
+        $contactData = [
+            'reference_code'=> $request->input('kwyc_code'),
+            'first_name' => $buyer['first_name'],
+            'middle_name' => $buyer['middle_name'] ?? null,
+            'last_name' => $buyer['last_name'],
+            'name_suffix' => $buyer['name_suffix'] ?? null,
+            'civil_status' => $buyer['civil_status'],
+            'sex' => $buyer['gender'], // Assuming "gender" maps to "sex"
+            'nationality' => $buyer['nationality'],
+            'date_of_birth' => $buyer['date_of_birth'],
+            'email' => $buyer['email'],
+            'mobile' => $buyer['mobile'],
+            'spouse' => [
+                'first_name' => $spouse['first_name'] ?? null,
+                'middle_name' => $spouse['middle_name'] ?? null,
+                'last_name' => $spouse['last_name'] ?? null,
+                'name_suffix' => $spouse['name_suffix'] ?? null,
+                'sex' => $spouse['gender'] ?? null,
+                'nationality' => $spouse['nationality'] ?? null,
+                'date_of_birth' => $spouse['date_of_birth'] ?? null,
+                'email' => $spouse['email'] ?? null,
+                'mobile' => $spouse['mobile'] ?? null,
+            ],
+            'addresses' => [
+                [
+                    'type' => 'present',
+                    'ownership' => $request->input('presentAddress.home_ownership'),
+                    'address1' => $request->input('presentAddress.address'),
+                    'locality' => $request->input('presentAddress.city'),
+                    'administrative_area' => $request->input('presentAddress.province'),
+                    'postal_code' => $request->input('presentAddress.zip_code'),
+                    'country' => 'PH',
+                    'length_of_stay' =>(string) $request->input('presentAddress.years_at_present_address'),
+                ],
+            ],
+        ];
+
+        if ($buyer['civil_status'] == CivilStatus::where('description', 'Married')->first()->code) {
+            $contactData['spouse'] = [
+                'first_name' => $spouse['first_name'] ?? null,
+                'middle_name' => $spouse['middle_name'] ?? null,
+                'last_name' => $spouse['last_name'] ?? null,
+                'name_suffix' => $spouse['name_suffix'] ?? null,
+                'sex' => $spouse['gender'] ?? null,
+                'nationality' => $spouse['nationality'] ?? null,
+                'date_of_birth' => $spouse['date_of_birth'] ?? null,
+                'email' => $spouse['email'] ?? null,
+                'mobile' => $spouse['mobile'] ?? null,
+            ];
+        }
+
+        // if ( $request->input('spousePresentAddress.same_as_permanent_address') !== 'Yes') {
+        //     $contactData['addresses'][] = [
+        //         'type' => 'spouse_present',
+        //         'ownership' => $request->input('spousePresentAddress.home_ownership'),
+        //         'address1' => $request->input('spousePresentAddress.address'),
+        //         'locality' => $request->input('spousePresentAddress.city'),
+        //         'administrative_area' => $request->input('spousePresentAddress.province'),
+        //         'postal_code' => $request->input('spousePresentAddress.zip_code'),
+        //         'country' => 'PH',
+        //         'length_of_stay' => $request->input('spousePresentAddress.years_at_present_address'),
+        //     ];
         // }
 
-        return redirect()->route('payment.choices');
+        try {
+            // Now call the PersistContactAction
+            $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
+            // $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
+            $contact = PersistContactAction::run($contactData);
+            $contact =  Contact::updateOrCreate([
+                'reference_code' => $request->input('kwyc_code'),
+            ],$contactData);
+            $lead->contact=$contact;
+            $lead->save();
+            // Return response or redirect
+            return redirect()->route('payment.choices',['kwyc_code' => $request->input('kwyc_code')]);
+        } catch (ValidationException $e) {
+            // Handle validation exceptions
+            dd($e->getMessage());
+            return back()->withErrors($e->errors())->withInput();
+        } catch (\Exception $e) {
+            dd($e->getMessage());
+            // Handle any other exceptions
+            return back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
+        }
     }
 }
 

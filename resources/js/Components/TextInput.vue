@@ -62,6 +62,7 @@ watch(inputValue, (newValue) => {
         <div class="relative">
             <input
                 :id="id"
+                :name="id"
                 :type="type"
                 :placeholder="placeholder"
                 :required="required"

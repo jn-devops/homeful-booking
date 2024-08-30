@@ -18,6 +18,9 @@ const props = defineProps({
     cities: Object,
     barangays: Object,
     home_ownerships: Object,
+    contact: Object,
+    fieldsExtracted : Object,
+    kwyc_code: String,
 });
 
 const currentStep = ref(0);
@@ -82,15 +85,26 @@ const spousePresentAddress = reactive({
 const errors = ref({});
 
 
-
 const submit = async () => {
     errors.value = {}; // Reset errors
+
     try {
-        router.post('/client-information/store', buyer.value);
+        const formData = {
+            kwyc_code: props.kwyc_code,
+            buyer: buyer,
+            presentAddress: presentAddress,
+            spousePresentAddress: spousePresentAddress
+        };
+
+        router.post(`/client-information/store/${props.kwyc_code}`, formData, {
+            onError: (error) => {
+                if (error.response.status === 422) {
+                    errors.value = error.response.data.errors;
+                }
+            }
+        });
     } catch (error) {
-        if (error.response.status === 422) {
-            errors.value = error.response.data.errors;
-        }
+        console.error("An error occurred during submission:", error);
     }
 };
 
@@ -539,7 +553,7 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                     <div :class="{
                         'hidden': spousePresentAddress.same_as_permanent_address == 'Yes'
                     }">
-                        
+
                         <div class="mt-3 w-full">
                             <SelectInput
                             id="spousePresentAddress.region"
@@ -652,7 +666,7 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                     />
                 </div>
              </div>
-            <button type="submit">Submit</button>
+            <button @click="submit" type="button">Submit</button>
         </form>
     </section>
 

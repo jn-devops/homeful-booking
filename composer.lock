@@ -3597,16 +3597,16 @@
         },
         {
             "name": "homeful/kwyc-check",
-            "version": "v1.4.2",
+            "version": "v1.4.3",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/kwyc-check.git",
-                "reference": "3b58ac2885b31363465f581780bd29a452e067da"
+                "reference": "0ae896abcc4aebf344181c3fe918b9318ba62286"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/kwyc-check/zipball/3b58ac2885b31363465f581780bd29a452e067da",
-                "reference": "3b58ac2885b31363465f581780bd29a452e067da",
+                "url": "https://api.github.com/repos/jn-devops/kwyc-check/zipball/0ae896abcc4aebf344181c3fe918b9318ba62286",
+                "reference": "0ae896abcc4aebf344181c3fe918b9318ba62286",
                 "shasum": ""
             },
             "require": {
@@ -3674,7 +3674,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/kwyc-check/issues",
-                "source": "https://github.com/jn-devops/kwyc-check/tree/v1.4.2"
+                "source": "https://github.com/jn-devops/kwyc-check/tree/v1.4.3"
             },
             "funding": [
                 {
@@ -3682,7 +3682,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-29T07:12:29+00:00"
+            "time": "2024-08-29T23:20:08+00:00"
         },
         {
             "name": "homeful/references",

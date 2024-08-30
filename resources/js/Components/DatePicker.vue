@@ -4,7 +4,7 @@
       <span v-if="required" class="text-red-600">*</span>
       {{ label }}
     </label>
-    <DatePicker v-model="date" :popover="popover">
+    <DatePicker :id="id" :name="id" v-model="date" :popover="popover">
       <template #default="{ togglePopover }">
         <button
           type="button"

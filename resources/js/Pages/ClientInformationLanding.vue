@@ -30,7 +30,7 @@
                     </Agreement>
                 </div>
                 <div class="mb-4">
-                    <Link href="/client-information"> <!-- TODO: Update the link -->
+                    <Link :href="`/client-information/${props.kwyc_code}`"> <!-- TODO: Update the link -->
                         <MyPrimaryButton
                             :disabled="!isAgreementChecked"
                             :isDisabled="!isAgreementChecked"
@@ -79,6 +79,7 @@ import { onMounted, ref, onUpdated, nextTick } from 'vue';
 
 const props = defineProps({
     supplementaryData: Object,
+    kwyc_code: String,
 });
 
 const lottieJson = ref(null);

@@ -34,10 +34,10 @@ Route::get('/kwyc-verify/{sku}/{code}', [KWYCController::class, 'index'])->name(
 
 Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
 
-Route::get('/payment-choices/{sku}/?{code}', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 4
-Route::get('/payment-choices/credit-debit-card/{sku}/?{code}', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');
+Route::get('/payment-choices/{kwyc_code}', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 4
+Route::get('/payment-choices/credit-debit-card/{kwyc_code}}', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');
 
-Route::get('/get-qualified/{sku}/?{code}', [GetQualifiedController::class, 'index'])->name('get.qualified'); // Step 5
+Route::get('/get-qualified/{kwyc_code}', [GetQualifiedController::class, 'index'])->name('get.qualified'); // Step 5
 
 Route::get('/details', function () {
     return Inertia::render('Details');
@@ -61,8 +61,8 @@ Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'tes
 //Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
 
 Route::get('/client-info/{kwyc_code}', [\App\Http\Controllers\ClientInformationController::class, 'clienInfoLanding'])->name('client-information.clienInfoLanding');
-Route::get('/client-information/{sku}/?{code}', [\App\Http\Controllers\ClientInformationController::class, 'show'])->name('client-information.show');
-Route::post('/client-information/store/{sku}/?{code}', [\App\Http\Controllers\ClientInformationController::class, 'store'])->name('client-information.store');
+Route::get('/client-information/{kwyc_code}', [\App\Http\Controllers\ClientInformationController::class, 'show'])->name('client-information.show');
+Route::post('/client-information/store/{kwyc_code}', [\App\Http\Controllers\ClientInformationController::class, 'store'])->name('client-information.store');
 
 
 require __DIR__.'/auth.php';

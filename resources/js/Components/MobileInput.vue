@@ -12,6 +12,7 @@
           <input
             ref="mobileInput"
             :id="id"
+            :name="id"
             type="text"
             :required="required"
             :disabled="disabled"

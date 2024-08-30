@@ -8,6 +8,7 @@
         <select
           ref="selectElement"
           :id="id"
+          :name="id"
           :required="required"
           :disabled="disabled"
           :data-hs-select="computedSelectOptions"
