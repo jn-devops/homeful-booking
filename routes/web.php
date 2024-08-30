@@ -35,7 +35,13 @@ Route::get('/kwyc-verify/{sku}/{code}', [KWYCController::class, 'index'])->name(
 Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
 
 Route::get('/payment-choices/{kwyc_code}', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 4
-Route::get('/payment-choices/credit-debit-card/{kwyc_code}}', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');
+Route::get('/payment-choices/credit-debit-card/{kwyc_code}', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');
+
+
+Route::get('/payment-choices/wallet/pay/{kwyc_code}', [PaymentChoicesController::class, 'digitalWalletPayment'])->name('payment.digitalWalletPayment');
+Route::get('/payment-choices/qr/pay/{kwyc_code}', [PaymentChoicesController::class, 'qrPayment'])->name('payment.qrPayment');
+Route::get('/payment-choices/card/pay/{kwyc_code}', [PaymentChoicesController::class, 'cardPayment'])->name('payment.cardPayment');
+
 
 Route::get('/get-qualified/{kwyc_code}', [GetQualifiedController::class, 'index'])->name('get.qualified'); // Step 5
 

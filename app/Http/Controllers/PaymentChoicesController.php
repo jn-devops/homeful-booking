@@ -2,12 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use Homeful\Contacts\Facades\Contacts;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use Homeful\Contacts\Models\Contact;
+use Homeful\Paymate\Paymate;
+use Homeful\KwYCCheck\Models\Lead;
 class PaymentChoicesController extends Controller
 {
-    function index(){
+    function index(String $kwyc_code){
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -79,10 +82,67 @@ class PaymentChoicesController extends Controller
         ]);
         return Inertia::render('PaymentChoices', [
             'supplementaryData' => $supplementaryData,
+            'kwyc_code' => $kwyc_code
         ]);
     }
 
-    function credit_debit_card_payment(){
-        return Inertia::render('CreditDebitCardPayment');
+    function credit_debit_card_payment(String $kwyc_code){
+        return Inertia::render('CreditDebitCardPayment',[
+            'kwyc_code' => $kwyc_code
+        ]);
     }
+
+    function cardPayment(String $kwyc_code, Request $request){
+        // $jsonInput =[{
+        //     "referenceCode"=>"",//alpha-numeric
+        //     "amount"=> ""//integer include two decimal w/o '.' ; Ex. 100 = 1.00
+        // }];
+        // $response = $paymate->payment_cashier($jsonInput);
+        // ```Send card payment```
+        $paymate = new Paymate();
+        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        $cardData = $request->all();
+        $jsonInput = [
+            "buyerName" => $lead->meta['checkin']['body']['data']['fieldsExtracted']['fullName'],
+            "email" => $lead->meta['checkin']['body']['inputs']['email'],
+            "expirationMonth" => substr($cardData['expirationDate'], 0, 2),
+            "expirationYear" => '20' . substr($cardData['expirationDate'], 3, 2),
+            "securityCode" => $cardData['cvv'],
+            "pan" => str_replace('-', '', $cardData['cardNumber']),
+            "referenceCode" => $lead->meta['checkin']['body']['inputs']['code'],
+            "amount" => "100"
+        ];
+        $response = $paymate->payment_online(new Request($jsonInput));
+
+        dd($response);
+    }
+
+    function qrPayment(String $kwyc_code){
+        $paymate = new Paymate();
+        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        $jsonInput = [
+            "referenceCode" => $lead->meta['checkin']['body']['inputs']['code'], // alpha-numeric
+            "amount" => "100" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
+        ];
+        $response = $paymate->payment_qrph(new Request($jsonInput));
+
+        // dd($response);
+        return response()->json($response['code_url']);
+    }
+
+    function digitalWalletPayment(String $kwyc_code,Request $request){
+        $paymate = new Paymate();
+        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        // ```Generate link for e-wallet payment```
+        $jsonInput = [
+            "wallet" => $request->wallet, // gcash or grabpay
+            "referenceCode" => $lead->meta['checkin']['body']['inputs']['code'], // alpha-numeric
+            "amount" => "200" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
+        ];
+        $response = $paymate->payment_wallet(new Request($jsonInput));
+        // dd($response['pay_url']);
+        return response()->json($response['pay_url']);
+    }
+
+
 }
