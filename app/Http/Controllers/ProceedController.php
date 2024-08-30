@@ -16,17 +16,23 @@ use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Whitecube\Price\Price;
 use function DI\string;
-
+use Homeful\Products\Models\Product;
 
 class ProceedController extends Controller
 {
-    function index($sku){
+    function index(String $sku, String $code = null){
+
+        // return 404 if sku not found
+        // $product_details = Product::where('sku', $sku)->firstOrFail();
+        $product_details = Product::where('sku', $sku)->first();
         $property_details = collect([
             'unit_location' => 'Phase 2 Block 7 Unit 2',
             'regional' => false,
             'price' => 2500000,
             'consulting_fee' => 10000
         ]);
+        $product_details = $product_details??$property_details;
+
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -144,6 +150,9 @@ class ProceedController extends Controller
             'calculator' => $calculator,
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
             'propertyDetail' => $property_details,
+            'sku'=>$sku,
+            'code'=>$code,
+            'productDetails' => $product_details
         ]);
     }
 }

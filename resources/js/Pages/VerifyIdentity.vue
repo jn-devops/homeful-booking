@@ -46,6 +46,7 @@
                         :class="[
                             'rounded-full p-4 mt-4 w-full text-sm md:text-md',
                         ]"
+                       @click="goToKwyc"
                     >
                         <div class="flex items-center space-x-2">
                             <span>Proceed</span>
@@ -82,13 +83,44 @@ import { onMounted, ref, onUpdated, nextTick } from 'vue';
 const lottieJson = ref(null);
 const successRefModal = ref(null);
 
-onMounted(async () => {
-    // await nextTick();
-    // successRefModal.value.openSuccessModal();
-    const response = await fetch('/animation/proceed.json');
-    lottieJson.value = await response.json();
-    console.log('response json:', lottieJson.value);
+const props = defineProps({
+    sku:String,
+    code:String,
+    url:String,
 });
+async function proceedWithAnimation() {
+    try {
+        // Ensure the DOM is updated before proceeding
+        // await nextTick();
+
+        // Open the success modal
+        // successRefModal.value.openSuccessModal();
+
+        // Fetch the Lottie animation JSON
+        const response = await fetch('/animation/proceed.json');
+
+        // Check if the response is successful
+        if (!response.ok) {
+
+            // throw new Error(`Failed to fetch the animation: ${response.statusText}`);
+        }
+
+        // Parse the JSON response
+        lottieJson.value = await response.json();
+        console.log('response json:', lottieJson.value);
+    } catch (error) {
+        // Handle any errors that occur
+        console.error('Error during proceedWithAnimation:', error);
+    }
+}
+
+function goToKwyc(){
+    window.location.href = props.url;
+}
+onMounted(async () => {
+    proceedWithAnimation();
+});
+
 </script>
 
 <style scoped>

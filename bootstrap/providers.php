@@ -6,4 +6,5 @@ return [
     App\Providers\Filament\BuyerPanelProvider::class,
     App\Providers\FortifyServiceProvider::class,
     Homeful\Mortgage\Providers\EventServiceProvider::class,
+    Homeful\References\ReferencesServiceProvider::class,
 ];

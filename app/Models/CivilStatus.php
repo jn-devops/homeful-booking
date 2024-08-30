@@ -1,16 +1,16 @@
 <?php
 
-        namespace App\Models;
+namespace App\Models;
 
-        use Illuminate\Database\Eloquent\Factories\HasFactory;
-        use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
-        class CivilStatus extends Model
-        {
-            use HasFactory;
+class CivilStatus extends Model
+{
+    use HasFactory;
 
-            protected $fillable = [
-                'code',
-                'description'
-            ];
-        }
+    protected $fillable = [
+        'code',
+        'description'
+    ];
+}

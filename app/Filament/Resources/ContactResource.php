@@ -73,6 +73,7 @@ class ContactResource extends Resource
     public static function table(Table $table): Table
     {
         return $table
+            ->paginated(50)
             ->columns([
                 Tables\Columns\TextColumn::make('reference_code')
                     ->searchable(),

@@ -33,7 +33,10 @@ class HandleInertiaRequests extends Middleware
             'auth' => [
                 'user' => $request->user(),
             ],
+            'sku'=>$request->session()->get('sku'),
+            'code'=>$request->session()->get('code'),
             'flash' => [
+                'success' => fn () => $request->session()->get('success'),
                 'message' => fn () => $request->session()->get('message'),
                 'warning' => fn () => $request->session()->get('warning'),
                 'data' => fn () => $request->session()->get('data'),

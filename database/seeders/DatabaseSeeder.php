@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
            TenureSeeder::class,
            WorkIndustrySeeder::class,
            YearsOfOperationSeeder::class,
+           HomeOwnershipSeeder::class,
+           NationalitySeeder::class,
+           StatusSeeder::class,
        ]);
     }
 }
