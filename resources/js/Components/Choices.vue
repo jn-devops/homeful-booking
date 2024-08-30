@@ -192,7 +192,7 @@ export default {
     }
   },
   mounted() {
-    // this.initializeSelect();
+    this.initializeSelect();
 
   },
   methods: {
@@ -200,17 +200,17 @@ export default {
       return id.replace(/([#;&,.+*~':"!^$[\]()=>|\/\\])/g, '\\$1');
     },
     initializeSelect() {
-    //   this.destroySelect();
-    //   this.$nextTick(() => {
-    //     const escapedId = this.escapeForQuerySelector(this.id);
-    //     const selectElement = document.querySelector(`#${escapedId}`);
-    //     if (selectElement) {
-    //         this.hsSelectInstance = new HSSelect(selectElement);
-    //         console.log(this.hsSelectInstance);
-    //         this.hsSelectInstance.on('change', this.onInputChange);
-    //         this.hsSelectInstance.refresh();
-    //     }
-    //   });
+      this.destroySelect();
+      this.$nextTick(() => {
+        const escapedId = this.escapeForQuerySelector(this.id);
+        const selectElement = document.querySelector(`#${escapedId}`);
+        if (selectElement) {
+            this.hsSelectInstance = new HSSelect(selectElement);
+            console.log(this.hsSelectInstance);
+            // this.hsSelectInstance.on('change', this.onInputChange);
+            // this.hsSelectInstance.refresh();
+        }
+      });
     },
     destroySelect() {
       if (this.hsSelectInstance) {

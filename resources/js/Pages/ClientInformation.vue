@@ -148,6 +148,7 @@ const updatePresentAddressProvince = (newValue, oldValue) => {
         presentAddress.city = '';
         presentAddress.barangay = '';
         presentAddress.barangays = ({});
+        console.log(filteredCities);
     }
 };
 
@@ -160,6 +161,49 @@ const updatePresentAddressCity = (newValue, oldValue) => {
         }, {});
         presentAddress.city = newValue;
         presentAddress.barangay = '';
+    }
+};
+
+// Spouse Address
+const updateSpousePresentAddressRegion = (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        const filteredProvinces = props.provinces.filter(province => province.region_code === newValue);
+        spousePresentAddress.provinces = filteredProvinces.reduce((acc, province) => {
+            acc[province.province_code] = province.province_description;
+            return acc;
+        }, {});
+        spousePresentAddress.region = newValue;
+        spousePresentAddress.province = '';
+        spousePresentAddress.city = '';
+        spousePresentAddress.barangay = '';
+        spousePresentAddress.cities = ({});
+        spousePresentAddress.barangays = ({});
+    }
+};
+
+const updateSpousePresentAddressProvince = (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        const filteredCities = props.cities.filter(city => city.province_code === newValue);
+        spousePresentAddress.cities = filteredCities.reduce((acc, city) => {
+            acc[city.city_municipality_code] = city.city_municipality_description;
+            return acc;
+        }, {});
+        spousePresentAddress.province = newValue;
+        spousePresentAddress.city = '';
+        spousePresentAddress.barangay = '';
+        spousePresentAddress.barangays = ({});
+    }
+};
+
+const updateSpousePresentAddressCity = (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        const filteredBarangays = props.barangays.filter(barangay => barangay.city_municipality_code === newValue);
+        spousePresentAddress.barangays = filteredBarangays.reduce((acc, barangay) => {
+            acc[barangay.barangay_code] = barangay.barangay_description;
+            return acc;
+        }, {});
+        spousePresentAddress.city = newValue;
+        spousePresentAddress.barangay = '';
     }
 };
 
@@ -492,11 +536,114 @@ const updatePresentAddressCity = (newValue, oldValue) => {
                 }">
                 <h2 class="text-base text-pink-700 uppercase">SPOUSE PRESENT ADDRESS</h2>
                 <div class="mt-3 w-full">
+                    <div :class="{
+                        'hidden': spousePresentAddress.same_as_permanent_address == 'Yes'
+                    }">
+                        
+                        <div class="mt-3 w-full">
+                            <SelectInput
+                            id="spousePresentAddress.region"
+                            label="Region"
+                            :options="props.regions"
+                            v-model="spousePresentAddress.region"
+                            placeholder=""
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.spousePresentAddress.region"
+                            @update:modelValue="updateSpousePresentAddressRegion"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <SelectInput
+                            id="spousePresentAddress.province"
+                            label="Province"
+                            :options="spousePresentAddress.provinces"
+                            v-model="spousePresentAddress.province"
+                            placeholder=""
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.spousePresentAddress.province"
+                            @update:modelValue="updateSpousePresentAddressProvince"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <SelectInput
+                            id="spousePresentAddress.city"
+                            label="City"
+                            :options="spousePresentAddress.cities"
+                            v-model="spousePresentAddress.city"
+                            placeholder=""
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.spousePresentAddress.city"
+                            :searchable="true"
+                            @update:modelValue="updateSpousePresentAddressCity"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <SelectInput
+                            id="spousePresentAddress.barangay"
+                            label="Barangay"
+                            :options="spousePresentAddress.barangays"
+                            v-model="spousePresentAddress.barangay"
+                            placeholder=""
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.spousePresentAddress.barangay"
+                            :searchable="true"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <TextInput
+                                id="spousePresentAddress.zip_code"
+                                label="Zip Code"
+                                type="text"
+                                v-model="spousePresentAddress.zip_code"
+                                :errorMessage="errors?.value?.spousePresentAddress.zip_code"
+                                :required="true"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <SelectInput
+                            id="spousePresentAddress.home_ownership"
+                            label="Home Ownership"
+                            :options="props.home_ownerships"
+                            v-model="spousePresentAddress.home_ownership"
+                            placeholder=""
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.spousePresentAddress.home_ownership"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <TextInput
+                                id="spousePresentAddress.years_at_present_address"
+                                label="Years at Present Address"
+                                type="number"
+                                v-model="spousePresentAddress.years_at_present_address"
+                                :errorMessage="errors?.value?.spousePresentAddress.years_at_present_address"
+                                :required="true"
+                            />
+                        </div>
+                        <div class="mt-3 w-full">
+                            <TextInput
+                                id="spousePresentAddress.address"
+                                label="Address"
+                                type="text"
+                                v-model="spousePresentAddress.address"
+                                :errorMessage="errors?.value?.spousePresentAddress.address"
+                                :required="true"
+                                placeholder="Unit Number, House Number/Building/Street No. Street Name"
+                            />
+                        </div>
+
+                    </div>
+                    {{ spousePresentAddress.same_as_permanent_address }}
                     <RadioInput
-                    id="presentAddress.same_as_permanent_address"
+                    id="spousePresentAddress.same_as_permanent_address"
                     label="Same as Permanent Address"
-                    name="presentAddress.same_as_permanent_address"
-                    v-model="presentAddress.same_as_permanent_address"
+                    name="spousePresentAddress.same_as_permanent_address"
+                    v-model="spousePresentAddress.same_as_permanent_address"
                     :options="[
                     { label: 'Yes', value: 'Yes' },
                     { label: 'No', value: 'No' }

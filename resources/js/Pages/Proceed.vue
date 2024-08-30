@@ -1,7 +1,8 @@
 <template>
     <div v-if="loading" class="flex items-center justify-center h-screen"> <!-- If -->
         <div class="w-2/6">
-            <LottiefileAnimation v-if="homefulAnimation" :animationData="homefulAnimation" />
+            <!-- <LottiefileAnimation v-if="homefulAnimation" :animationData="homefulAnimation" /> -->
+            <img :src="homefulBookingUrl" class="shimmer w-full" />
         </div>
     </div> <!-- End If -->
     <div v-else class="md:w-[415px] md:mx-auto"> <!-- Else -->
@@ -366,6 +367,7 @@ const props = defineProps({
     supplementaryData: Object,
     calculator: Object,
     propertyDetail: Object,
+    homefulBookingUrl: String
 });
 
 const loading = ref(true);
@@ -437,10 +439,10 @@ onMounted(async () => {
         loading.value = false;
     }, 3000);
   const response = await fetch('/animation/proceed.json');
-  const homefulMainAnimation = await fetch('/animation/HomefulLogoAnimation.json');
+//   const homefulMainAnimation = await fetch('/animation/HomefulLogoIconAnimationCMG.json');
 
   lottieJson.value = await response.json();
-  homefulAnimation.value = await homefulMainAnimation.json();
+//   homefulAnimation.value = await homefulMainAnimation.json();
 });
 
 </script>
@@ -468,5 +470,20 @@ onMounted(async () => {
 
 .bg-rose {
   background-color: #ff007f;
+}
+
+.shimmer {
+  color: grey;
+  display: inline-block;
+  mask: linear-gradient(-60deg, #000 30%, #0005, #000 70%) right/350% 100%;
+  animation: shimmer 2.5s infinite;
+  font-size: 50px;
+  max-width: 200px;
+}
+
+@keyframes shimmer {
+  100% {
+    mask-position: left
+  }
 }
 </style>

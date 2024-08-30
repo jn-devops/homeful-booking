@@ -142,6 +142,7 @@ class ProceedController extends Controller
         return Inertia::render('Proceed', [
             'supplementaryData' => $supplementaryData,
             'calculator' => $calculator,
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
             'propertyDetail' => $property_details,
         ]);
     }
