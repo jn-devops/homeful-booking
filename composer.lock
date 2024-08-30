@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "eac13853f961b1d1dd34954c2079e5f4",
+    "content-hash": "73ae2d9fcceec6d0183aee93f5f918a0",
     "packages": [
         {
             "name": "amphp/amp",
@@ -2416,6 +2416,59 @@
             "time": "2018-11-22T02:45:56+00:00"
         },
         {
+            "name": "facade/ignition-contracts",
+            "version": "1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/facade/ignition-contracts.git",
+                "reference": "3c921a1cdba35b68a7f0ccffc6dffc1995b18267"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/facade/ignition-contracts/zipball/3c921a1cdba35b68a7f0ccffc6dffc1995b18267",
+                "reference": "3c921a1cdba35b68a7f0ccffc6dffc1995b18267",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3|^8.0"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^v2.15.8",
+                "phpunit/phpunit": "^9.3.11",
+                "vimeo/psalm": "^3.17.1"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Facade\\IgnitionContracts\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Freek Van der Herten",
+                    "email": "freek@spatie.be",
+                    "homepage": "https://flareapp.io",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Solution contracts for Ignition",
+            "homepage": "https://github.com/facade/ignition-contracts",
+            "keywords": [
+                "contracts",
+                "flare",
+                "ignition"
+            ],
+            "support": {
+                "issues": "https://github.com/facade/ignition-contracts/issues",
+                "source": "https://github.com/facade/ignition-contracts/tree/1.0.2"
+            },
+            "time": "2020-10-16T08:27:54+00:00"
+        },
+        {
             "name": "filament/actions",
             "version": "v3.2.99",
             "source": {
@@ -2846,6 +2899,74 @@
                 "source": "https://github.com/filamentphp/filament"
             },
             "time": "2024-07-31T11:53:30+00:00"
+        },
+        {
+            "name": "frittenkeez/laravel-vouchers",
+            "version": "0.5.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/FrittenKeeZ/laravel-vouchers.git",
+                "reference": "044a91a00afcc09a7f224e341a686307d82d32f1"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/FrittenKeeZ/laravel-vouchers/zipball/044a91a00afcc09a7f224e341a686307d82d32f1",
+                "reference": "044a91a00afcc09a7f224e341a686307d82d32f1",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/config": "^9.0|^10.0|^11.0",
+                "illuminate/console": "^9.0|^10.0|^11.0",
+                "illuminate/database": "^9.0|^10.0|^11.0",
+                "illuminate/support": "^9.0|^10.0|^11.0",
+                "php": "^8.1"
+            },
+            "require-dev": {
+                "friendsofphp/php-cs-fixer": "^3.4",
+                "illuminate/support": "^9.45|^10.0|^11.0",
+                "laravel/pint": "^1.16",
+                "nesbot/carbon": "^2.63",
+                "orchestra/testbench": "^7.0|^8.0|^9.0",
+                "phpunit/phpunit": "^9.6|^10.5"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "FrittenKeeZ\\Vouchers\\VouchersServiceProvider"
+                    ],
+                    "aliases": {
+                        "Vouchers": "FrittenKeeZ\\Vouchers\\Facades\\Vouchers"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "FrittenKeeZ\\Vouchers\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Frederik Sauer",
+                    "email": "fritten.keez@gmail.com"
+                }
+            ],
+            "description": "Voucher system for Laravel 9+",
+            "keywords": [
+                "coupon",
+                "discount",
+                "laravel",
+                "voucher"
+            ],
+            "support": {
+                "issues": "https://github.com/FrittenKeeZ/laravel-vouchers/issues",
+                "source": "https://github.com/FrittenKeeZ/laravel-vouchers/tree/0.5.0"
+            },
+            "time": "2024-06-13T15:35:49+00:00"
         },
         {
             "name": "fruitcake/php-cors",
@@ -3476,16 +3597,16 @@
         },
         {
             "name": "homeful/kwyc-check",
-            "version": "v1.4.1",
+            "version": "v1.4.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/kwyc-check.git",
-                "reference": "e0e68f28f688727bc10b4ac4336dd973e5924e3c"
+                "reference": "3b58ac2885b31363465f581780bd29a452e067da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/kwyc-check/zipball/e0e68f28f688727bc10b4ac4336dd973e5924e3c",
-                "reference": "e0e68f28f688727bc10b4ac4336dd973e5924e3c",
+                "url": "https://api.github.com/repos/jn-devops/kwyc-check/zipball/3b58ac2885b31363465f581780bd29a452e067da",
+                "reference": "3b58ac2885b31363465f581780bd29a452e067da",
                 "shasum": ""
             },
             "require": {
@@ -3553,7 +3674,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/kwyc-check/issues",
-                "source": "https://github.com/jn-devops/kwyc-check/tree/v1.4.1"
+                "source": "https://github.com/jn-devops/kwyc-check/tree/v1.4.2"
             },
             "funding": [
                 {
@@ -3561,7 +3682,94 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-26T01:53:28+00:00"
+            "time": "2024-08-29T07:12:29+00:00"
+        },
+        {
+            "name": "homeful/references",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jn-devops/references.git",
+                "reference": "5afe791be0d227081b5c300ce32791ebd44ce21b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jn-devops/references/zipball/5afe791be0d227081b5c300ce32791ebd44ce21b",
+                "reference": "5afe791be0d227081b5c300ce32791ebd44ce21b",
+                "shasum": ""
+            },
+            "require": {
+                "frittenkeez/laravel-vouchers": "^0.5.0",
+                "homeful/kwyc-check": "^1.4",
+                "illuminate/contracts": "^10.0||^11.0",
+                "jn-devops/contracts": "^1.1",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "spatie/laravel-ray": "^1.35"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Homeful\\References\\ReferencesServiceProvider"
+                    ],
+                    "aliases": {
+                        "References": "Homeful\\References\\Facades\\References"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Homeful\\References\\": "src/",
+                    "Homeful\\References\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Anais Santos",
+                    "email": "aacsantos@joy-nostalg.com",
+                    "homepage": "https://github.com/anais-enclavewrx"
+                },
+                {
+                    "name": "Lester Hurtado",
+                    "email": "devops@joy-nostalg.com",
+                    "homepage": "https://github.com/jn-devops"
+                }
+            ],
+            "description": "Homeful References Package",
+            "homepage": "https://github.com/homeful/references",
+            "keywords": [
+                "Homeful",
+                "laravel",
+                "references"
+            ],
+            "support": {
+                "issues": "https://github.com/jn-devops/references/issues",
+                "source": "https://github.com/jn-devops/references/tree/v1.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Homeful",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-28T22:17:05+00:00"
         },
         {
             "name": "inertiajs/inertia-laravel",
@@ -3770,16 +3978,16 @@
         },
         {
             "name": "jn-devops/common",
-            "version": "v1.2.4",
+            "version": "v1.2.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/common.git",
-                "reference": "683ce82ff8418b96f871d52b5264acbe61fdce02"
+                "reference": "c35a36dd9271e819428aadbb64014166331da841"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/common/zipball/683ce82ff8418b96f871d52b5264acbe61fdce02",
-                "reference": "683ce82ff8418b96f871d52b5264acbe61fdce02",
+                "url": "https://api.github.com/repos/jn-devops/common/zipball/c35a36dd9271e819428aadbb64014166331da841",
+                "reference": "c35a36dd9271e819428aadbb64014166331da841",
                 "shasum": ""
             },
             "require": {
@@ -3843,7 +4051,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/common/issues",
-                "source": "https://github.com/jn-devops/common/tree/v1.2.4"
+                "source": "https://github.com/jn-devops/common/tree/v1.2.5"
             },
             "funding": [
                 {
@@ -3851,20 +4059,20 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-06T09:13:26+00:00"
+            "time": "2024-08-27T08:08:29+00:00"
         },
         {
             "name": "jn-devops/contacts",
-            "version": "v1.4.16",
+            "version": "v1.4.24",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/contacts.git",
-                "reference": "19ee384780b695a80c032c23fd94bf40a8f1a076"
+                "reference": "4e10d33714d5d3c3da9279977143bf2380148df4"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/19ee384780b695a80c032c23fd94bf40a8f1a076",
-                "reference": "19ee384780b695a80c032c23fd94bf40a8f1a076",
+                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/4e10d33714d5d3c3da9279977143bf2380148df4",
+                "reference": "4e10d33714d5d3c3da9279977143bf2380148df4",
                 "shasum": ""
             },
             "require": {
@@ -3927,7 +4135,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/contacts/issues",
-                "source": "https://github.com/jn-devops/contacts/tree/v1.4.16"
+                "source": "https://github.com/jn-devops/contacts/tree/v1.4.24"
             },
             "funding": [
                 {
@@ -3935,20 +4143,105 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-14T06:42:29+00:00"
+            "time": "2024-08-29T11:35:46+00:00"
         },
         {
-            "name": "jn-devops/mortgage",
-            "version": "dev-main",
+            "name": "jn-devops/contracts",
+            "version": "v1.1.0",
             "source": {
                 "type": "git",
-                "url": "https://github.com/jn-devops/mortgage.git",
-                "reference": "f9c5053633fb2ce061ca65adbb7fe37a4a47901d"
+                "url": "https://github.com/jn-devops/contracts.git",
+                "reference": "2e67e1ccec320785eed536928244aa12cc2b773f"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/mortgage/zipball/f9c5053633fb2ce061ca65adbb7fe37a4a47901d",
-                "reference": "f9c5053633fb2ce061ca65adbb7fe37a4a47901d",
+                "url": "https://api.github.com/repos/jn-devops/contracts/zipball/2e67e1ccec320785eed536928244aa12cc2b773f",
+                "reference": "2e67e1ccec320785eed536928244aa12cc2b773f",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0",
+                "jn-devops/borrower": "^1.0",
+                "jn-devops/common": "^1.1",
+                "jn-devops/contacts": "^1.4",
+                "jn-devops/mortgage": "^1.0",
+                "jn-devops/properties": "^1.0",
+                "php": "^8.2",
+                "spatie/laravel-model-states": "^2.7",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "spatie/laravel-ray": "^1.35"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Homeful\\Contracts\\ContractsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Contracts": "Homeful\\Contracts\\Facades\\Contracts"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Homeful\\Contracts\\": "src/",
+                    "Homeful\\Contracts\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lester B. Hurtado",
+                    "email": "devops@joy-nostalg.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Homeful Contracts Package",
+            "homepage": "https://github.com/jn-devops/contracts",
+            "keywords": [
+                "Homeful",
+                "contracts",
+                "laravel"
+            ],
+            "support": {
+                "issues": "https://github.com/jn-devops/contracts/issues",
+                "source": "https://github.com/jn-devops/contracts/tree/v1.1.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Homeful",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-20T02:41:58+00:00"
+        },
+        {
+            "name": "jn-devops/mortgage",
+            "version": "v1.0.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jn-devops/mortgage.git",
+                "reference": "b0def902275ec2ed0e04094ddab8f0e25affe5a6"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jn-devops/mortgage/zipball/b0def902275ec2ed0e04094ddab8f0e25affe5a6",
+                "reference": "b0def902275ec2ed0e04094ddab8f0e25affe5a6",
                 "shasum": ""
             },
             "require": {
@@ -3972,7 +4265,6 @@
                 "phpstan/phpstan-phpunit": "^1.3",
                 "spatie/laravel-ray": "^1.35"
             },
-            "default-branch": true,
             "type": "library",
             "extra": {
                 "laravel": {
@@ -4010,7 +4302,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/mortgage/issues",
-                "source": "https://github.com/jn-devops/mortgage/tree/main"
+                "source": "https://github.com/jn-devops/mortgage/tree/v1.0.1"
             },
             "funding": [
                 {
@@ -4018,7 +4310,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-06T09:46:13+00:00"
+            "time": "2024-08-06T09:44:09+00:00"
         },
         {
             "name": "jn-devops/paymate",
@@ -4183,6 +4475,168 @@
                 }
             ],
             "time": "2024-07-23T23:08:43+00:00"
+        },
+        {
+            "name": "jn-devops/products",
+            "version": "v1.1.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jn-devops/products.git",
+                "reference": "a666e99e54b5751ab6d06db35f218fdc80ed73a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jn-devops/products/zipball/a666e99e54b5751ab6d06db35f218fdc80ed73a7",
+                "reference": "a666e99e54b5751ab6d06db35f218fdc80ed73a7",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0",
+                "jn-devops/common": "^1.1",
+                "php": "^8.2",
+                "spatie/laravel-data": "^4.8",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "spatie/laravel-ray": "^1.35"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Homeful\\Products\\ProductsServiceProvider"
+                    ],
+                    "aliases": {
+                        "Products": "Homeful\\Products\\Facades\\Products"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Homeful\\Products\\": "src/",
+                    "Homeful\\Products\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lester B. Hurtado",
+                    "email": "devops@joy-nostalg.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Homeful Products Package",
+            "homepage": "https://github.com/jn-devops/products",
+            "keywords": [
+                "Homeful",
+                "laravel",
+                "products"
+            ],
+            "support": {
+                "issues": "https://github.com/jn-devops/products/issues",
+                "source": "https://github.com/jn-devops/products/tree/v1.1.1"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Homeful",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-18T23:40:00+00:00"
+        },
+        {
+            "name": "jn-devops/properties",
+            "version": "v1.2.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/jn-devops/properties.git",
+                "reference": "fb691e687e181ba903d0d7f7b8f3a56502135c2b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/jn-devops/properties/zipball/fb691e687e181ba903d0d7f7b8f3a56502135c2b",
+                "reference": "fb691e687e181ba903d0d7f7b8f3a56502135c2b",
+                "shasum": ""
+            },
+            "require": {
+                "illuminate/contracts": "^10.0||^11.0",
+                "jn-devops/common": "^1.1",
+                "jn-devops/products": "^1.0",
+                "php": "^8.2",
+                "spatie/laravel-package-tools": "^1.16"
+            },
+            "require-dev": {
+                "larastan/larastan": "^2.9",
+                "laravel/pint": "^1.14",
+                "nunomaduro/collision": "^8.1.1||^7.10.0",
+                "orchestra/testbench": "^9.0.0||^8.22.0",
+                "pestphp/pest": "^2.34",
+                "pestphp/pest-plugin-arch": "^2.7",
+                "pestphp/pest-plugin-laravel": "^2.3",
+                "phpstan/extension-installer": "^1.3",
+                "phpstan/phpstan-deprecation-rules": "^1.1",
+                "phpstan/phpstan-phpunit": "^1.3",
+                "spatie/laravel-ray": "^1.35"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Homeful\\Properties\\PropertiesServiceProvider"
+                    ],
+                    "aliases": {
+                        "Properties": "Homeful\\Properties\\Facades\\Properties"
+                    }
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Homeful\\Properties\\": "src/",
+                    "Homeful\\Properties\\Database\\Factories\\": "database/factories/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lester B. Hurtado",
+                    "email": "devops@joy-nostalg.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Homeful Properties Package",
+            "homepage": "https://github.com/jn-devops/properties",
+            "keywords": [
+                "Homeful",
+                "laravel",
+                "properties"
+            ],
+            "support": {
+                "issues": "https://github.com/jn-devops/properties/issues",
+                "source": "https://github.com/jn-devops/properties/tree/v1.2.0"
+            },
+            "funding": [
+                {
+                    "url": "https://github.com/Homeful",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-08-20T01:48:51+00:00"
         },
         {
             "name": "jn-devops/property",
@@ -8832,17 +9286,92 @@
             "time": "2024-08-22T09:20:42+00:00"
         },
         {
-            "name": "spatie/laravel-package-tools",
-            "version": "1.16.4",
+            "name": "spatie/laravel-model-states",
+            "version": "2.7.1",
             "source": {
                 "type": "git",
-                "url": "https://github.com/spatie/laravel-package-tools.git",
-                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53"
+                "url": "https://github.com/spatie/laravel-model-states.git",
+                "reference": "91e7dfcf2d1d471d3b7fec151465346e7db43e72"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
-                "reference": "ddf678e78d7f8b17e5cdd99c0c3413a4a6592e53",
+                "url": "https://api.github.com/repos/spatie/laravel-model-states/zipball/91e7dfcf2d1d471d3b7fec151465346e7db43e72",
+                "reference": "91e7dfcf2d1d471d3b7fec151465346e7db43e72",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "facade/ignition-contracts": "^1.0",
+                "illuminate/contracts": "^8.73 | ^9.0 | ^10.0 | ^11.0",
+                "illuminate/database": "^8.73 | ^9.0 | ^10.0 | ^11.0",
+                "illuminate/support": "^8.73 | ^9.0 | ^10.0 | ^11.0",
+                "php": "^7.4|^8.0",
+                "spatie/laravel-package-tools": "^1.9"
+            },
+            "require-dev": {
+                "orchestra/testbench": "^6.23 | ^7.0 | ^8.0 | ^9.0",
+                "pestphp/pest": "^1.22|^2.0",
+                "phpunit/phpunit": "^9.4|^10.0",
+                "symfony/var-dumper": "^5.3 | ^6.0 | ^7.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "Spatie\\ModelStates\\ModelStatesServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Spatie\\ModelStates\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Brent Roose",
+                    "email": "brent@spatie.be",
+                    "homepage": "https://spatie.be",
+                    "role": "Developer"
+                }
+            ],
+            "description": "State support for Eloquent models",
+            "homepage": "https://github.com/spatie/laravel-model-states",
+            "keywords": [
+                "spatie",
+                "state"
+            ],
+            "support": {
+                "source": "https://github.com/spatie/laravel-model-states/tree/2.7.1"
+            },
+            "funding": [
+                {
+                    "url": "https://spatie.be/open-source/support-us",
+                    "type": "custom"
+                },
+                {
+                    "url": "https://github.com/spatie",
+                    "type": "github"
+                }
+            ],
+            "time": "2024-03-07T07:05:22+00:00"
+        },
+        {
+            "name": "spatie/laravel-package-tools",
+            "version": "1.16.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/spatie/laravel-package-tools.git",
+                "reference": "c7413972cf22ffdff97b68499c22baa04eddb6a2"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/spatie/laravel-package-tools/zipball/c7413972cf22ffdff97b68499c22baa04eddb6a2",
+                "reference": "c7413972cf22ffdff97b68499c22baa04eddb6a2",
                 "shasum": ""
             },
             "require": {
@@ -8881,7 +9410,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-package-tools/issues",
-                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.4"
+                "source": "https://github.com/spatie/laravel-package-tools/tree/1.16.5"
             },
             "funding": [
                 {
@@ -8889,7 +9418,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-03-20T07:29:11+00:00"
+            "time": "2024-08-27T18:56:10+00:00"
         },
         {
             "name": "spatie/laravel-permission",
@@ -14208,9 +14737,7 @@
     ],
     "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "jn-devops/mortgage": 20
-    },
+    "stability-flags": [],
     "prefer-stable": true,
     "prefer-lowest": false,
     "platform": {

@@ -36,7 +36,6 @@
                         </Agreement>
                     </div>
                     <div class="mb-4">
-                        <Link href="/kwyc-verify">
                             <MyPrimaryButton
                                 :disabled="!isAgreementChecked"
                                 :isDisabled="!isAgreementChecked"
@@ -44,6 +43,7 @@
                                     'rounded-full p-4 mt-4 w-full text-sm md:text-md',
                                     isAgreementChecked ? '' : 'bg-gray-300'
                                 ]"
+                                @click="goToKwyc"
                             >
                                 <div class="flex items-center space-x-2">
                                     <span>Proceed</span>
@@ -52,7 +52,6 @@
                                     </div>
                                 </div>
                             </MyPrimaryButton>
-                        </Link>
                     </div>
                 </div>
                 <div class="max-w-7xl sm:px-6 lg:px-8 py-2 bg-slate-100">
@@ -360,12 +359,17 @@ import FiveLogo from '@/Logos/5Logo.vue';
 import ConsultingContent from  '@/Logos/ConsultingContent.vue';
 import { Link } from '@inertiajs/vue3'
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
+import { usePage } from '@inertiajs/vue3'
 
+const page = usePage()
 
 const props = defineProps({
     supplementaryData: Object,
     calculator: Object,
     propertyDetail: Object,
+    productDetails: Object,
+    sku:String,
+    code:String,
 });
 
 const loading = ref(true);
@@ -441,7 +445,19 @@ onMounted(async () => {
 
   lottieJson.value = await response.json();
   homefulAnimation.value = await homefulMainAnimation.json();
+
 });
+
+const goToKwyc = () => {
+    const url = `/kwyc-verify/${props.sku}/${props.code}`;
+
+    const params = new URLSearchParams({
+        calculator: JSON.stringify(props.calculator),
+    });
+    console.log(params.toString());
+    console.log(`${url}?${params.toString()}`);
+    window.location.href = `${url}?${params.toString()}`;
+};
 
 </script>
 

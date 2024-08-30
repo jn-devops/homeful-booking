@@ -10,14 +10,18 @@ use App\Models\PhilippineBarangay;
 use App\Models\PhilippineCity;
 use App\Models\PhilippineProvince;
 use App\Models\PhilippineRegion;
+use Homeful\KwYCCheck\Models\Lead;
+use Homeful\References\Models\Reference;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
+use Homeful\Contacts\Actions\PersistContactAction;
+use Homeful\Contacts\Models\Contact;
 
 class ClientInformationController extends Controller
 {
-    public function show()
+    public function show(String $kwyc_code)
     {
-
+        dd($kwyc_code);
         $provinces = PhilippineProvince::all()->map(function($province) {
             return [
                 'region_code' => $province->region_code,
@@ -55,7 +59,11 @@ class ClientInformationController extends Controller
         ]);
     }
 
-    public function clienInfoLanding(){
+    public function clienInfoLanding(String $kwyc_code){
+
+        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'];
+
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -127,6 +135,8 @@ class ClientInformationController extends Controller
         ]);
         return Inertia::render('ClientInformationLanding', [
             'supplementaryData' => $supplementaryData,
+            'contact' => $lead->contact,
+            'fieldsExtracted' => $fieldsExtracted,
         ]);
     }
 

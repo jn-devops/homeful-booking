@@ -4,13 +4,23 @@
     "description": "The skeleton application for the Laravel framework.",
     "keywords": ["laravel", "framework"],
     "license": "MIT",
+
+    "repositories": [
+        {
+            "type": "path",
+            "url": "../references",
+            "options": {
+                "symlink": true
+            }
+        }
+    ],
     "require": {
         "php": "^8.2",
         "aws/aws-sdk-php": "^3.316",
         "bezhansalleh/filament-shield": "^3.2",
         "filament/filament": "^3.2",
         "homeful/kwyc-check": "^1.4",
-        "homeful/references": "^1.1",
+        "homeful/references": "dev-main",
         "inertiajs/inertia-laravel": "^1.0",
         "jn-devops/contacts": "^1.4",
         "jn-devops/contracts": "^1.1",
