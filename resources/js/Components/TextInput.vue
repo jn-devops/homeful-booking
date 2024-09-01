@@ -30,6 +30,10 @@ const props = defineProps({
         type: Boolean,
         default: false
     },
+    prefix: {
+        type: String,
+        default: '*'
+    },
     type: {
         type: String,
         default: 'text',
@@ -60,21 +64,45 @@ watch(inputValue, (newValue) => {
             <span v-if="required" class="text-red-600">*</span>
         </label>
         <div class="relative">
-            <input
-                :id="id"
-                :name="id"
-                :type="type"
-                :placeholder="placeholder"
-                :required="required"
-                class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
-                :class="{
-                    'border-red-500 focus:border-red-500 focus:ring-red-500': errorMessage,
-                    'border-teal-500 focus:border-teal-500 focus:ring-teal-500': !errorMessage && inputValue.length > 0,
-                    'border-stone-300': !errorMessage && inputValue.length === 0
-                }"
-                v-model="inputValue"
-                :aria-describedby="`${id}-helper`"
-            />
+            <div v-if="prefix != '*'" class="flex flex-cols gap-2 items-center">
+                <div class="text-stone-400 w-fit">
+                    {{ prefix }}
+                </div>
+                <div class="w-full">
+                    <input
+                        :id="id"
+                        :name="id"
+                        :type="type"
+                        :placeholder="placeholder"
+                        :required="required"
+                        class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
+                        :class="{
+                            'border-red-500 focus:border-red-500 focus:ring-red-500': errorMessage,
+                            'border-teal-500 focus:border-teal-500 focus:ring-teal-500': !errorMessage && inputValue.length > 0,
+                            'border-stone-300': !errorMessage && inputValue.length === 0
+                        }"
+                        v-model="inputValue"
+                        :aria-describedby="`${id}-helper`"
+                    />
+                </div>
+            </div>
+            <div v-else>
+                <input
+                        :id="id"
+                        :name="id"
+                        :type="type"
+                        :placeholder="placeholder"
+                        :required="required"
+                        class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
+                        :class="{
+                            'border-red-500 focus:border-red-500 focus:ring-red-500': errorMessage,
+                            'border-teal-500 focus:border-teal-500 focus:ring-teal-500': !errorMessage && inputValue.length > 0,
+                            'border-stone-300': !errorMessage && inputValue.length === 0
+                        }"
+                        v-model="inputValue"
+                        :aria-describedby="`${id}-helper`"
+                    />
+            </div>
             <div v-if="errorMessage" class="absolute inset-y-0 end-0 flex items-center pointer-events-none pe-3">
                 <svg class="shrink-0 size-4 text-red-500" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                     <circle cx="12" cy="12" r="10"></circle>

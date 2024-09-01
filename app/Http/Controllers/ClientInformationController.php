@@ -10,6 +10,10 @@ use App\Models\PhilippineBarangay;
 use App\Models\PhilippineCity;
 use App\Models\PhilippineProvince;
 use App\Models\PhilippineRegion;
+use App\Models\EmploymentType;
+use App\Models\EmploymentStatus;
+use App\Models\CurrentPosition;
+use App\Models\WorkIndustry;
 use Homeful\KwYCCheck\Models\Lead;
 use Homeful\References\Models\Reference;
 use Illuminate\Http\Request;
@@ -23,7 +27,7 @@ class ClientInformationController extends Controller
     public function show(String $kwyc_code)
     {
         $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
-        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'];
+        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'] ?? null;
 
         $provinces = PhilippineProvince::all()->map(function($province) {
             return [
@@ -55,11 +59,17 @@ class ClientInformationController extends Controller
             'civil_statuses'=>CivilStatus::all()->pluck('code','description')->toArray(),
             'home_ownerships'=>HomeOwnership::all()->pluck('code','description')->toArray(),
             'regions'=>PhilippineRegion::all()->pluck('region_code','region_description')->toArray(),
+            'employmement_types'=>EmploymentType::all()->pluck('code','description')->toArray(),
+            'employmement_statuses'=>EmploymentStatus::all()->pluck('code','description')->toArray(),
+            'current_positions'=>CurrentPosition::all()->pluck('code','description')->toArray(),
+            'work_industries'=>WorkIndustry::all()->pluck('code','description')->toArray(),
+            // 'countries'=>Country::all()->pluck('code','description')->toArray(), TODO: Make Country Model
+            'countries' => collect([]),
             'genders'=>['Male'=>'Male','Female'=>'Female'],
             'provinces' => $provinces,
             'cities' => $cities,
             'barangays' => $barangays,
-            'contact' => $lead->contact,
+            'contact' => $lead->contact ?? null,
             'fieldsExtracted' => $fieldsExtracted,
             'kwyc_code' => $kwyc_code
         ]);

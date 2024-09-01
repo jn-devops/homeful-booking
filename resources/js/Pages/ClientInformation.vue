@@ -4,9 +4,14 @@ import TextInput from '@/Components/TextInput.vue';
 import SelectInput from '@/Components/Choices.vue';
 import DatePicker from '@/Components/DatePicker.vue';
 import RadioInput from '@/Components/RadioInput.vue';
-import { ref, watch,reactive } from 'vue';
+import { ref, watch,reactive, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 import MobileInput from '@/Components/MobileInput.vue';
+import vueFilePond from "vue-filepond";
+import "filepond/dist/filepond.min.css";
+import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
+import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
+import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 
 const props = defineProps({
     name_suffixes: Object,
@@ -14,6 +19,11 @@ const props = defineProps({
     nationalities: Object,
     civil_statuses: Object,
     regions: Object,
+    employmement_types: Object,
+    employmement_statuses: Object,
+    current_positions: Object,
+    work_industries: Object,
+    countries: Object,
     provinces: Object,
     cities: Object,
     barangays: Object,
@@ -49,6 +59,27 @@ const buyer = reactive({
     },
 });
 
+const employment = reactive({
+    employment_type: '', // All
+    employment_status: '', // Locally Employed & OFW
+    tenure: '', // Locally Employed & OFW
+    current_position: '', // Locally Employed & OFW
+    rank: '', // Locally Employed & OFW
+    work_industry: '', // All
+    gross_monthly_income: '', // All
+    tax_identification_no: '', // All
+    pagibig_no: '', // All
+    sss_gsis_no: '', // All
+    employer_details: {
+        employer_name: '', // All
+        years_of_operation: '',// All
+        contact_person: '', // Locally Employed & OFW
+        email: '', // Locally Employed & OFW
+        contact_no: '', // Locally Employed & OFW
+        country: '', // OFW & Self Employed with Business
+        employer_complete_address: '', // All
+    }
+});
 
 const presentAddress = reactive({
     region: '',
@@ -78,6 +109,12 @@ const spousePresentAddress = reactive({
     provinces:({}),
     cities:({}),
     barangays:({}),
+});
+
+const attachments = reactive({
+    company_id: '',
+    government_id: '',
+    bir_certificate: '',
 });
 
 
@@ -125,6 +162,28 @@ const onSelectChange = (value) => {
     // You can update the buyer object here if needed
     // buyer.value.someField = value;
 };
+
+// File Uploader:
+const FilePond = vueFilePond(
+  FilePondPluginFileValidateType,
+  FilePondPluginImagePreview
+);
+const myFiles = ref(["cat.jpeg"]); // Replaces `data` function
+
+function handleFilePondInit() {
+  console.log("FilePond has initialized");
+
+  // Access FilePond instance methods via `pondRef`
+  // Example: pondRef.value.someMethod();
+}
+
+const pondRef = ref(null); // Replace `this.$refs.pond`
+
+onMounted(() => {
+  if (pondRef.value) {
+    handleFilePondInit();
+  }
+});
 
 watch(
   () => buyer.civil_status,
@@ -231,441 +290,694 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
     <section class="flex flex-col items-start px-6 w-full text-sm font-semibold text-black">
 
         <form id="form" name="form" @submit.prevent="submit" class="h-auto block w-full">
-            <div class="mt-4 w-full">
-                <h2 class="text-base text-pink-700 uppercase">Personal Details:</h2>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="buyer.first_name"
-                        label="First Name"
-                        type="text"
-                        v-model="buyer.first_name"
-                        :errorMessage="errors?.value?.first_name"
+            <!-- Step 1 -->
+            <div :class="{
+                'hidden': (currentStep + 1) != 1
+            }">
+                <div class="mt-4 w-full">
+                    <h2 class="text-base text-pink-700 uppercase">Personal Details:</h2>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.first_name"
+                            label="First Name"
+                            placeholder="Enter First Name"
+                            type="text"
+                            v-model="buyer.first_name"
+                            :errorMessage="errors?.value?.first_name"
+                            :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.middle_name"
+                            label="Middle Name"
+                            placeholder="Enter Mdddle Name"
+                            type="text"
+                            v-model="buyer.middle_name"
+                            :errorMessage="errors?.value?.middle_name"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.last_name"
+                            label="Last Name"
+                            placeholder="Enter Last Name"
+                            type="text"
+                            v-model="buyer.last_name"
+                            :errorMessage="errors?.value?.last_name"
+                            :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.name_suffix"
+                        :label="'Name Suffix'"
+                        :options="props.name_suffixes"
+                        v-model="buyer.name_suffix"
+                        placeholder=""
+                        helperText=""
                         :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="buyer.middle_name"
-                        label="Middle Name"
-                        type="text"
-                        v-model="buyer.middle_name"
-                        :errorMessage="errors?.value?.middle_name"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="buyer.last_name"
-                        label="Last Name"
-                        type="text"
-                        v-model="buyer.last_name"
-                        :errorMessage="errors?.value?.last_name"
+                        :errorMessage="errors?.value?.name_suffix"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.civil_status"
+                        label="Civil Status"
+                        :options="props.civil_statuses"
+                        v-model="buyer.civil_status"
+                        placeholder=""
+                        helperText=""
                         :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.name_suffix"
-                    :label="'Name Suffix'"
-                    :options="props.name_suffixes"
-                    v-model="buyer.name_suffix"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.name_suffix"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.civil_status"
-                    label="Civil Status"
-                    :options="props.civil_statuses"
-                    v-model="buyer.civil_status"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.civil_status"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.gender"
-                    label="Gender"
-                    :options="props.genders"
-                    v-model="buyer.gender"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.name_suffix"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <DatePicker
-                    id="buyer.date_of_birth"
-                    label="Date of Birth"
-                    v-model="buyer.date_of_birth"
-                    format="yyyy-MM-dd"
-                    :errorMessage="errors?.value?.date_of_birth"
-                    :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.nationality"
-                    label="Nationality"
-                    :options="props.nationalities"
-                    v-model="buyer.nationality"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.name_suffix"
-                    :searchable="true"
-                    />
-                </div>
-            </div>
-            <div class="mt-4 w-full">
-                <h2 class="text-base text-pink-700 uppercase">Contact Information</h2>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="buyer.email"
-                        label="E-Mail"
-                        type="email"
-                        v-model="buyer.email"
-                        :errorMessage="errors?.value?.email"
+                        :errorMessage="errors?.value?.civil_status"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.gender"
+                        label="Gender"
+                        :options="props.genders"
+                        v-model="buyer.gender"
+                        placeholder=""
+                        helperText=""
                         :required="true"
-                    />
+                        :errorMessage="errors?.value?.name_suffix"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <DatePicker
+                        id="buyer.date_of_birth"
+                        label="Date of Birth"
+                        v-model="buyer.date_of_birth"
+                        format="yyyy-MM-dd"
+                        :errorMessage="errors?.value?.date_of_birth"
+                        :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.nationality"
+                        label="Nationality"
+                        :options="props.nationalities"
+                        v-model="buyer.nationality"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.name_suffix"
+                        :searchable="true"
+                        />
+                    </div>
                 </div>
                 <div class="mt-4 w-full">
-                    <MobileInput
-                        id="buyer.mobile"
-                        label="Mobile"
-                        v-model="buyer.mobile"
-                        :errorMessage="errors?.value?.mobile"
-                        :required="true"
-                    />
-                </div>
-            </div>
-            <!-- Present Address -->
-            <div class="mt-4 w-full">
-                <h2 class="text-base text-pink-700 uppercase">PRESENT ADDRESS</h2>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="presentAddress.region"
-                    label="Region"
-                    :options="props.regions"
-                    v-model="presentAddress.region"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.presentAddress.region"
-                    @update:modelValue="updatePresentAddressRegion"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="presentAddress.province"
-                    label="Province"
-                    :options="presentAddress.provinces"
-                    v-model="presentAddress.province"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.presentAddress.province"
-                    @update:modelValue="updatePresentAddressProvince"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="presentAddress.city"
-                    label="City"
-                    :options="presentAddress.cities"
-                    v-model="presentAddress.city"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.presentAddress.city"
-                    :searchable="true"
-                    @update:modelValue="updatePresentAddressCity"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="presentAddress.barangay"
-                    label="Barangay"
-                    :options="presentAddress.barangays"
-                    v-model="presentAddress.barangay"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.presentAddress.barangay"
-                    :searchable="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="presentAddress.zip_code"
-                        label="Zip Code"
-                        type="text"
-                        v-model="presentAddress.zip_code"
-                        :errorMessage="errors?.value?.presentAddress.zip_code"
-                        :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="presentAddress.home_ownership"
-                    label="Home Ownership"
-                    :options="props.home_ownerships"
-                    v-model="presentAddress.home_ownership"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.presentAddress.home_ownership"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="presentAddress.years_at_present_address"
-                        label="Years at Present Address"
-                        type="number"
-                        v-model="presentAddress.years_at_present_address"
-                        :errorMessage="errors?.value?.presentAddress.years_at_present_address"
-                        :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="presentAddress.address"
-                        label="Address"
-                        type="text"
-                        v-model="presentAddress.address"
-                        :errorMessage="errors?.value?.presentAddress.address"
-                        :required="true"
-                        placeholder="Unit Number, House Number/Building/Street No. Street Name"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <RadioInput
-                    id="presentAddress.same_as_permanent_address"
-                    label="Same as Permanent Address"
-                    name="presentAddress.same_as_permanent_address"
-                    v-model="presentAddress.same_as_permanent_address"
-                    :options="[
-                    { label: 'Yes', value: 'Yes' },
-                    { label: 'No', value: 'No' }
-                    ]"
-                    :required="true"
-                    />
-                </div>
-            </div>
-            <!-- Spouse Details -->
-            <div class="mt-4 w-full" :class="{
-                    'hidden': buyer.civil_status!= props.civil_statuses['Married'],
-                }">
-                <h2 class="text-base text-pink-700 uppercase">SPOUSE PERSONAL DETAILS:</h2>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="buyer.spouse.first_name"
-                        label="First Name"
-                        type="text"
-                        v-model="buyer.spouse.first_name"
-                        :errorMessage="errors?.value?.spouse.first_name"
-                        :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput id="buyer.spouse.middle_name" label="Middle Name" type="text" v-model="buyer.spouse.middle_name" />
-                </div>
-                <div class="mt-3 w-full">
-                    <TextInput
-                        id="buyer.spouse.last_name"
-                        label="Last Name"
-                        type="text"
-                        v-model="buyer.spouse.last_name"
-                        :errorMessage="errors?.value?.spouse.last_name"
-                        :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.spouse.name_suffix"
-                    :label="'Name Suffix'"
-                    :options="props.name_suffixes"
-                    v-model="buyer.spouse.name_suffix"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.spouse.name_suffix"
-                    />
-                </div>
-               <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.spouse.gender"
-                    label="Gender"
-                    :options="props.genders"
-                    v-model="buyer.spouse.gender"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.spouse.gender"
-                    />
-               </div>
-                <div class="mt-3 w-full">
-                    <DatePicker
-                    id="buyer.spouse.date_of_birth"
-                    label="Date of Birth"
-                    v-model="buyer.spouse.date_of_birth"
-                    format="yyyy-MM-dd"
-                    :errorMessage="errors?.value?.spouse.date_of_birth"
-                    :required="true"
-                    />
-                </div>
-                <div class="mt-3 w-full">
-                    <SelectInput
-                    id="buyer.spouse.nationality"
-                    label="Nationality"
-                    :options="props.nationalities"
-                    v-model="buyer.spouse.nationality"
-                    placeholder=""
-                    helperText=""
-                    :required="true"
-                    :errorMessage="errors?.value?.spouse.nationality">
-                    </SelectInput>
-                </div>
-            </div>
-            <!-- Spouse Contact Information -->
-            <div  class="mt-4 w-full" :class="{
-                    'hidden': buyer.civil_status!= props.civil_statuses['Married'],
-                }">
-                <h2 class="text-base text-pink-700 uppercase">SPOUSE CONATCT INFORMATION:</h2>
-                <div class="mt-3 w-full">
-                    <TextInput id="buyer.spouse.email" label="E-Mail" type="email" v-model="buyer.spouse.email" :errorMessage="errors?.value?.spouse.email" :required="true" />
-                </div>
-                <div class="mt-3 w-full">
-                    <MobileInput id="buyer.spouse.mobile" label="Mobile" v-model="buyer.spouse.mobile" :errorMessage="errors?.value?.spouse.mobile" :required="true" />
-                </div>
-            </div>
-            <!-- Spouse Present Address -->
-             <div class="mt-4 w-full" :class="{
-                    'hidden': buyer.civil_status!= props.civil_statuses['Married'],
-                }">
-                <h2 class="text-base text-pink-700 uppercase">SPOUSE PRESENT ADDRESS</h2>
-                <div class="mt-3 w-full">
-                    <div :class="{
-                        'hidden': spousePresentAddress.same_as_permanent_address == 'Yes'
-                    }">
-
-                        <div class="mt-3 w-full">
-                            <SelectInput
-                            id="spousePresentAddress.region"
-                            label="Region"
-                            :options="props.regions"
-                            v-model="spousePresentAddress.region"
-                            placeholder=""
-                            helperText=""
+                    <h2 class="text-base text-pink-700 uppercase">Contact Information</h2>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.email"
+                            label="E-Mail"
+                            type="email"
+                            v-model="buyer.email"
+                            :errorMessage="errors?.value?.email"
                             :required="true"
-                            :errorMessage="errors?.value?.spousePresentAddress.region"
-                            @update:modelValue="updateSpousePresentAddressRegion"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <SelectInput
-                            id="spousePresentAddress.province"
-                            label="Province"
-                            :options="spousePresentAddress.provinces"
-                            v-model="spousePresentAddress.province"
-                            placeholder=""
-                            helperText=""
-                            :required="true"
-                            :errorMessage="errors?.value?.spousePresentAddress.province"
-                            @update:modelValue="updateSpousePresentAddressProvince"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <SelectInput
-                            id="spousePresentAddress.city"
-                            label="City"
-                            :options="spousePresentAddress.cities"
-                            v-model="spousePresentAddress.city"
-                            placeholder=""
-                            helperText=""
-                            :required="true"
-                            :errorMessage="errors?.value?.spousePresentAddress.city"
-                            :searchable="true"
-                            @update:modelValue="updateSpousePresentAddressCity"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <SelectInput
-                            id="spousePresentAddress.barangay"
-                            label="Barangay"
-                            :options="spousePresentAddress.barangays"
-                            v-model="spousePresentAddress.barangay"
-                            placeholder=""
-                            helperText=""
-                            :required="true"
-                            :errorMessage="errors?.value?.spousePresentAddress.barangay"
-                            :searchable="true"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <TextInput
-                                id="spousePresentAddress.zip_code"
-                                label="Zip Code"
-                                type="text"
-                                v-model="spousePresentAddress.zip_code"
-                                :errorMessage="errors?.value?.spousePresentAddress.zip_code"
-                                :required="true"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <SelectInput
-                            id="spousePresentAddress.home_ownership"
-                            label="Home Ownership"
-                            :options="props.home_ownerships"
-                            v-model="spousePresentAddress.home_ownership"
-                            placeholder=""
-                            helperText=""
-                            :required="true"
-                            :errorMessage="errors?.value?.spousePresentAddress.home_ownership"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <TextInput
-                                id="spousePresentAddress.years_at_present_address"
-                                label="Years at Present Address"
-                                type="number"
-                                v-model="spousePresentAddress.years_at_present_address"
-                                :errorMessage="errors?.value?.spousePresentAddress.years_at_present_address"
-                                :required="true"
-                            />
-                        </div>
-                        <div class="mt-3 w-full">
-                            <TextInput
-                                id="spousePresentAddress.address"
-                                label="Address"
-                                type="text"
-                                v-model="spousePresentAddress.address"
-                                :errorMessage="errors?.value?.spousePresentAddress.address"
-                                :required="true"
-                                placeholder="Unit Number, House Number/Building/Street No. Street Name"
-                            />
-                        </div>
-
+                        />
                     </div>
-                    {{ spousePresentAddress.same_as_permanent_address }}
-                    <RadioInput
-                    id="spousePresentAddress.same_as_permanent_address"
-                    label="Same as Permanent Address"
-                    name="spousePresentAddress.same_as_permanent_address"
-                    v-model="spousePresentAddress.same_as_permanent_address"
-                    :options="[
-                    { label: 'Yes', value: 'Yes' },
-                    { label: 'No', value: 'No' }
-                    ]"
-                    :required="true"
-                    />
+                    <div class="mt-4 w-full">
+                        <MobileInput
+                            id="buyer.mobile"
+                            label="Mobile"
+                            v-model="buyer.mobile"
+                            :errorMessage="errors?.value?.mobile"
+                            :required="true"
+                        />
+                    </div>
                 </div>
-             </div>
+                <!-- Present Address -->
+                <div class="mt-4 w-full">
+                    <h2 class="text-base text-pink-700 uppercase">PRESENT ADDRESS</h2>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="presentAddress.region"
+                        label="Region"
+                        :options="props.regions"
+                        v-model="presentAddress.region"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.presentAddress.region"
+                        @update:modelValue="updatePresentAddressRegion"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="presentAddress.province"
+                        label="Province"
+                        :options="presentAddress.provinces"
+                        v-model="presentAddress.province"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.presentAddress.province"
+                        @update:modelValue="updatePresentAddressProvince"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="presentAddress.city"
+                        label="City"
+                        :options="presentAddress.cities"
+                        v-model="presentAddress.city"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.presentAddress.city"
+                        :searchable="true"
+                        @update:modelValue="updatePresentAddressCity"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="presentAddress.barangay"
+                        label="Barangay"
+                        :options="presentAddress.barangays"
+                        v-model="presentAddress.barangay"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.presentAddress.barangay"
+                        :searchable="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="presentAddress.zip_code"
+                            label="Zip Code"
+                            type="text"
+                            v-model="presentAddress.zip_code"
+                            :errorMessage="errors?.value?.presentAddress.zip_code"
+                            :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="presentAddress.home_ownership"
+                        label="Home Ownership"
+                        :options="props.home_ownerships"
+                        v-model="presentAddress.home_ownership"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.presentAddress.home_ownership"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="presentAddress.years_at_present_address"
+                            label="Years at Present Address"
+                            type="number"
+                            v-model="presentAddress.years_at_present_address"
+                            :errorMessage="errors?.value?.presentAddress.years_at_present_address"
+                            :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="presentAddress.address"
+                            label="Address"
+                            type="text"
+                            v-model="presentAddress.address"
+                            :errorMessage="errors?.value?.presentAddress.address"
+                            :required="true"
+                            placeholder="Unit Number, House Number/Building/Street No. Street Name"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <RadioInput
+                        id="presentAddress.same_as_permanent_address"
+                        label="Same as Permanent Address"
+                        name="presentAddress.same_as_permanent_address"
+                        v-model="presentAddress.same_as_permanent_address"
+                        :options="[
+                        { label: 'Yes', value: 'Yes' },
+                        { label: 'No', value: 'No' }
+                        ]"
+                        :required="true"
+                        />
+                    </div>
+                </div>
+                <!-- Spouse Details -->
+                <div class="mt-4 w-full" :class="{
+                        'hidden': buyer.civil_status!= props.civil_statuses['Married'],
+                    }">
+                    <h2 class="text-base text-pink-700 uppercase">SPOUSE PERSONAL DETAILS:</h2>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.spouse.first_name"
+                            label="First Name"
+                            type="text"
+                            v-model="buyer.spouse.first_name"
+                            :errorMessage="errors?.value?.spouse.first_name"
+                            :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput id="buyer.spouse.middle_name" label="Middle Name" type="text" v-model="buyer.spouse.middle_name" />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.spouse.last_name"
+                            label="Last Name"
+                            type="text"
+                            v-model="buyer.spouse.last_name"
+                            :errorMessage="errors?.value?.spouse.last_name"
+                            :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.spouse.name_suffix"
+                        :label="'Name Suffix'"
+                        :options="props.name_suffixes"
+                        v-model="buyer.spouse.name_suffix"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.spouse.name_suffix"
+                        />
+                    </div>
+                <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.spouse.gender"
+                        label="Gender"
+                        :options="props.genders"
+                        v-model="buyer.spouse.gender"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.spouse.gender"
+                        />
+                </div>
+                    <div class="mt-3 w-full">
+                        <DatePicker
+                        id="buyer.spouse.date_of_birth"
+                        label="Date of Birth"
+                        v-model="buyer.spouse.date_of_birth"
+                        format="yyyy-MM-dd"
+                        :errorMessage="errors?.value?.spouse.date_of_birth"
+                        :required="true"
+                        />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                        id="buyer.spouse.nationality"
+                        label="Nationality"
+                        :options="props.nationalities"
+                        v-model="buyer.spouse.nationality"
+                        placeholder=""
+                        helperText=""
+                        :required="true"
+                        :errorMessage="errors?.value?.spouse.nationality">
+                        </SelectInput>
+                    </div>
+                </div>
+                <!-- Spouse Contact Information -->
+                <div  class="mt-4 w-full" :class="{
+                        'hidden': buyer.civil_status!= props.civil_statuses['Married'],
+                    }">
+                    <h2 class="text-base text-pink-700 uppercase">SPOUSE CONATCT INFORMATION:</h2>
+                    <div class="mt-3 w-full">
+                        <TextInput id="buyer.spouse.email" label="E-Mail" type="email" v-model="buyer.spouse.email" :errorMessage="errors?.value?.spouse.email" :required="true" />
+                    </div>
+                    <div class="mt-3 w-full">
+                        <MobileInput id="buyer.spouse.mobile" label="Mobile" v-model="buyer.spouse.mobile" :errorMessage="errors?.value?.spouse.mobile" :required="true" />
+                    </div>
+                </div>
+                <!-- Spouse Present Address -->
+                <div class="mt-4 w-full" :class="{
+                        'hidden': buyer.civil_status!= props.civil_statuses['Married'],
+                    }">
+                    <h2 class="text-base text-pink-700 uppercase">SPOUSE PRESENT ADDRESS</h2>
+                    <div class="mt-3 w-full">
+                        <div :class="{
+                            'hidden': spousePresentAddress.same_as_permanent_address == 'Yes'
+                        }">
+
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="spousePresentAddress.region"
+                                label="Region"
+                                :options="props.regions"
+                                v-model="spousePresentAddress.region"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.spousePresentAddress.region"
+                                @update:modelValue="updateSpousePresentAddressRegion"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="spousePresentAddress.province"
+                                label="Province"
+                                :options="spousePresentAddress.provinces"
+                                v-model="spousePresentAddress.province"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.spousePresentAddress.province"
+                                @update:modelValue="updateSpousePresentAddressProvince"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="spousePresentAddress.city"
+                                label="City"
+                                :options="spousePresentAddress.cities"
+                                v-model="spousePresentAddress.city"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.spousePresentAddress.city"
+                                :searchable="true"
+                                @update:modelValue="updateSpousePresentAddressCity"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="spousePresentAddress.barangay"
+                                label="Barangay"
+                                :options="spousePresentAddress.barangays"
+                                v-model="spousePresentAddress.barangay"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.spousePresentAddress.barangay"
+                                :searchable="true"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <TextInput
+                                    id="spousePresentAddress.zip_code"
+                                    label="Zip Code"
+                                    type="text"
+                                    v-model="spousePresentAddress.zip_code"
+                                    :errorMessage="errors?.value?.spousePresentAddress.zip_code"
+                                    :required="true"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="spousePresentAddress.home_ownership"
+                                label="Home Ownership"
+                                :options="props.home_ownerships"
+                                v-model="spousePresentAddress.home_ownership"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.spousePresentAddress.home_ownership"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <TextInput
+                                    id="spousePresentAddress.years_at_present_address"
+                                    label="Years at Present Address"
+                                    type="number"
+                                    v-model="spousePresentAddress.years_at_present_address"
+                                    :errorMessage="errors?.value?.spousePresentAddress.years_at_present_address"
+                                    :required="true"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <TextInput
+                                    id="spousePresentAddress.address"
+                                    label="Address"
+                                    type="text"
+                                    v-model="spousePresentAddress.address"
+                                    :errorMessage="errors?.value?.spousePresentAddress.address"
+                                    :required="true"
+                                    placeholder="Unit Number, House Number/Building/Street No. Street Name"
+                                />
+                            </div>
+
+                        </div>
+                        <RadioInput
+                        id="spousePresentAddress.same_as_permanent_address"
+                        label="Same as Permanent Address"
+                        name="spousePresentAddress.same_as_permanent_address"
+                        v-model="spousePresentAddress.same_as_permanent_address"
+                        :options="[
+                        { label: 'Yes', value: 'Yes' },
+                        { label: 'No', value: 'No' }
+                        ]"
+                        :required="true"
+                        />
+                    </div>
+                </div>
+            </div>
+            <!-- Step 2 -->
+            <div :class="{
+                'hidden': (currentStep + 1) != 2
+            }">
+                <div class="mt-4 w-full">
+                    <!-- Employment -->
+                    <h2 class="text-base text-pink-700 uppercase">EMPLOYMENT</h2>
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                            id="employment.employment_type"
+                            :label="'Employment Type'"
+                            :options="props.employmement_types"
+                            v-model="employment.employment_type"
+                            placeholder="Select Employment Type"
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.employment_type"
+                        />
+                        <div :class="{
+                            'hidden': employment.employment_type != props.employmement_types['Locally Employed'] && employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)']
+                        }">
+                            <SelectInput
+                                id="employment.employment_status"
+                                :label="'Employment Status'"
+                                :options="props.employmement_statuses"
+                                v-model="employment.employment_status"
+                                placeholder="Select Employment Status"
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.employment_status"
+                            />
+                            <TextInput
+                                id="employment.tenure"
+                                label="Tenure (years)"
+                                placeholder="Enter Number of Years"
+                                type="number"
+                                v-model="employment.tenure"
+                                :errorMessage="errors?.value?.tenure"
+                                :required="true"
+                            />
+                            <SelectInput
+                                id="employment.current_position"
+                                :label="'Current Position'"
+                                :options="props.current_positions"
+                                v-model="employment.current_position"
+                                placeholder="Select Current Position"
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.current_position"
+                            />
+                            <TextInput
+                                id="employment.rank"
+                                label="Rank"
+                                placeholder="Enter Rank"
+                                type="text"
+                                v-model="employment.rank"
+                                :errorMessage="errors?.value?.rank"
+                                :required="true"
+                            />
+                        </div>
+                        <SelectInput
+                            id="employment.work_industry"
+                            :label="'Work Industry'"
+                            :options="props.work_industries"
+                            v-model="employment.work_industry"
+                            placeholder="Select Work Industry"
+                            helperText=""
+                            :required="true"
+                            :errorMessage="errors?.value?.work_industry"
+                        />
+                        <TextInput
+                            id="employment.gross_monthly_income"
+                            label="Gross Monthly Income"
+                            prefix="PHP"
+                            placeholder="Enter Gross Monthly Income"
+                            type="text"
+                            v-model="employment.gross_monthly_income"
+                            :errorMessage="errors?.value?.gross_monthly_income"
+                            :required="true"
+                        />
+                        <TextInput
+                            id="employment.tax_identification_no"
+                            label="Tax Identification Number"
+                            placeholder="Enter Tax Identification Number"
+                            type="text"
+                            v-model="employment.tax_identification_no"
+                            :errorMessage="errors?.value?.tax_identification_no"
+                            :required="true"
+                        />
+                        <TextInput
+                            id="employment.pagibig_no"
+                            label="PAG-BIG Number"
+                            placeholder="Enter PAG-BIG Number"
+                            type="text"
+                            v-model="employment.pagibig_no"
+                            :errorMessage="errors?.value?.pagibig_no"
+                            :required="true"
+                        />
+                        <TextInput
+                            id="employment.sss_gsis_no"
+                            label="SSS/GSIS Number"
+                            placeholder="Enter SSS/GSIS Number"
+                            type="text"
+                            v-model="employment.sss_gsis_no"
+                            :errorMessage="errors?.value?.sss_gsis_no"
+                            :required="true"
+                        />
+                    </div>
+                    <!-- Employer Details -->
+                    <h2 class="text-base text-pink-700 uppercase">EMPLOYMENT DETAILS</h2>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="employment.employer_details.employer_name"
+                            label="Employer/Business Name"
+                            placeholder="Enter Employer/Business Name"
+                            type="text"
+                            v-model="employment.employer_details.employer_name"
+                            :errorMessage="errors?.value?.employer_name"
+                            :required="true"
+                        />
+                        <TextInput
+                            id="employment.employer_details.years_of_operation"
+                            label="Years of Operation"
+                            placeholder="Enter Years of Operation"
+                            type="text"
+                            v-model="employment.employer_details.years_of_operation"
+                            :errorMessage="errors?.value?.years_of_operation"
+                            :required="true"
+                        />
+                        <div :class="{
+                            'hidden': employment.employment_type != props.employmement_types['Locally Employed'] && employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)']
+                        }">
+                            <TextInput
+                                id="employment.employer_details.contact_person"
+                                label="Contact Person"
+                                placeholder="Enter Contact Person"
+                                type="text"
+                                v-model="employment.employer_details.contact_person"
+                                :errorMessage="errors?.value?.contact_person"
+                                :required="true"
+                            />
+                            <TextInput
+                                id="employment.employer_details.email"
+                                label="Email Address"
+                                placeholder="Enter Email Address"
+                                type="text"
+                                v-model="employment.employer_details.email"
+                                :errorMessage="errors?.value?.email"
+                                :required="true"
+                            />
+                            <TextInput
+                                id="employment.employer_details.contact_no"
+                                label="Contact Number"
+                                placeholder="Enter Contact Number"
+                                type="text"
+                                prefix="+63"
+                                v-model="employment.employer_details.contact_no"
+                                :errorMessage="errors?.value?.contact_no"
+                                :required="true"
+                            />
+                        </div>
+                        <div :class="{
+                            'hidden': employment.employment_type != props.employmement_types['Self-Employed with Business'] && employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)']
+                        }">
+                            <SelectInput
+                                id="employment.country"
+                                :label="'Country'"
+                                :options="props.countries"
+                                v-model="employment.country"
+                                placeholder="Select Country"
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.country"
+                            />
+                        </div>
+                        <TextInput
+                            id="employment.employer_details.employer_complete_address"
+                            label="Employer Complete Address"
+                            placeholder="Enter Employer Complete Address"
+                            type="text"
+                            v-model="employment.employer_details.employer_complete_address"
+                            :errorMessage="errors?.value?.employer_complete_address"
+                            :required="true"
+                        />
+                    </div>
+                </div>
+            </div>
+            <!-- Step 3 -->
+            <div :class="{
+                'hidden': (currentStep + 1) != 3
+            }">
+                <h2 class="text-base text-pink-700 uppercase">ATTACHMENTS</h2>
+                <!-- Attachments for Locally Employed and OFW -->
+                <div class="mt-3 w-full" :class="{
+                    'hidden': employment.employment_type != props.employmement_types['Locally Employed'] && employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)']
+                }">
+                    <div class="my-3">
+                        <div class="text-sm font-medium mb-2">
+                            Company ID <span class="text-red-500"> * </span>
+                        </div>
+                        <file-pond
+                            name="test"
+                            ref="pond"
+                            label-idle="Drop files here..."
+                            v-bind:allow-multiple="true"
+                            accepted-file-types="image/jpeg, image/png"
+                            server="/api"
+                            v-bind:files="attachments.company_id"
+                            v-on:init="handleFilePondInit"
+                        />
+                    </div>
+                    <div class="my-3">
+                        <div class="text-sm font-medium mb-2">
+                            Government ID <span class="text-red-500"> * </span>
+                        </div>
+                        <file-pond
+                            name="test"
+                            ref="pond"
+                            label-idle="Drop files here..."
+                            v-bind:allow-multiple="true"
+                            accepted-file-types="image/jpeg, image/png"
+                            server="/api"
+                            v-bind:files="attachments.government_id"
+                            v-on:init="handleFilePondInit"
+                        />
+                    </div>
+                </div>
+                <!-- Self-Employed with Business -->
+                <div class="mt-3 w-full" :class="{
+                    'hidden': employment.employment_type != props.employmement_types['Self-Employed with Business']
+                }">
+                    <div class="text-sm font-medium mb-2">
+                            BIR Certificate <span class="text-red-500"> * </span>
+                        </div>
+                        <file-pond
+                            name="test"
+                            ref="pond"
+                            label-idle="Drop files here..."
+                            v-bind:allow-multiple="true"
+                            accepted-file-types="image/jpeg, image/png"
+                            server="/api"
+                            v-bind:files="attachments.bir_certificate"
+                            v-on:init="handleFilePondInit"
+                        />
+                </div>
+            </div>
             <button @click="submit" type="button">Submit</button>
         </form>
     </section>
