@@ -35,6 +35,7 @@
         "lottie-web": "^5.12.2",
         "preline": "^2.4.1",
         "qr-code-styling": "^1.6.0-rc.1",
-        "v-calendar": "^3.1.2"
+        "v-calendar": "^3.1.2",
+        "vue-filepond": "^7.0.4"
     }
 }

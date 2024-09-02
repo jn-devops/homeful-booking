@@ -222,16 +222,17 @@ class ClientInformationController extends Controller
         //         'length_of_stay' => $request->input('spousePresentAddress.years_at_present_address'),
         //     ];
         // }
-
         try {
             $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
-            // $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
-            $contact = PersistContactAction::run($contactData);
-            $contact =  Contact::updateOrCreate([
-                'reference_code' => $request->input('kwyc_code'),
-            ],$contactData);
-            $lead->contact=$contact;
-            $lead->save();
+            $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
+            // $contact = PersistContactAction::run($contactData);
+            // $contact =  Contact::updateOrCreate([
+            //     'reference_code' => $request->input('kwyc_code'),
+            // ],$contactData);
+            // $lead->contact=$contact;
+            // $lead->save();
+            // dd($updated_lead,$contactData,$request->all());
+
             // Return response or redirect
             return redirect()->route('payment.choices',['kwyc_code' => $request->input('kwyc_code')]);
         } catch (ValidationException $e) {
