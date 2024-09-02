@@ -11,12 +11,14 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('name_suffixes', function (Blueprint $table) {
-            $table->id();
-            $table->string('code');
-            $table->string('description');
-            $table->timestamps();
-        });
+        if (!Schema::hasTable('name_suffixes')) {
+            Schema::create('name_suffixes', function (Blueprint $table) {
+                $table->id();
+                $table->string('code');
+                $table->string('description');
+                $table->timestamps();
+            });
+        }
     }
 
     /**
@@ -24,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('suffixes');
+        Schema::dropIfExists('name_suffixes');
     }
 };
