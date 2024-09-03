@@ -261,7 +261,6 @@ class ClientInformationController extends Controller
         // }
 
         try {
-            // Now call the PersistContactAction
             $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
             // $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
             $contact = PersistContactAction::run($contactData);
@@ -273,12 +272,10 @@ class ClientInformationController extends Controller
             // Return response or redirect
             return redirect()->route('payment.choices',['kwyc_code' => $request->input('kwyc_code')]);
         } catch (ValidationException $e) {
-            // Handle validation exceptions
             dd($e->getMessage());
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
             dd($e->getMessage());
-            // Handle any other exceptions
             return back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
         }
     }

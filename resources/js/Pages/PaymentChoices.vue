@@ -86,6 +86,8 @@
         </template>
     </MyModal>
 
+
+
     <!-- Payment Reminder Modal -->
     <MyModal
     :modal-show="paymentReminder"
@@ -139,6 +141,21 @@
         </template>
     </MyModal>
 
+      <!-- InstaPay QRCode -->
+    <MyModal
+    :modal-show="instaPayQrModal"
+    @updatemodalShow="updatePaymentOption"
+    >
+        <template #title>
+            Scan to Pay
+        </template>
+        <template #content_noborder>
+            <div class="flex flex-wrap gap-3 mb-20 justify-center">
+                <div id="instaPayQRCode" ></div>
+            </div>
+        </template>
+    </MyModal>
+
 </template>
 
 <script setup>
@@ -155,15 +172,19 @@ import TertiaryButton from '@/MyComponents/TertiaryButton.vue';
 import Timeline from '@/MyComponents/Timeline.vue';
 import { router } from '@inertiajs/vue3';
 import { onMounted, ref, onUpdated, nextTick } from 'vue';
-
+import QRCodeStyling from 'qr-code-styling';
 const props = defineProps({
     supplementaryData: Object,
+    kwyc_code: String
 });
 
 const paymentOption = ref(false);
 const paymentReminder = ref(false);
+const instaPayQrModal = ref(false);
 const isDisclaimerChecked = ref(false);
 const selectedPaymentMethod = ref(0);
+
+const instaPayQr = ref('');
 const updatePaymentOption = (newVal) => {
     paymentOption.value = newVal;
 }
@@ -175,14 +196,64 @@ const choosePaymentMethod = (pm) => {
     selectedPaymentMethod.value = pm;
 }
 
-const payNow = () => {
+const payNow =async () => {
     switch(selectedPaymentMethod.value){
         case 1:
-            router.get('/payment-choices/credit-debit-card');
+            router.get(`/payment-choices/credit-debit-card/${props.kwyc_code}`);
             break;
         case 2:
+            try {
+                // Make the request to get the payment URL
+                const response = await axios.get(`/payment-choices/wallet/pay/${props.kwyc_code}?wallet=gcash`);
+
+                if (response.data) {
+                    window.location.href = response.data;
+                } else {
+                    console.error('Payment URL not found in response.');
+                }
+            } catch (error) {
+                console.error('An error occurred while fetching the payment URL:', error);
+            }
             break;
         case 3:
+            try {
+                // Make the request to get the payment URL
+                instaPayQrModal.value = true;
+
+                const response = await axios.get(`/payment-choices/qr/pay/${props.kwyc_code}`);
+                if (response.data) {
+                    instaPayQr.value=response.data;
+                    console.log(instaPayQr.value)
+                    const qrCode = new QRCodeStyling({
+                        width: 300,
+                        height: 300,
+                        type: "svg",
+                        data: instaPayQr.value,
+                        // image: "https://upload.wikimedia.org/wikipedia/commons/5/51/Facebook_f_logo_%282019%29.svg",
+                        dotsOptions: {
+                            color: "#4267b2",
+                            type: "rounded"
+                        },
+                        backgroundOptions: {
+                            color: "#e9ebee",
+                        },
+                        imageOptions: {
+                            crossOrigin: "anonymous",
+                            margin: 20
+                        }
+                    });
+
+
+
+                    console.log(document.getElementById("instaPayQRCode"));
+                    qrCode.append(document.getElementById("instaPayQRCode"));
+
+                } else {
+                    console.error('Payment URL not found in response.');
+                }
+            } catch (error) {
+                console.error('An error occurred while fetching the payment URL:', error);
+            }
             break;
     }
 }
