@@ -156,59 +156,96 @@ class ClientInformationController extends Controller
 
     public function store(Request $request)
     {
-        $buyer = $request->input('buyer');
-        $spouse = $buyer['spouse'] ?? [];
+        dd($request->all());
 
         $contactData = [
             'reference_code'=> $request->input('kwyc_code'),
-            'first_name' => $buyer['first_name'],
-            'middle_name' => $buyer['middle_name'] ?? null,
-            'last_name' => $buyer['last_name'],
-            'name_suffix' => $buyer['name_suffix'] ?? null,
-            'civil_status' => $buyer['civil_status'],
-            'sex' => $buyer['gender'], // Assuming "gender" maps to "sex"
-            'nationality' => $buyer['nationality'],
-            'date_of_birth' => $buyer['date_of_birth'],
-            'email' => $buyer['email'],
-            'mobile' => $buyer['mobile'],
+            'first_name' =>  $request->input('first_name'),
+            'middle_name' =>  $request->input('middle_name') ?? null,
+            'last_name' =>  $request->input('last_name'),
+            'name_suffix' =>  $request->input('name_suffix') ?? null,
+            'civil_status' =>  $request->input('civil_status'),
+            'sex' =>  $request->input('gender'), // Assuming "gender" maps to "sex"
+            'nationality' =>  $request->input('nationality'),
+            'date_of_birth' =>  $request->input('date_of_birth'),
+            'email' =>  $request->input('email'),
+            'mobile' =>  $request->input('mobile'),
             'spouse' => [
-                'first_name' => $spouse['first_name'] ?? null,
-                'middle_name' => $spouse['middle_name'] ?? null,
-                'last_name' => $spouse['last_name'] ?? null,
-                'name_suffix' => $spouse['name_suffix'] ?? null,
-                'sex' => $spouse['gender'] ?? null,
-                'nationality' => $spouse['nationality'] ?? null,
-                'date_of_birth' => $spouse['date_of_birth'] ?? null,
-                'email' => $spouse['email'] ?? null,
-                'mobile' => $spouse['mobile'] ?? null,
+                'first_name' => $request->input('spouse_first_name') ?? null,
+                'middle_name' => $request->input('spouse_middle_name') ?? null,
+                'last_name' => $request->input('spouse_last_name') ?? null,
+                'name_suffix' => $request->input('spouse_name_suffix') ?? null,
+                'sex' => $request->input('spouse_gender') ?? null,
+                'nationality' => $request->input('spouse_nationality') ?? null,
+                'date_of_birth' => $request->input('spouse_date_of_birth') ?? null,
+                'email' => $request->input('spouse_email') ?? null,
+                'mobile' => $request->input('spouse_mobile') ?? null,
             ],
             'addresses' => [
                 [
                     'type' => 'present',
-                    'ownership' => $request->input('presentAddress.home_ownership'),
-                    'address1' => $request->input('presentAddress.address'),
-                    'locality' => $request->input('presentAddress.city'),
-                    'administrative_area' => $request->input('presentAddress.province'),
-                    'postal_code' => $request->input('presentAddress.zip_code'),
+                    'ownership' => $request->input('present_address_home_ownership'),
+                    'address1' => $request->input('present_address_address'),
+                    'locality' => $request->input('present_address_city'),
+                    'administrative_area' => $request->input('present_address_province'),
+                    'postal_code' => $request->input('present_address_zip_code'),
                     'country' => 'PH',
-                    'length_of_stay' =>(string) $request->input('presentAddress.years_at_present_address'),
+                    'length_of_stay' =>(string) $request->input('present_address_years_at_present_address'),
                 ],
+                [
+                    'type' => 'spouse',
+                    'ownership' => $request->input('spouse_present_address_home_ownership'),
+                    'address1' => $request->input('spouse_present_address_address'),
+                    'locality' => $request->input('spouse_present_address_city'),
+                    'administrative_area' => $request->input('spouse_present_address_province'),
+                    'postal_code' => $request->input('spouse_present_address_zip_code'),
+                    'country' => 'PH',
+                    'length_of_stay' =>(string) $request->input('spouse_present_address_years_at_present_address'),
+                ],
+            ],
+            'employment' => [
+                'type' => 'buyer',
+                'employment_status' => $request->input('employment_status'),
+                'monthly_gross_income' => $request->input('gross_monthly_income'),
+                'current_position' => $request->input('current_position'),
+                'employment_type' => $request->input('employment_type'),
+                'years_in_service' => $request->input('tenure'),
+                'industry' => $request->input('work_industry'),
+                'rank' => $request->input('rank'), // No equivalent field to contact
+
+                'id' => [
+                    'pagibig' => $request->input('pagibig_no'),
+                    'sss' => $request->input('sss_gsis_no'),
+                    'gsis' => $request->input('sss_gsis_no'),
+                ],
+                'tax_identification_no' => $request->input('tax_identification_no'),
+                'pagibig_no' => $request->input('pagibig_no'),
+                'sss_gsis_no' => $request->input('sss_gsis_no'),
+                'employer_name' => $request->input('employer_details_employer_name'),
+                'years_of_operation' => $request->input('employer_details_years_of_operation'),
+                'contact_person' => $request->input('employer_details_contact_person'),
+                'email' => $request->input('employer_details_email'),
+                'contact_no' => $request->input('employer_details_contact_no'),
+                'country' => $request->input('employer_details_country'),
+                'employer_complete_address' => $request->input('employer_details')['employer_complete_address'],
             ],
         ];
 
         if ($buyer['civil_status'] == CivilStatus::where('description', 'Married')->first()->code) {
             $contactData['spouse'] = [
                 'first_name' => $spouse['first_name'] ?? null,
-                'middle_name' => $spouse['middle_name'] ?? null,
-                'last_name' => $spouse['last_name'] ?? null,
-                'name_suffix' => $spouse['name_suffix'] ?? null,
-                'sex' => $spouse['gender'] ?? null,
-                'nationality' => $spouse['nationality'] ?? null,
-                'date_of_birth' => $spouse['date_of_birth'] ?? null,
-                'email' => $spouse['email'] ?? null,
-                'mobile' => $spouse['mobile'] ?? null,
+                'middle_name' => $$request->input('spouse_middle_name') ?? null,
+                'last_name' => $$request->input('spouse_last_name') ?? null,
+                'name_suffix' => $$request->input('spouse_name_suffix') ?? null,
+                'sex' => $$request->input('spouse_gender') ?? null,
+                'nationality' => $$request->input('spouse_nationality') ?? null,
+                'date_of_birth' => $$request->input('spouse_date_of_birth') ?? null,
+                'email' => $$request->input('spouse_email') ?? null,
+                'mobile' => $$request->input('spouse_mobile') ?? null,
             ];
         }
+
+        dd($contactData);
 
         // if ( $request->input('spousePresentAddress.same_as_permanent_address') !== 'Yes') {
         //     $contactData['addresses'][] = [

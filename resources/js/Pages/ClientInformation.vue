@@ -7,7 +7,7 @@ import RadioInput from '@/Components/RadioInput.vue';
 import { ref, watch,reactive, onMounted } from 'vue';
 import { router } from '@inertiajs/vue3';
 import MobileInput from '@/Components/MobileInput.vue';
-import vueFilePond from "vue-filepond";
+import vueFilePond, {setOptions} from "vue-filepond";
 import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
@@ -111,28 +111,69 @@ const spousePresentAddress = reactive({
     barangays:({}),
 });
 
-const attachments = reactive({
-    company_id: '',
-    government_id: '',
-    bir_certificate: '',
-});
+//Attachments
 
+const company_id = ref([]);
+const government_id = ref([]);
+const bir_certificate = ref([]);
 
+// setOptions({
+//     server: {
+//         process: '/file-pond/upload',
+//         revert: '/file-pond/revert',
+//         headers: {
+//             'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+//         }
+//     },
+//     maxFileSize: '5MB',
+//     acceptedFileTypes: ['image/*', 'application/pdf'],
+// });
+
+const companyIdFileUpdate = (fileItems) => {
+    company_id.value = fileItems.map(fileItem => fileItem.file);    
+}
+const governmentIdFileUpdate = (fileItems) => {
+    government_id.value = fileItems.map(fileItem => fileItem.file);
+}
+const birCertificateFileUpdate = (fileItems) => {
+    bir_certificate.value = fileItems.map(fileItem => fileItem.file);
+}
 
 const errors = ref({});
+
+const formData = new FormData();
+const appendFormData = (data, prefix = '') => {
+    for (const [key, value] of Object.entries(data)) {
+        if (typeof value === 'object' && value !== null) {
+            appendFormData(value, `${prefix}${key}.`);
+        } else {
+            formData.append(`${prefix}${key}`, value);
+        }
+    }
+}
 
 
 const submit = async () => {
     errors.value = {}; // Reset errors
+    console.log('****************************', company_id.value);
 
     try {
-        const formData = {
-            kwyc_code: props.kwyc_code,
-            buyer: buyer,
-            presentAddress: presentAddress,
-            spousePresentAddress: spousePresentAddress
-        };
+        formData.append('kwyc_code', props.kwyc_code);
 
+        appendFormData(buyer);
+        appendFormData(employment);
+        appendFormData(presentAddress, 'present_address_');
+        appendFormData(spousePresentAddress, 'spouse_present_address_');
+
+        if (company_id.value.length > 0) {
+            formData.append('company_id', company_id.value[0]); 
+        }
+        if (government_id.value.length > 0) {
+            formData.append('government_id', government_id.value[0]); 
+        }
+        if (bir_certificate.value.length > 0) {
+            formData.append('bir_certificate', bir_certificate.value[0]); 
+        }
         router.post(`/client-information/store/${props.kwyc_code}`, formData, {
             onError: (error) => {
                 if (error.response.status === 422) {
@@ -168,7 +209,6 @@ const FilePond = vueFilePond(
   FilePondPluginFileValidateType,
   FilePondPluginImagePreview
 );
-const myFiles = ref(["cat.jpeg"]); // Replaces `data` function
 
 function handleFilePondInit() {
   console.log("FilePond has initialized");
@@ -933,14 +973,11 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                             Company ID <span class="text-red-500"> * </span>
                         </div>
                         <file-pond
-                            name="test"
-                            ref="pond"
+                            name="filepond"
+                            ref="company_id"
                             label-idle="Drop files here..."
-                            v-bind:allow-multiple="true"
-                            accepted-file-types="image/jpeg, image/png"
-                            server="/api"
-                            v-bind:files="attachments.company_id"
                             v-on:init="handleFilePondInit"
+                            @updatefiles="companyIdFileUpdate"
                         />
                     </div>
                     <div class="my-3">
@@ -948,14 +985,11 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                             Government ID <span class="text-red-500"> * </span>
                         </div>
                         <file-pond
-                            name="test"
-                            ref="pond"
+                            name="filepond"
+                            ref="government_id"
                             label-idle="Drop files here..."
-                            v-bind:allow-multiple="true"
-                            accepted-file-types="image/jpeg, image/png"
-                            server="/api"
-                            v-bind:files="attachments.government_id"
                             v-on:init="handleFilePondInit"
+                            @updatefiles="governmentIdFileUpdate"
                         />
                     </div>
                 </div>
@@ -967,14 +1001,11 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                             BIR Certificate <span class="text-red-500"> * </span>
                         </div>
                         <file-pond
-                            name="test"
-                            ref="pond"
+                            name="filepond"
+                            ref="bir_certificate"
                             label-idle="Drop files here..."
-                            v-bind:allow-multiple="true"
-                            accepted-file-types="image/jpeg, image/png"
-                            server="/api"
-                            v-bind:files="attachments.bir_certificate"
                             v-on:init="handleFilePondInit"
+                            @updatefiles="birCertificateFileUpdate"
                         />
                 </div>
             </div>

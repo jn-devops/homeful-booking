@@ -75,7 +75,7 @@ watch(inputValue, (newValue) => {
                         :type="type"
                         :placeholder="placeholder"
                         :required="required"
-                        class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
+                        class="py-3 px-4 block w-full text-black rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
                         :class="{
                             'border-red-500 focus:border-red-500 focus:ring-red-500': errorMessage,
                             'border-teal-500 focus:border-teal-500 focus:ring-teal-500': !errorMessage && inputValue.length > 0,
@@ -93,7 +93,7 @@ watch(inputValue, (newValue) => {
                         :type="type"
                         :placeholder="placeholder"
                         :required="required"
-                        class="py-3 px-4 block w-full rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
+                        class="py-3 px-4 block w-full text-black rounded-lg text-sm focus:ring-1 focus:ring-opacity-50 border border-stone-300   dark:bg-neutral-800 dark:border-neutral-700 dark:text-neutral-400 placeholder:text-stone-300"
                         :class="{
                             'border-red-500 focus:border-red-500 focus:ring-red-500': errorMessage,
                             'border-teal-500 focus:border-teal-500 focus:ring-teal-500': !errorMessage && inputValue.length > 0,

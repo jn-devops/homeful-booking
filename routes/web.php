@@ -3,6 +3,7 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProceedController;
 use App\Http\Controllers\ClientInformationController;
+use App\Http\Controllers\FilePondController;
 use App\Http\Controllers\GetQualifiedController;
 use App\Http\Controllers\PaymentChoicesController;
 use App\Http\Controllers\KWYCController;
@@ -24,6 +25,10 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
+
+// Initial page to show before entry point
+Route::get('/welcome/{sku}/{code}', [\App\Http\Controllers\InitialPageController::class, 'index'])->name('initial.entry.point');
+
 
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
 Route::get('/consult/{sku}/{code}', [\App\Http\Controllers\ConsultationController::class, 'entryPoint'])->name('entry.point');
@@ -56,6 +61,9 @@ Route::get('/paymentsuccessful', function () {
 });
 
 Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'test'])->name('test');
+
+Route::post('/file-pond/upload', [FilePondController::class, 'upload']);
+Route::delete('/file-pond/revert', [FilePondController::class, 'revert']);
 
 //
 //Route::get('/client-information', \App\Livewire\ClientInformationSheet::class)->name('client-information');
