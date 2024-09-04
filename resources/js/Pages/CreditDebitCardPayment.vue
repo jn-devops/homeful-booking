@@ -51,11 +51,11 @@
                         />
                     </div>
                 </div>
-                <div class="text-xl font-semibold flex-none pb-6 justify-center text-center">
+                <div class="text-xl w-full font-semibold flex-none pb-6 justify-center text-center">
                     <MyPrimaryButton
                         @click="payNow"
                         :class="[
-                            'rounded-full p-4 mt-4 w-96 text-sm md:text-md',
+                            'rounded-full w-full p-4 mt-4 text-sm md:text-md',
                             // isFormValid ? '' : 'bg-gray-300'
                         ]"
                     >

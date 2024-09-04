@@ -187,7 +187,7 @@ const submit = async () => {
 };
 
 let buttonText = ref('Go to Employment Information');
-
+let showButton = ref(false); 
 const setButtonText = (step) => {
     switch (step + 1){
         case 1:
@@ -202,16 +202,19 @@ const setButtonText = (step) => {
     }
 }
 
+const toggleDisplayButton = () =>{
+    showButton.value = !showButton.value;
+}
+
 const nextStep = () => {
-    console.log('next');
     if (currentStep.value == 2){
-        console.log('submitted');
         submit();
     }
     if (currentStep.value < 2) {
         currentStep.value++;
     }
     setButtonText(currentStep.value);
+    toggleDisplayButton();
 };
 
 const previousStep = () => {
@@ -1036,16 +1039,30 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
     </section>
 
     <div class="fixed bottom-0 left-0 w-full bg-[#E1ECF8] text-white p-5">
-        <div class="w-full flex item-center rounded-full bg-white text-black">
-            <button @click="previousStep" class="px-4 cursor-pointer">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left text-[#CC035C]">
-                    <path d="M6 8L2 12L6 16"/><path d="M2 12H22"/>
-                </svg>
-            </button>
-            <div class="bg-gradient-to-r from-[#FCB115] to-[#CC035C] rounded-full w-full h-full p-4 text-center text-white font-semibold">
-                <button @click="nextStep" class="cursor-pointer">{{ buttonText }}</button>
+        <div :class="{
+                'hidden': showButton
+            }">
+            <div class="w-full rounded-full bg-white text-black">
+                <div class="bg-gradient-to-r from-[#FCB115] to-[#CC035C] rounded-full w-fit h-full py-4 px-6 text-center text-white font-semibold flex item-center">
+                    <button @click="toggleDisplayButton" class="cursor-pointer font-bold">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5714285714285716" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-right"><path d="M18 8L22 12L18 16"/><path d="M2 12H22"/></svg>
+                    </button>
+                </div>
             </div>
-
+        </div>
+        <div :class="{
+                'hidden': !showButton
+            }">
+            <div class="w-full flex item-center rounded-full bg-white text-black">
+                <button @click="previousStep" class="px-4 cursor-pointer">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left text-[#CC035C]">
+                        <path d="M6 8L2 12L6 16"/><path d="M2 12H22"/>
+                    </svg>
+                </button>
+                <div class="bg-gradient-to-r from-[#FCB115] to-[#CC035C] rounded-full w-full h-full p-4 text-center text-white font-semibold">
+                    <button @click="nextStep" class="cursor-pointer">{{ buttonText }}</button>
+                </div>
+            </div>
         </div>
     </div>
 </template>
