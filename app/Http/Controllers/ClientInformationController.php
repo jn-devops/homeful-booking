@@ -156,10 +156,8 @@ class ClientInformationController extends Controller
 
     public function store(Request $request)
     {
-        dd($request->all());
-
         $contactData = [
-            'reference_code'=> $request->input('kwyc_code'),
+            'reference_code' => $request->input('kwyc_code'),
             'first_name' =>  $request->input('first_name'),
             'middle_name' =>  $request->input('middle_name') ?? null,
             'last_name' =>  $request->input('last_name'),
@@ -227,11 +225,11 @@ class ClientInformationController extends Controller
                 'email' => $request->input('employer_details_email'),
                 'contact_no' => $request->input('employer_details_contact_no'),
                 'country' => $request->input('employer_details_country'),
-                'employer_complete_address' => $request->input('employer_details')['employer_complete_address'],
+                'employer_complete_address' => $request->input('employer_details_employer_complete_address'),
             ],
         ];
 
-        if ($buyer['civil_status'] == CivilStatus::where('description', 'Married')->first()->code) {
+        if ($contactData['civil_status'] == CivilStatus::where('description', 'Married')->first()->code) {
             $contactData['spouse'] = [
                 'first_name' => $spouse['first_name'] ?? null,
                 'middle_name' => $$request->input('spouse_middle_name') ?? null,

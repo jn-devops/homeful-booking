@@ -17,7 +17,7 @@ watch(currentStep, (newVal, oldVal) => {
 </script>
 
 <template>
-    <div class="block md:hidden bg-blue-50 pt-10 pb-4 px-4">
+    <div class="block md:hidden bg-[#E1ECF8] pt-10 pb-4 px-4">
         <div class="flex gap-2 justify-around items-center">
             <!-- Step 1 -->
             <div v-if="currentStep === 0" class="relative size-20">
@@ -61,7 +61,7 @@ watch(currentStep, (newVal, oldVal) => {
                     <p class="text-xs/relaxed">Next Payment</p>
                 </div>
                 <div v-if="currentStep === 2">
-                    <h1 class="font-bold">Payment Information</h1>
+                    <h1 class="font-bold">Attachment</h1>
                     <p class="text-xs/relaxed">Review and Submit</p>
                 </div>
             </div>

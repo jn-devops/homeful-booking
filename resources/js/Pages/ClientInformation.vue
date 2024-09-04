@@ -186,16 +186,39 @@ const submit = async () => {
     }
 };
 
+let buttonText = ref('Go to Employment Information');
+
+const setButtonText = (step) => {
+    switch (step + 1){
+        case 1:
+            buttonText = "Go to Employment Information";
+            break;
+        case 2:
+            buttonText = "Go to Attachment";
+            break;
+        case 3:
+            buttonText = "Submit & Proceed to Payment";
+            break;
+    }
+}
+
 const nextStep = () => {
+    console.log('next');
+    if (currentStep.value == 2){
+        console.log('submitted');
+        submit();
+    }
     if (currentStep.value < 2) {
         currentStep.value++;
     }
+    setButtonText(currentStep.value);
 };
 
 const previousStep = () => {
     if (currentStep.value > 0) {
         currentStep.value--;
     }
+    setButtonText(currentStep.value);
 };
 
 const onSelectChange = (value) => {
@@ -327,7 +350,7 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
         <DetailsHeader :currentStep="currentStep" />
     </header>
 
-    <section class="flex flex-col items-start px-6 w-full text-sm font-semibold text-black">
+    <section class="flex flex-col items-start px-6 w-full text-sm font-semibold text-black mb-32">
 
         <form id="form" name="form" @submit.prevent="submit" class="h-auto block w-full">
             <!-- Step 1 -->
@@ -1009,10 +1032,20 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                         />
                 </div>
             </div>
-            <button @click="submit" type="button">Submit</button>
         </form>
     </section>
 
-    <button @click="previousStep">Previous</button>
-    <button @click="nextStep">Next</button>
+    <div class="fixed bottom-0 left-0 w-full bg-[#E1ECF8] text-white p-5">
+        <div class="w-full flex item-center rounded-full bg-white text-black">
+            <button @click="previousStep" class="px-4 cursor-pointer">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-move-left text-[#CC035C]">
+                    <path d="M6 8L2 12L6 16"/><path d="M2 12H22"/>
+                </svg>
+            </button>
+            <div class="bg-gradient-to-r from-[#FCB115] to-[#CC035C] rounded-full w-full h-full p-4 text-center text-white font-semibold">
+                <button @click="nextStep" class="cursor-pointer">{{ buttonText }}</button>
+            </div>
+
+        </div>
+    </div>
 </template>
