@@ -16,11 +16,21 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Enums\ActionsPosition;
+use Filament\Infolists;
+use Filament\Infolists\Infolist;
 class ContactResource extends Resource
 {
     protected static ?string $model = Clients::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Infolists\Components\TextEntry::make('first_name'),
+            ]);
+    }
 
     public static function form(Form $form): Form
     {
