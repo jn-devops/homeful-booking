@@ -11,14 +11,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable('name_suffixes')) {
-            Schema::create('name_suffixes', function (Blueprint $table) {
-                $table->id();
-                $table->string('code');
-                $table->string('description');
-                $table->timestamps();
-            });
-        }
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->string('current_status')->nullable();
+            $table->string('current_status_code')->nullable();
+        });
     }
 
     /**
@@ -26,6 +22,8 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('name_suffixes');
+        Schema::table('contacts', function (Blueprint $table) {
+            $table->dropColumn(['current_status', 'current_status_code']);
+        });
     }
 };

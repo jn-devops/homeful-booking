@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73ae2d9fcceec6d0183aee93f5f918a0",
+    "content-hash": "874a168515f0bf165a7dde3b619a0ccc",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4063,16 +4063,16 @@
         },
         {
             "name": "jn-devops/contacts",
-            "version": "v1.5.2",
+            "version": "v1.4.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/contacts.git",
-                "reference": "add53a95ddbb3c5c91c8218809179249e39ba62c"
+                "reference": "a3d5c8d3b1be00cb1e8f0f20d16f75b85c805ea3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/add53a95ddbb3c5c91c8218809179249e39ba62c",
-                "reference": "add53a95ddbb3c5c91c8218809179249e39ba62c",
+                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/a3d5c8d3b1be00cb1e8f0f20d16f75b85c805ea3",
+                "reference": "a3d5c8d3b1be00cb1e8f0f20d16f75b85c805ea3",
                 "shasum": ""
             },
             "require": {
@@ -4135,7 +4135,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/contacts/issues",
-                "source": "https://github.com/jn-devops/contacts/tree/v1.5.2"
+                "source": "https://github.com/jn-devops/contacts/tree/v1.4.27"
             },
             "funding": [
                 {
@@ -4143,7 +4143,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-03T06:47:19+00:00"
+            "time": "2024-09-03T02:25:44+00:00"
         },
         {
             "name": "jn-devops/contracts",
