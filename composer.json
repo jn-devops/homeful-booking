@@ -20,6 +20,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "lbhurtado/engagespark": "^3.7",
+        "spatie/laravel-medialibrary": "^11.9",
         "tightenco/ziggy": "^2.0",
         "woenel/prpcmblmts": "^1.0"
     },

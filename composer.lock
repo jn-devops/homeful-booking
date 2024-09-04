@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "73ae2d9fcceec6d0183aee93f5f918a0",
+    "content-hash": "874a168515f0bf165a7dde3b619a0ccc",
     "packages": [
         {
             "name": "amphp/amp",
@@ -4063,16 +4063,16 @@
         },
         {
             "name": "jn-devops/contacts",
-            "version": "v1.4.26",
+            "version": "v1.4.27",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/contacts.git",
-                "reference": "6e6653f24d9179edae2ae0bd9e51263d8f6b3dcf"
+                "reference": "a3d5c8d3b1be00cb1e8f0f20d16f75b85c805ea3"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/6e6653f24d9179edae2ae0bd9e51263d8f6b3dcf",
-                "reference": "6e6653f24d9179edae2ae0bd9e51263d8f6b3dcf",
+                "url": "https://api.github.com/repos/jn-devops/contacts/zipball/a3d5c8d3b1be00cb1e8f0f20d16f75b85c805ea3",
+                "reference": "a3d5c8d3b1be00cb1e8f0f20d16f75b85c805ea3",
                 "shasum": ""
             },
             "require": {
@@ -4135,7 +4135,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/contacts/issues",
-                "source": "https://github.com/jn-devops/contacts/tree/v1.4.26"
+                "source": "https://github.com/jn-devops/contacts/tree/v1.4.27"
             },
             "funding": [
                 {
@@ -4143,7 +4143,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-01T04:40:56+00:00"
+            "time": "2024-09-03T02:25:44+00:00"
         },
         {
             "name": "jn-devops/contracts",
@@ -9178,16 +9178,16 @@
         },
         {
             "name": "spatie/laravel-medialibrary",
-            "version": "11.9.0",
+            "version": "11.9.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/spatie/laravel-medialibrary.git",
-                "reference": "b103470caad6e7cd8013130e2651e637da94d4ef"
+                "reference": "ff589ea5532a33d84faeb64bfdfd59057b4148b8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/b103470caad6e7cd8013130e2651e637da94d4ef",
-                "reference": "b103470caad6e7cd8013130e2651e637da94d4ef",
+                "url": "https://api.github.com/repos/spatie/laravel-medialibrary/zipball/ff589ea5532a33d84faeb64bfdfd59057b4148b8",
+                "reference": "ff589ea5532a33d84faeb64bfdfd59057b4148b8",
                 "shasum": ""
             },
             "require": {
@@ -9271,7 +9271,7 @@
             ],
             "support": {
                 "issues": "https://github.com/spatie/laravel-medialibrary/issues",
-                "source": "https://github.com/spatie/laravel-medialibrary/tree/11.9.0"
+                "source": "https://github.com/spatie/laravel-medialibrary/tree/11.9.1"
             },
             "funding": [
                 {
@@ -9283,7 +9283,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-22T09:20:42+00:00"
+            "time": "2024-09-02T06:32:15+00:00"
         },
         {
             "name": "spatie/laravel-model-states",
