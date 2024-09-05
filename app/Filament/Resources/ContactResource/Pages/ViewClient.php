@@ -18,4 +18,5 @@ class ViewClient extends ViewRecord
     {
         return __('Reference Code: '.$this->record->reference_code);
     }
+    
 }

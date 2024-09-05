@@ -2,14 +2,14 @@
 
 namespace App\Filament\Imports;
 
-use App\Models\ProductsImport;
+// use App\Models\ProductsImport;
 use Filament\Actions\Imports\ImportColumn;
 use Filament\Actions\Imports\Importer;
 use Filament\Actions\Imports\Models\Import;
-
+use Homeful\Products\Models\Product;
 class ProductsImportImporter extends Importer
 {
-    protected static ?string $model = ProductsImport::class;
+    protected static ?string $model = Product::class;
 
     public static function getColumns(): array
     {
@@ -72,14 +72,14 @@ class ProductsImportImporter extends Importer
         ];
     }
 
-    public function resolveRecord(): ?ProductsImport
+    public function resolveRecord(): ?Product
     {
         // return ProductsImport::firstOrNew([
         //     // Update existing records, matching them by `$this->data['column_name']`
         //     'email' => $this->data['email'],
         // ]);
 
-        return new ProductsImport();
+        return new Product();
     }
 
     public static function getCompletedNotificationBody(Import $import): string
