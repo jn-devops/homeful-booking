@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Validator;
 use Whitecube\Price\Price;
 use function DI\string;
 use Homeful\Products\Models\Product;
+use Homeful\Mortgage\Data\MortgageData;
+
 
 class ProceedController extends Controller
 {
@@ -122,28 +124,24 @@ class ProceedController extends Controller
 
         ];
 
-        with(Mortgage::createWithTypicalBorrower($property, $params), function (Mortgage $mortgage) use ($params, &$calculator, $property_details) {
+        $mortgage = Mortgage::createWithTypicalBorrower($property, $params);
+        $data = MortgageData::fromObject($mortgage);
 
-            $calculator = [
-                'guess_down_payment_amount' => (int)((string)$mortgage->getDownPayment()->getPrincipal()->inclusive()->getAmount()),
-                'guess_dp_amortization_amount' => (int)((string)$mortgage->getDownPayment()->getMonthlyAmortization()->inclusive()->getAmount()),
-                'guess_partial_miscellaneous_fees' => (int)((string)$mortgage->getPartialMiscellaneousFees()->inclusive()->getAmount()),
-                'guess_balance_payment' => (int)((string)$mortgage->getLoan()->getPrincipal()->inclusive()->getAmount()),
-                'age' => $mortgage->getDefaultAge(),
-                'guess_gross_monthly_income' => (int)((String)$mortgage->getBorrower()->getGrossMonthlyIncome()->base()->getAmount()),
-                'down_payment_term' => $mortgage->getDownPayment()->getTerm()->monthsToPay(),
-                'balance_payment_term' => $mortgage->getBalancepaymentTerm(),
-                'percent_down_payment' => $mortgage->getPercentDownPayment(),
-                'regional' =>  $property_details['regional'],
-                'total_contract_price' => $property_details['price'],
-                'percent_miscellaneous_fees' => $mortgage->getPercentMiscellaneousFees(),
-            ];
-            $year_term = $mortgage->getDownPayment()->getTerm()->monthsToPay();
-            with($mortgage->getLoan()->setTerm(new Term($year_term)), function (Payment $loan) use(&$calculator) {
-                $calculator['guess_monthly_amortization'] = (int)((string)$loan->getMonthlyAmortization()->inclusive()->getAmount());
-            });
-
-        });
+        $calculator = [
+            'guess_down_payment_amount' => $data->down_payment,
+            'guess_dp_amortization_amount' => $data->dp_amortization,
+            'guess_partial_miscellaneous_fees' => $data->partial_miscellaneous_fees,
+            'guess_balance_payment' => $data->loan_amount,
+            'age' => $data->borrower->age,
+            'guess_gross_monthly_income' => $data->borrower->gross_monthly_income,
+            'down_payment_term' => $data->dp_term,
+            'balance_payment_term' => $data->bp_term,
+            'percent_down_payment' => $data->percent_down_payment,
+            'regional' =>  $data->borrower->regional,
+            'total_contract_price' => $data->property->total_contract_price,
+            'percent_miscellaneous_fees' => $data->percent_mf,
+            'guess_monthly_amortization' => $data->loan_amortization,
+        ];
 
         return Inertia::render('Proceed', [
             'supplementaryData' => $supplementaryData,

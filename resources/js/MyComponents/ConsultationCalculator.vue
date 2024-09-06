@@ -85,7 +85,6 @@ const debouncedUpdate = debounce(() => {
         balance_payment_term: form.balance_payment_term,
         percent_miscellaneous_fees: loan_data.value.percent_miscellaneous_fees,
     })
-    console.log(calculatorForm)
     calculatorForm.get(route('calculate.loan'), {
         preserveState: true,
         preserveScroll: true,
@@ -99,19 +98,25 @@ const debouncedUpdate = debounce(() => {
 watch(() => form.age, (newValue, oldValue) => {
     debouncedUpdate();
 })
-// watch(() => form.gross_monthly_income, (newValue, oldValue) => {
-//     debouncedUpdate();
-// })
-// watch(() => form.balance_payment_term, (newValue, oldValue) => {
-//     debouncedUpdate();
-// })
 
 watch (
     () => usePage().props.flash.event,
     (event) => {
         switch (event?.name) {
             case 'loan.calculated':
-                loan_data.value = event.data
+                console.log('Event',event.data);
+                loan_data.value.gross_monthly_income = event.data.borrower.gross_monthly_income;
+                loan_data.value.total_contract_price = event.data.property.total_contract_price;
+                loan_data.value.appraised_value = event.data.property.appraised_value;
+                loan_data.value.percent_down_payment = event.data.percent_down_payment;
+                loan_data.value.balance_payment_term = event.data.bp_term;
+                loan_data.value.percent_miscellaneous_fees = event.data.percent_mf;
+                loan_data.value.guess_down_payment_amount = event.data.down_payment;
+                loan_data.value.guess_dp_amortization_amount = event.data.dp_amortization;
+                loan_data.value.guess_partial_miscellaneous_fees = event.data.partial_miscellaneous_fees;
+                loan_data.value.guess_balance_payment = event.data.loan_amount;
+                loan_data.value.guess_monthly_amortization = event.data.loan_amortization;
+                loan_data.value.down_payment_term = event.data.dp_term;
                 break;
         }
     },

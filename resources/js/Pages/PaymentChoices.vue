@@ -144,7 +144,7 @@
       <!-- InstaPay QRCode -->
     <MyModal
     :modal-show="instaPayQrModal"
-    @updatemodalShow="updatePaymentOption"
+    @updatemodalShow="updateInstaPayQrModal"
     >
         <template #title>
             Scan to Pay
@@ -187,6 +187,9 @@ const selectedPaymentMethod = ref(0);
 const instaPayQr = ref('');
 const updatePaymentOption = (newVal) => {
     paymentOption.value = newVal;
+}
+const updateInstaPayQrModal = (newVal) => {
+    instaPayQrModal.value = newVal;
 }
 const updatePaymentReminder = (newVal) => {
     paymentReminder.value = newVal;

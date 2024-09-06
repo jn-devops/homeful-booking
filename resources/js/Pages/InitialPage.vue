@@ -1,17 +1,25 @@
 <script setup>
 import EntryPointImg from '@/Logos/EntryPointImg.vue';
+import Agreement from '@/MyComponents/Agreement.vue';
+import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 import {ref, onMounted} from 'vue';
 
 const props = defineProps({
-    homefulBookingUrl: String
+    homefulBookingUrl: String,
+    supplementaryData: Object
 });
 
 console.log(props.homefulBookingUrl);
 
 const loading = ref(false);
+const isAgreementChecked = ref(false);
 const lottieJson = ref(null);
 const homefulAnimation = ref(null);
+
+const showAgreement = (newVal) => {
+    isAgreementChecked.value = newVal; 
+}
 
 onMounted(async () => {
     // setTimeout(() => {
@@ -35,14 +43,94 @@ onMounted(async () => {
     <div v-else class="md:w-[415px] md:mx-auto mt-28"> <!-- Else -->
         <ReturnToPagev2 :icon="homefulBookingUrl"> Home Loan Calculation </ReturnToPagev2>
         <div class="flex justify-center">
-            <div class="w-64 text-center">
+            <div class="w-56 text-center">
                 <EntryPointImg />
             </div>
         </div>
         <div class="text-center py-3">
             <span class="text-[#135DBD] text-2xl font-semibold">Home Loan Calculation</span>
         </div>
-    </div>
+        <div class="px-6">
+            <p>
+                Home buying is a long term purchase that requires a long term commitment in the form of a dedicated fund.  Therefore, buying a home is a significant decision with long-term implications, making it crucial to carefully consider several factors before committing.
+            </p>
+        </div>
+        <div class="hs-accordion-group">
+            <div class="hs-accordion active" id="hs-basic-heading-one">
+                <button class="hs-accordion-toggle bg-[#F3F4F6] w-full px-6 py-2 mt-2 flex" aria-expanded="true" aria-controls="hs-basic-collapse-one">
+                    <span class="text-lg font-semibold flex-auto text-start">
+                        What is Home Loan Consultation?
+                    </span>
+                    <div class="flex-none w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hs-accordion-active:hidden lucide lucide-chevron-down text-[#F59E0B]">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hs-accordion-active:block hidden lucide lucide-chevron-up text-[#F59E0B]">
+                            <path d="m18 15-6-6-6 6"/>
+                        </svg>
+                    </div>
+                </button>
+                <div id="hs-basic-collapse-one" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 px-6" role="region" aria-labelledby="hs-basic-heading-one">
+                    <p class="my-3">
+                        Our home loan consultation is designed to: 
+                    </p>
+                    <ol class="list-decimal list-inside text-gray-800 dark:text-white">
+                        <li class="mb-2">Guide you in understanding your options and determining the best home budget.</li>
+                        <li class="mb-2">Provides guidance on how to complete your Home Loan Consultation accurately and gather the necessary documentation, reducing the likelihood of errors or delays.</li>
+                        <li class="mb-2">Assist you throughout the Home Loan Consultation process.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="hs-accordion" id="hs-basic-heading-two">
+                <button class="hs-accordion-toggle bg-[#F3F4F6] w-full px-6 py-2 mt-2 flex" aria-expanded="false" aria-controls="hs-basic-collapse-two">
+                    <span class="text-lg font-semibold flex-auto text-start">
+                        Is there a Consultation Fee?
+                    </span>
+                    <div class="flex-none w-fit">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hs-accordion-active:hidden lucide lucide-chevron-down text-[#F59E0B]">
+                            <path d="m6 9 6 6 6-6"/>
+                        </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="hs-accordion-active:block hidden lucide lucide-chevron-up text-[#F59E0B]">
+                            <path d="m18 15-6-6-6 6"/>
+                        </svg>
+                    </div>
+                </button>
+                <div id="hs-basic-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300 px-6" role="region" aria-labelledby="hs-basic-heading-two">
+                    <p class="my-3">
+                        Yes! 
+                    </p>
+                    <p class="my-3">
+                        The Consultation Fee shall be utilized to compensate the time and expertise in evaluating and guiding you thru your buying decision process.  
+                    </p>
+                    <p class="my-3"> 
+                        Should you choose to proceed with the purchase, the fee will be credited as your processing fee, which will serve to officially reserve the unit under your name. 
+                    </p>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="px-4 my-6">
+            <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.agreement" agreementType="TermOfServices">
+                <template #agreement_context>
+                    By clicking the button below you are agreeing to the 
+                </template>
+            </Agreement>
+            <MyPrimaryButton
+                :disabled="!isAgreementChecked"
+                :isDisabled="!isAgreementChecked"
+                @click="showAgreement"
+                :class="[
+                    'rounded-full p-4 mt-4 w-full text-sm md:text-md',
+                    isAgreementChecked ? '' : 'bg-gray-300'
+                ]"
+            >
+                I Agree & Continue
+            </MyPrimaryButton>
+        </div>
+
+    </div> 
 </template>
 
 <style scoped>
