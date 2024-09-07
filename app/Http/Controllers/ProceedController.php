@@ -31,7 +31,8 @@ class ProceedController extends Controller
             'unit_location' => 'Phase 2 Block 7 Unit 2',
             'regional' => false,
             'price' => 2500000,
-            'consulting_fee' => 10000
+            'consulting_fee' => 10000,
+            'image' => asset('images/SampleProperty.png'),
         ]);
         $product_details = $product_details??$property_details;
 
@@ -131,6 +132,7 @@ class ProceedController extends Controller
             'guess_down_payment_amount' => $data->down_payment,
             'guess_dp_amortization_amount' => $data->dp_amortization,
             'guess_partial_miscellaneous_fees' => $data->partial_miscellaneous_fees,
+            'guess_miscellaneous_fees' => $data->miscellaneous_fees,
             'guess_balance_payment' => $data->loan_amount,
             'age' => $data->borrower->age,
             'guess_gross_monthly_income' => $data->borrower->gross_monthly_income,
