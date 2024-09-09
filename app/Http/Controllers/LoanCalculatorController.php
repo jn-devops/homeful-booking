@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
+use Homeful\Mortgage\Data\MortgageData;
 
 use Inertia\Inertia;
 use Whitecube\Price\Price;
@@ -48,40 +49,40 @@ class LoanCalculatorController extends Controller
 
         $params = [
             Input::PERCENT_DP => $request['percent_down_payment'],
-            Input::BP_INTEREST_RATE => 6.25 / 100, // Todo: where to get the interest rate
-            Input::BP_TERM => $request['balance_payment_term'],
+            Input::BP_INTEREST_RATE => 7 / 100, // Todo: where to get the interest rate
+            Input::BP_TERM => min(65 - $request['age'], 30),
             Input::PERCENT_MF => $request['percent_miscellaneous_fees'],
             Input::TCP => $request['total_contract_price'],
             Input::DP_TERM => 12,
-            Input::CONSULTING_FEE => 10000,
+            Input::WAGES => $request['gross_monthly_income'],
+            Input::LOW_CASH_OUT => $request['low_cash_out'] ?? 0,
         ];
 
-        $mortgage = new Mortgage(property: $property, borrower: $borrower, params: $params);
-//        dd( $mortgage->getDownPayment()->getPrincipal()->inclusive()->getAmount());
+        $mortgage = Mortgage::createWithTypicalBorrower($property, $params);
+        $data = MortgageData::fromObject($mortgage);
 
-        $mortage_data = [
-            'guess_down_payment_amount' => (int)((string)$mortgage->getDownPayment()->getPrincipal()->inclusive()->getAmount()),
-            'guess_dp_amortization_amount' => (int)((string)$mortgage->getDownPayment()->getMonthlyAmortization()->inclusive()->getAmount()),
-            'guess_partial_miscellaneous_fees' => (int)((string)$mortgage->getPartialMiscellaneousFees()->inclusive()->getAmount()),
-            'guess_balance_payment' => (int)((string)$mortgage->getLoan()->getPrincipal()->inclusive()->getAmount()),
-            'age' => round($mortgage->getBorrower()->getBirthdate()->diffInYears(Carbon::now())),
-            'gross_monthly_income' => (int)((String)$mortgage->getBorrower()->getGrossMonthlyIncome()->base()->getAmount()),
-            'down_payment_term' => $mortgage->getDownPayment()->getTerm()->monthsToPay(),
-            'balance_payment_term' => $mortgage->getBalancepaymentTerm(),
-            'percent_down_payment' => $mortgage->getPercentDownPayment(),
-            'regional' => $request['regional'],
-            'gross_monthly_income' => (int)((String)$mortgage->getBorrower()->getGrossMonthlyIncome()->base()->getAmount()),
-            'total_contract_price' => $request['total_contract_price'],
-            'percent_miscellaneous_fees' => $mortgage->getPercentMiscellaneousFees(),
-        ];
+        // $mortage_data = [
+        //     'guess_down_payment_amount' => (int)((string)$mortgage->getDownPayment()->getPrincipal()->inclusive()->getAmount()),
+        //     'guess_dp_amortization_amount' => (int)((string)$mortgage->getDownPayment()->getMonthlyAmortization()->inclusive()->getAmount()),
+        //     'guess_partial_miscellaneous_fees' => (int)((string)$mortgage->getPartialMiscellaneousFees()->inclusive()->getAmount()),
+        //     'guess_balance_payment' => (int)((string)$mortgage->getLoan()->getPrincipal()->inclusive()->getAmount()),
+        //     'age' => round($mortgage->getBorrower()->getBirthdate()->diffInYears(Carbon::now())),
+        //     'gross_monthly_income' => (int)((String)$mortgage->getBorrower()->getGrossMonthlyIncome()->base()->getAmount()),
+        //     'down_payment_term' => $mortgage->getDownPayment()->getTerm()->monthsToPay(),
+        //     'balance_payment_term' => $mortgage->getBalancepaymentTerm(),
+        //     'percent_down_payment' => $mortgage->getPercentDownPayment(),
+        //     'regional' => $request['regional'],
+        //     'gross_monthly_income' => (int)((String)$mortgage->getBorrower()->getGrossMonthlyIncome()->base()->getAmount()),
+        //     'total_contract_price' => $request['total_contract_price'],
+        //     'percent_miscellaneous_fees' => $mortgage->getPercentMiscellaneousFees(),
+        // ];
 
-        $year_term = $mortgage->getDownPayment()->getTerm()->monthsToPay();
-        with($mortgage->getLoan()->setTerm(new Term($year_term)), function (Payment $loan) use(&$mortage_data) {
-            $mortage_data['guess_monthly_amortization'] = (int)((string)$loan->getMonthlyAmortization()->inclusive()->getAmount());
-        });
+        // $year_term = $mortgage->getDownPayment()->getTerm()->monthsToPay();
+        // with($mortgage->getLoan()->setTerm(new Term($year_term)), function (Payment $loan) use(&$mortage_data) {
+        //     $mortage_data['guess_monthly_amortization'] = (int)((string)$loan->getMonthlyAmortization()->inclusive()->getAmount());
+        // });
 
-        $data = collect($mortage_data);
-//        dd($data);
+        // $data = collect($mortage_data);
 
         return back()->with('event', [
             'name' => 'loan.calculated',

@@ -1,7 +1,6 @@
 <template>
     <div v-if="loading" class="flex items-center justify-center h-screen"> <!-- If -->
         <div class="w-2/6">
-            <!-- <LottiefileAnimation v-if="homefulAnimation" :animationData="homefulAnimation" /> -->
             <img :src="homefulBookingUrl" class="shimmer w-full" />
         </div>
     </div> <!-- End If -->
@@ -123,9 +122,9 @@
             <template #modalcontent>
                 <div class="">
                     <div class="flex gap-3 items-center justify-evenly">
-                        <div class="bg-gray-300 h-20 w-1/3 flex items-center rounded-xl justify-center">
+                        <div class="bg-gray-300 h-20 w-1/3 rounded-xl">
                             <!-- img -->
-                            sample img here
+                            <img :src="propertyDetail.image" alt="Property Image" class="w-full">
                         </div>
                         <div>
                             <p class="font-bold">{{ propertyDetail.unit_location }}</p>
@@ -377,7 +376,6 @@ const props = defineProps({
 const loading = ref(true);
 const chkbox = ref(false);
 const lottieJson = ref(null);
-const homefulAnimation = ref(null);
 
 // For Modals:
 const disclaimerStatus = ref(true);
@@ -434,6 +432,7 @@ const formatCurrency = (value) => {
     const formatter = new Intl.NumberFormat('en-PH', {
         style: 'currency',
         currency: 'PHP',
+        
     });
     return formatter.format(value);
 };
@@ -443,10 +442,7 @@ onMounted(async () => {
         loading.value = false;
     }, 3000);
   const response = await fetch('/animation/proceed.json');
-//   const homefulMainAnimation = await fetch('/animation/HomefulLogoIconAnimationCMG.json');
-
   lottieJson.value = await response.json();
-  homefulAnimation.value = await homefulMainAnimation.json();
 
 });
 

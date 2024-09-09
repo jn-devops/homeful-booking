@@ -72,7 +72,7 @@ const employment = reactive({
     sss_gsis_no: '', // All
     employer_details: {
         employer_name: '', // All
-        years_of_operation: '',// All
+        years_of_operation: '',// All //TODO: Change to years established
         contact_person: '', // Locally Employed & OFW
         email: '', // Locally Employed & OFW
         contact_no: '', // Locally Employed & OFW

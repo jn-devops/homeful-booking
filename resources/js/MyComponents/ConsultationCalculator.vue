@@ -9,6 +9,7 @@ import SliderRange from '@/MyComponents/SliderRange.vue';
 import {reactive, ref, watch} from 'vue';
 import { debounce } from 'lodash';
 import {useForm, usePage} from "@inertiajs/vue3";
+import CenterModal from '@/MyComponents/CenterModal.vue';
 
 const props = defineProps({
     calculator: {
@@ -62,6 +63,7 @@ const loan_data  = ref({
     guess_down_payment_amount: props.calculator.guess_down_payment_amount,
     guess_dp_amortization_amount: props.calculator.guess_dp_amortization_amount,
     guess_partial_miscellaneous_fees: props.calculator.guess_partial_miscellaneous_fees,
+    guess_miscellaneous_fees: props.calculator.guess_miscellaneous_fees,
     guess_balance_payment: props.calculator.guess_balance_payment,
     guess_monthly_amortization: props.calculator.guess_monthly_amortization,
     down_payment_term: props.calculator.down_payment_term,
@@ -85,7 +87,6 @@ const debouncedUpdate = debounce(() => {
         balance_payment_term: form.balance_payment_term,
         percent_miscellaneous_fees: loan_data.value.percent_miscellaneous_fees,
     })
-    console.log(calculatorForm)
     calculatorForm.get(route('calculate.loan'), {
         preserveState: true,
         preserveScroll: true,
@@ -99,19 +100,26 @@ const debouncedUpdate = debounce(() => {
 watch(() => form.age, (newValue, oldValue) => {
     debouncedUpdate();
 })
-// watch(() => form.gross_monthly_income, (newValue, oldValue) => {
-//     debouncedUpdate();
-// })
-// watch(() => form.balance_payment_term, (newValue, oldValue) => {
-//     debouncedUpdate();
-// })
 
 watch (
     () => usePage().props.flash.event,
     (event) => {
         switch (event?.name) {
             case 'loan.calculated':
-                loan_data.value = event.data
+                console.log('Event',event.data);
+                loan_data.value.gross_monthly_income = event.data.borrower.gross_monthly_income;
+                loan_data.value.total_contract_price = event.data.property.total_contract_price;
+                loan_data.value.appraised_value = event.data.property.appraised_value;
+                loan_data.value.percent_down_payment = event.data.percent_down_payment;
+                loan_data.value.balance_payment_term = event.data.bp_term;
+                loan_data.value.percent_miscellaneous_fees = event.data.percent_mf;
+                loan_data.value.guess_down_payment_amount = event.data.down_payment;
+                loan_data.value.guess_dp_amortization_amount = event.data.dp_amortization;
+                loan_data.value.guess_partial_miscellaneous_fees = event.data.partial_miscellaneous_fees;
+                loan_data.value.guess_miscellaneous_fees = event.data.miscellaneous_fees;
+                loan_data.value.guess_balance_payment = event.data.loan_amount;
+                loan_data.value.guess_monthly_amortization = event.data.loan_amortization;
+                loan_data.value.down_payment_term = event.data.dp_term;
                 break;
         }
     },
@@ -122,6 +130,8 @@ const formatCurrency = (value) => {
     const formatter = new Intl.NumberFormat('en-PH', {
         style: 'currency',
         currency: 'PHP',
+        minimumFractionDigits: 0,
+        maximumFractionDigits: 0
     });
     return formatter.format(value);
 };
@@ -133,69 +143,83 @@ const subSliderValue = (propName, decrement = 1) => {
     form[propName] = form[propName] - decrement
 }
 
+const isDownpaymentOpen = ref(false);
+const downpaymentModal = (newVal) =>{
+    isDownpaymentOpen.value = newVal;
+}
+const isBalancePaymnentOpen = ref(false);
+const balancePaymentModal = (newVal) =>{
+    isBalancePaymnentOpen.value = newVal;
+}
+
 </script>
 <template>
      <div class="py-1 px-0 md:px-4 h-[500px] overflow-auto md:h-auto md:overflow-hidden">
             <!-- Mobile -->
             <div class="block md:hidden">
-                <div class="mt-4">
-                    <div class="flex gap-2 items-center">
-                        <div class="w-32">
-                            <p class="font-bold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
-                            <p class="text-gray-500 text-sm">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
-                        </div>
-                        <div class="grow w-62">
-                            <div class="bg-[#F6F6F6] p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
-                                <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
-                                    <div class="default_text-color font-bold flex py-1">
-                                    <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
-                                    <p class="font-normal">/ month</p>
+                <div class="mt-3">
+                    <h3 class="font-bold text-xl mb-2">Downpayment</h3>
+                    <div class="bg-[#F6FAFF] px-4 py-4 rounded-lg" @click="downpaymentModal(true)">
+                        <div class="flex gap-2 mb-5">
+                            <div class=" flex-none w-36">
+                                <p class="text-black text-sm">Total Down Payment</p>
+                                <p class="font-bold text-[#8B8B8B] text-lg">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
+                            </div>
+                            <div class="grow w-62">
+                                <div class="flex gap-0">
+                                    <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
+                                        <p class="text-sm">Payable in {{ loan_data.down_payment_term }} months:</p>
+                                        <div class="default_text-color font-bold flex py-1 " >
+                                            <p class="text-lg py-0">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++</p>
+                                            <p class="font-normal">/ month</p>
+                                        </div>
                                     </div>
-                                    <p class="py-1 text-sm">Payable in {{ loan_data.down_payment_term }} months</p>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="flex gap-2 mb-2">
+                            <div class="flex-none w-36">
+                                <p class="text-black text-sm">Miscellaneous Fee</p>
+                                <p class="font-bold text-[#8B8B8B] text-lg">{{ formatCurrency(loan_data.guess_miscellaneous_fees) }}</p>
+                            </div>
+                            <div class="grow w-62">
+                                <div class="flex gap-0">
+                                    <div class="text-sm flex-grow-1">
+                                        <p class="text-sm">Partial Payment Miscellaneous Fee</p>
+                                        <div class="default_text-color font-bold flex py-1">
+                                            <p class="text-lg py-0">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
+                                            <p class="text-xs font-normal ps-2">/ Pay on 13th month</p>
+                                        </div>
+                                    </div>
+                                </div>
+                                
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="mt-4">
-                    <div class="flex gap-2 items-center">
-                        <div class="w-32">
-                            <p class="font-bold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
-                            <p class="text-gray-500 text-sm">Partial Miscellaneous Fee</p>
-                        </div>
-                        <div class="grow w-62">
-                            <div class="bg-[#F6F6F6]  p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
-                                <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
-                                    <div class="default_text-color font-bold flex py-1">
-                                    <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</p>
+                <div class="mt-3">
+                    <h3 class="font-bold text-xl mb-2">Balance Downpayment</h3>
+                    <div class="bg-[#F6FAFF] px-4 py-4 rounded-lg" @click="balancePaymentModal(true)">
+                        <div class="flex gap-2">
+                            <div class="flex-none w-36">
+                                <p class="text-text text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment<br>Tru Bank Financing:</p>
+                                <p class="font-bold text-[#8B8B8B] text-lg">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+                            </div>
+                            <div class="grow w-62">
+                                <div class="flex gap-0">
+                                    <div class="text-sm flex-grow-1">
+                                        <p class="text-sm">{{ loan_data.balance_payment_term }} years to pay after loan takeout</p>
+                                        <div class="default_text-color font-bold flex py-1 border-b-2">
+                                            <p class="text-lg py-0">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++</p>
+                                            <p class="font-normal">/ month</p>
+                                        </div>
                                     </div>
-                                    <p class="py-1 text-sm">Pay on 13th month</p>
+                                </div>
+                                <div class="py-1 text-sm">
+                                    <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
                                 </div>
                             </div>
-                            
                         </div>
-                    </div>
-                </div>
-                <div class="mt-4">
-                    <div class="flex gap-2 items-center">
-                    <div class="w-32">
-                        <p class="font-bold">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
-                        <p class="text-gray-500 text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment<br>Tru Bank Financing</p>
-                    </div>
-                    <div class="grow w-62">
-                        <div class="bg-[#F6F6F6]  p-3 px-5 rounded-3xl flex gap-0 items-center overflow-hidden">
-                            <div class="text-sm flex-grow-1 flex-shrink-0 overflow-hidden">
-                                <div class="default_text-color font-bold flex py-1">
-                                <p class="text-xl border-b-2 py-0 text-md">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++</p>
-                                <p class="font-normal">/ month</p>
-                                </div>
-                                <p class="py-1 text-sm">{{ loan_data.balance_payment_term }} years to pay <br />after loan takeout</p>
-                            </div>
-                        </div>
-                        <div class="p-1 px-5 text-sm">
-                            <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
-                        </div>
-                    </div>
                     </div>
                 </div>
                 <div class="mt-4 border-t-2 border-t-slate-200">
@@ -415,6 +439,109 @@ const subSliderValue = (propName, decrement = 1) => {
             </div>
         </div>
 
+        <!-- Downpayment Modal -->
+        <CenterModal :isOpen="isDownpaymentOpen" @update:isOpen="isDownpaymentOpen = $event">
+            <div class="grid grid-cols-10 gap-2">
+                <div class="col-span-4">
+                    <p class="font-bold text-black text-xl">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</p>
+                    <p class="text black text-sm">{{ loan_data.percent_down_payment * 100 }}% Downpayment</p>
+                </div>
+                <div class=" col-span-6">
+                    <div class="bg-[#F6F6F6] py-2 px-4 rounded-2xl ">
+                        <div class="default_text-color font-bold flex gap-2">
+                            <p class="border-b-2 py-1">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}++ <span class="font-normal"> / month</span></p>
+                        </div>
+                        <p class="py-1 text-sm">Payable in {{ loan_data.down_payment_term }} months</p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="grid grid-cols-3 gap-3">
+                    <table class="w-full col-span-3 text-sm">
+                        <tbody>
+                            <tr>
+                                <td class="w-4/6 text-[#7F7F7F]">DP Amount</td>
+                                <td class="w-2/6 font-semibold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">DP Percentage</td>
+                                <td class="font-semibold">{{ loan_data.percent_down_payment * 100 }}%</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Terms</td>
+                                <td class="font-semibold">{{ loan_data.down_payment_term }} months</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Downypayment Monthly Amortization</td>
+                                <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_dp_amortization_amount) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Miscellaneous Fee(Pay on 13th month)</td>
+                                <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="w-full flex items-center justify-center mt-3" @click="downpaymentModal(false)">
+                <div class="basis-4/5 bg-[#F0F0F0] text-center rounded-full p-4 text-[#CC035C] font-semibold">Close</div>
+            </div>
+        </CenterModal>
+
+        <!-- Balance Payment Modal -->
+        <CenterModal :isOpen="isBalancePaymnentOpen" @update:isOpen="isBalancePaymnentOpen = $event">
+            <div class="grid grid-cols-10 gap-2">
+                <div class="col-span-4">
+                    <p class="font-bold text-black text-xl">{{ formatCurrency(loan_data.guess_balance_payment) }}</p>
+                    <p class="text black text-sm">{{ 100 - (loan_data.percent_down_payment * 100) }}% Balance Downpayment</p>
+                </div>
+                <div class=" col-span-6">
+                    <div class="bg-[#F6F6F6] py-2 px-4 rounded-2xl ">
+                        <div class="default_text-color font-bold flex gap-2">
+                            <p class="border-b-2 py-1">{{ formatCurrency(loan_data.guess_monthly_amortization) }}++ <span class="font-normal"> / month</span></p>
+                        </div>
+                        <p class="py-1 text-sm">{{ loan_data.balance_payment_term }} years to pay after loan takeout</p>
+                    </div>
+                    <div class="py-1 ps-5 text-sm">
+                        <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
+                    </div>
+                </div>
+            </div>
+            <div class="mt-4">
+                <div class="grid grid-cols-3 gap-3">
+                    <table class="w-full col-span-3 text-sm">
+                        <tbody>
+                            <tr>
+                                <td class="w-4/6 text-[#7F7F7F]">Balance Payment Amount:</td>
+                                <td class="w-2/6 font-semibold">{{ formatCurrency(loan_data.guess_balance_payment) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Balance Miscellaneous Fee:</td>
+                                <td class="font-semibold">{{ formatCurrency(loan_data.guess_miscellaneous_fees) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Total Balance(BP+MF):</td>
+                                <td class="font-semibold">{{ formatCurrency(loan_data.guess_balance_payment +  loan_data.guess_miscellaneous_fees) }}</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Terms</td>
+                                <td class="default_text-color font-semibold">{{ loan_data.balance_payment_term }} years</td>
+                            </tr>
+                            <tr>
+                                <td class="text-[#7F7F7F]">Monthly Amortization</td>
+                                <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_monthly_amortization) }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="w-full flex items-center justify-center mt-3" @click="balancePaymentModal(false)">
+                <div class="basis-4/5 bg-[#F0F0F0] text-center rounded-full p-4 text-[#CC035C] font-semibold">Close</div>
+            </div>
+        </CenterModal>
+
         <!-- MyModal -->
         <MyModal
         :modal-show="btnDetails"
@@ -422,7 +549,7 @@ const subSliderValue = (propName, decrement = 1) => {
         >
             <template #content_noborder>
                 <div
-                v-if="detailsContent === 'downpayment'"
+                v-if="detailsContent ===  'downpayment'"
                 >
                     <div class="grid grid-cols-10 gap-2 items-center">
                         <div class="col-span-4">
@@ -442,6 +569,7 @@ const subSliderValue = (propName, decrement = 1) => {
                     <div class="mt-4">
                         <div class="grid grid-cols-3 gap-3">
                             <table class="w-full col-span-3">
+                            <tbody>
                                 <tr>
                                     <td class="w-4/6">DP Amount</td>
                                     <td class="w-2/6 font-semibold">{{ formatCurrency(loan_data.guess_down_payment_amount) }}</td>
@@ -462,6 +590,7 @@ const subSliderValue = (propName, decrement = 1) => {
                                     <td>Miscellaneous Fee(Pay on 13th month)</td>
                                     <td class="default_text-color font-semibold">{{ formatCurrency(loan_data.guess_partial_miscellaneous_fees) }}</td>
                                 </tr>
+                            </tbody>
                             </table>
                         </div>
                     </div>
