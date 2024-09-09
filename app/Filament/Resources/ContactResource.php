@@ -178,6 +178,10 @@ class ContactResource extends Resource
                                 ->schema([
                                     // ...
                                 ]),
+                            Tabs\Tab::make('Documents')
+                                ->schema([
+                                    // ...
+                                ]),
                         ])
                         ->contained(false)
                         ->persistTabInQueryString()
