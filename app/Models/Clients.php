@@ -21,6 +21,7 @@ class Clients extends Contact
         'present_address',
         'same_as_permanent_address',
         'buyer_employment',
+        'name'
     ];
 
 
@@ -87,6 +88,10 @@ class Clients extends Contact
         return array_merge($defaultAddress, $presentAddress ?? []);
     }
 
+    public function getNameAttribute()
+    {
+        return $this->first_name;
+    }
     public function getTenureAttribute()
     {
         return $this->employment[0]['years_in_service'] ?? 0;

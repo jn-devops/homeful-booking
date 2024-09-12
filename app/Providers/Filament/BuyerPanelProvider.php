@@ -2,6 +2,7 @@
 
 namespace App\Providers\Filament;
 
+use App\Http\Middleware\BuyerAuth;
 use Filament\Http\Middleware\Authenticate;
 use Filament\Http\Middleware\DisableBladeIconComponents;
 use Filament\Http\Middleware\DispatchServingFilamentEvent;
@@ -25,6 +26,13 @@ class BuyerPanelProvider extends PanelProvider
         return $panel
             ->id('buyer')
             ->path('buyer')
+            ->authGuard('buyer')
+            ->authPasswordBroker('buyers')
+            ->passwordReset()
+            ->login()
+//            ->registration()
+            ->databaseNotifications()
+//            ->profile(BuyerProfile::class,isSimple: false)
             ->colors([
                 'primary' => Color::Amber,
             ])
@@ -51,6 +59,8 @@ class BuyerPanelProvider extends PanelProvider
             ])
             ->authMiddleware([
                 Authenticate::class,
+                BuyerAuth::class,
+
             ]);
     }
 }

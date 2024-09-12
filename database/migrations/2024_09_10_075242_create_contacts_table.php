@@ -8,8 +8,9 @@ return new class extends Migration
 {
     public function up()
     {
+        Schema::dropIfExists('contacts');
         Schema::create('contacts', function (Blueprint $table) {
-             $table->id();
+             $table->uuid('id')->primary();
              $table->string('reference_code')->nullable()->unique();
              $table->string('first_name');
              $table->string('middle_name');
@@ -30,6 +31,13 @@ return new class extends Migration
              $table->json('employment')->nullable();
              $table->json('co_borrowers')->nullable();
              $table->json('order')->nullable();
+             $table->string('current_status')->nullable();
+             $table->string('current_status_code')->nullable();
+             //
+             $table->timestamp('email_verified_at')->nullable();
+             $table->string('password');
+             $table->rememberToken();
+
              $table->timestamps();
         });
     }
