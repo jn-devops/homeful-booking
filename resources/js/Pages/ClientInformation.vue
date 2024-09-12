@@ -12,6 +12,9 @@ import "filepond/dist/filepond.min.css";
 import "filepond-plugin-image-preview/dist/filepond-plugin-image-preview.min.css";
 import FilePondPluginFileValidateType from "filepond-plugin-file-validate-type";
 import FilePondPluginImagePreview from "filepond-plugin-image-preview";
+import SignaturePad from '@/Components/SignaturePad.vue';
+import CenterModal from '@/MyComponents/CenterModal.vue';
+import SuccessModal from '@/MyComponents/SuccessModal.vue';
 
 const props = defineProps({
     name_suffixes: Object,
@@ -38,6 +41,7 @@ const buyer = reactive({
     first_name: '',
     last_name: '',
     middle_name: '',
+    hasNoMiddleName: false,
     name_suffix: '',
     civil_status: '',
     gender: '',
@@ -57,6 +61,7 @@ const buyer = reactive({
         mobile:'',
         address_same_as_buyer:'No'
     },
+    signature: '',
 });
 
 const employment = reactive({
@@ -111,8 +116,24 @@ const spousePresentAddress = reactive({
     barangays:({}),
 });
 
-//Attachments
+// Signature
+const isSignaturePadOpen = ref(false);
+const toggleSignaturePad = () => {
+    isSignaturePadOpen.value = !isSignaturePadOpen.value;
+}
 
+const updateSignature = ([signatureVal, signaturePad]) => {
+    buyer.signature = signatureVal;
+    isSignaturePadOpen.value = signaturePad;
+};
+
+const clearSignature = () => {
+    buyer.signature = '';
+}
+
+const successRefModal = ref(false);
+
+//Attachments
 const company_id = ref([]);
 const government_id = ref([]);
 const bir_certificate = ref([]);
@@ -155,16 +176,15 @@ const appendFormData = (data, prefix = '') => {
 
 const submit = async () => {
     errors.value = {}; // Reset errors
-    console.log('****************************', company_id.value);
-
+    
     try {
         formData.append('kwyc_code', props.kwyc_code);
-
+        
         appendFormData(buyer);
         appendFormData(employment);
         appendFormData(presentAddress, 'present_address_');
         appendFormData(spousePresentAddress, 'spouse_present_address_');
-
+        
         if (company_id.value.length > 0) {
             formData.append('company_id', company_id.value[0]); 
         }
@@ -174,6 +194,7 @@ const submit = async () => {
         if (bir_certificate.value.length > 0) {
             formData.append('bir_certificate', bir_certificate.value[0]); 
         }
+        console.log('Sample', formData);
         router.post(`/client-information/store/${props.kwyc_code}`, formData, {
             onError: (error) => {
                 if (error.response.status === 422) {
@@ -208,10 +229,11 @@ const toggleDisplayButton = () =>{
 
 const nextStep = () => {
     if (currentStep.value == 2){
-        submit();
+        successRefModal.value.openSuccessModal();
     }
     if (currentStep.value < 2) {
         currentStep.value++;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
     }
     setButtonText(currentStep.value);
     toggleDisplayButton();
@@ -374,14 +396,20 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                         />
                     </div>
                     <div class="mt-3 w-full">
-                        <TextInput
-                            id="buyer.middle_name"
-                            label="Middle Name"
-                            placeholder="Enter Mdddle Name"
-                            type="text"
-                            v-model="buyer.middle_name"
-                            :errorMessage="errors?.value?.middle_name"
-                        />
+                        <div :class="{'hidden':buyer.hasNoMiddleName}">
+                            <TextInput
+                                id="buyer.middle_name"
+                                label="Middle Name"
+                                placeholder="Enter Mdddle Name"
+                                type="text"
+                                v-model="buyer.middle_name"
+                                :errorMessage="errors?.value?.middle_name"
+                            />
+                        </div>
+                        <label for="hasNoMiddleName">
+                            <input type="checkbox" id="hasNoMiddleName" v-model="buyer.hasNoMiddleName" value="hasNoMiddleName">
+                            I have no middle name
+                        </label>
                     </div>
                     <div class="mt-3 w-full">
                         <TextInput
@@ -402,7 +430,7 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                         v-model="buyer.name_suffix"
                         placeholder=""
                         helperText=""
-                        :required="true"
+                        :required="false"
                         :errorMessage="errors?.value?.name_suffix"
                         />
                     </div>
@@ -1034,6 +1062,22 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                             @updatefiles="birCertificateFileUpdate"
                         />
                 </div>
+                <p class="mb-3">Signature <span class="text-red-500">*</span></p>
+                <div @click="toggleSignaturePad" :class="['px-20 mx-auto border rounded-xl']">
+                    <div :class=" {
+                        'hidden': buyer.signature == ''
+                    }">
+                        <img :src="buyer.signature" alt="Base64 Image" />
+                    </div>
+                    <div :class="['text-center py-10', {
+                        'hidden': buyer.signature != ''
+                    }]">
+                        Click to add signature
+                    </div>
+                </div>
+                <p class="text-[#B4173A] underline underline-offset-4 mt-1" @click="clearSignature">
+                    Clear Signature
+                </p>
             </div>
         </form>
     </section>
@@ -1059,10 +1103,24 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                         <path d="M6 8L2 12L6 16"/><path d="M2 12H22"/>
                     </svg>
                 </button>
-                <div class="bg-gradient-to-r from-[#FCB115] to-[#CC035C] rounded-full w-full h-full p-4 text-center text-white font-semibold">
-                    <button @click="nextStep" class="cursor-pointer">{{ buttonText }}</button>
+                <div @click="nextStep" class="bg-gradient-to-r from-[#FCB115] to-[#CC035C] rounded-full w-full h-full p-4 text-center text-white font-semibold">
+                    <button class="cursor-pointer">{{ buttonText }}</button>
                 </div>
             </div>
         </div>
     </div>
+
+    <CenterModal :isOpen="isSignaturePadOpen" @update:isOpen="isSignaturePadOpen = $event">
+        <div>
+            <SignaturePad 
+                :signatureVal="buyer.signature" 
+                :isSignaturePadOpen="isSignaturePadOpen" 
+                @update="updateSignature"  
+            />
+        </div>
+    </CenterModal>
+
+    <SuccessModal ref="successRefModal" :afterFunction="submit">
+        Customer Information Form Completed
+    </SuccessModal>
 </template>

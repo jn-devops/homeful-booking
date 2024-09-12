@@ -80,6 +80,7 @@ class ClientInformationController extends Controller
 
 
         $supplementaryData = collect([
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
                     <ul class="list-decimal ml-6 mt-6">

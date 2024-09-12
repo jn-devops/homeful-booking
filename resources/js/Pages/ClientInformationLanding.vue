@@ -1,26 +1,24 @@
 <template>
-    <ReturnToPage />
+        <ReturnToPagev2 :icon="supplementaryData.homefulBookingUrl"> Home Loan Consultation</ReturnToPagev2>
     <div class="bg_layout p-0 ">
-        <div class="w-full">
-            <ClientInfoImg class="w-full" />
-        </div>
-        <div class="py-1 w-full">
-            <div class="flex flex-row p-5">
-                <div class="basis-1/5">
-                    <CircularProgress :currentProgress="3" />
+        <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
+            <!-- <ClientInfoImg class="w-full" /> -->
+            <div class="basis-4/12">
+                <VerifyIdentityImg />
                 </div>
-                <div class="ps-5 basis-4/5 flex flex-col justify-center">
-                    <div class="text-md font-semibold text-[#CC035C]">
-                        Step 3:
-                    </div>
-                    <div class="text-xl font-extrabold">
-                        Complete the Customer Information From
-                    </div>
+                <div class="basis-7/12 flex flex-col justify-center">
+                <div class="text-md font-semibold text-[#CC035C]">
+                    Step 3 of 5:
+                </div>
+                <div class="text-2xl font-extrabold">
+                    Complete Data From
                 </div>
             </div>
-            <div class="px-5">
-                <p>
-                    You will be redirected to the Customer Information Form to provide additional details for your application.
+        </div>
+        <div class="py-1 w-full">
+            <div class="px-5 pt-9">
+                <p class="font-bold ps-4 pb-5">
+                    You will be redirected to the Customer Information Form to provide additional details for your Home Loan Consultation 
                 </p>
                 <div class="pt-3">
                     <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.agreement">
@@ -68,11 +66,13 @@
 <script setup>
 import LottiefileAnimation from '@/Logos/Animation/LottiefileAnimation.vue';
 import ClientInfoImg from '@/Logos/ClientInfoImg.vue';
+import VerifyIdentityImg from '@/Logos/VerifyIdentityImg.vue';
 import Agreement from '@/MyComponents/Agreement.vue';
 import CircularProgress from '@/MyComponents/CircularProgress.vue';
 import FiveStepTimeline from '@/MyComponents/FiveStepTimeline.vue';
 import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 import ReturnToPage from '@/MyComponents/ReturnToPage.vue';
+import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
 import { Link } from '@inertiajs/vue3'
 import { onMounted, ref, onUpdated, nextTick } from 'vue';

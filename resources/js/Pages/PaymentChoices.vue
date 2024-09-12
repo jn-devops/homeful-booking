@@ -1,25 +1,22 @@
 <template>
-    <ReturnToPage />
+    <ReturnToPagev2 :icon="supplementaryData.homefulBookingUrl"> Home Loan Consultation</ReturnToPagev2>
     <div class="bg_layout p-0 ">
-        <div class="w-full">
-            <PaymentChoicesImg class="w-full" />
-        </div>
-        <div class="py-1 w-full">
-            <div class="flex flex-row p-5">
-                <div class="basis-1/5">
-                    <CircularProgress :currentProgress="4" />
+        <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
+            <div class="basis-4/12">
+                <PaymentChoicesHeaderImg />
+            </div>
+            <div class="basis-7/12 flex flex-col justify-center">
+                <div class="text-md font-semibold text-[#CC035C]">
+                    Step 4 of 5:
                 </div>
-                <div class="ps-5 basis-4/5 flex flex-col justify-center">
-                    <div class="text-md font-semibold text-[#CC035C]">
-                        Step 4:
-                    </div>
-                    <div class="text-2xl font-extrabold">
-                        Pay <br> Consulting Fee
-                    </div>
+                <div class="text-xl font-extrabold">
+                    Pay Home Loan  Consultation Fee
                 </div>
             </div>
-            <div class="px-5">
-                <p>
+        </div>
+        <div class="py-1 w-full">
+            <div class="px-5 pt-6">
+                <p class="py-10 px-4 font-bold">
                     Please pay the Consulting Fee. If you choose not to pay within 2 working days, your qualification process will not proceed.
                 </p>
                 <div class="mb-4">
@@ -97,26 +94,28 @@
             Payment Reminders
         </template>
         <template #modalcontent>
-            <br>
-            <Timeline class="mt-2">
-                <template #success>
-                    Payment of Consulting Fee is non refundable.
-                </template>
-            </Timeline>
-            <Timeline class="mt-2">
-                <template #success>
-                    Payment of Consulting Fee does not guarantee reservation. Reservation is subject to final confirmation.
-                </template>
-            </Timeline>
-            <Timeline class="mt-2">
-                <template #success>
-                    You will receive an SMS notification if payment is successful.
-                </template>
-            </Timeline>
+            <div class="py-5">
+                <Timeline class="mt-5">
+                    <template #success>
+                        Payment of Consulting Fee is non refundable.
+                    </template>
+                </Timeline>
+                <Timeline class="mt-5">
+                    <template #success>
+                        Payment of Consulting Fee does not guarantee reservation. Reservation is subject to final confirmation.
+                    </template>
+                </Timeline>
+                <Timeline class="mt-5">
+                    <template #success>
+                        You will receive an SMS notification if payment is successful.
+                    </template>
+                </Timeline>
+
+            </div>
             <br>
         </template>
         <template #policy_terms>
-            <Agreement v-model="isDisclaimerChecked" :agreement="supplementaryData.agreement">
+            <Agreement v-model="isDisclaimerChecked" :agreement="supplementaryData.agreement" shorterModal>
                 <template #agreement_context>
                     By clicking Proceed, you agree to Homeful.ph's
                 </template>
@@ -173,6 +172,8 @@ import Timeline from '@/MyComponents/Timeline.vue';
 import { router } from '@inertiajs/vue3';
 import { onMounted, ref, onUpdated, nextTick } from 'vue';
 import QRCodeStyling from 'qr-code-styling';
+import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
+import PaymentChoicesHeaderImg from '@/Logos/PaymentChoicesHeaderImg.vue';
 const props = defineProps({
     supplementaryData: Object,
     kwyc_code: String

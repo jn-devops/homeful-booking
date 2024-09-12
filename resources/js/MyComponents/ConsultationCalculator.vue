@@ -154,11 +154,11 @@ const balancePaymentModal = (newVal) =>{
 
 </script>
 <template>
-     <div class="py-1 px-0 md:px-4 h-[500px] overflow-auto md:h-auto md:overflow-hidden">
+     <div class="py-1 px-0 md:px-4 h-[600px] overflow-auto md:h-auto md:overflow-hidden">
             <!-- Mobile -->
             <div class="block md:hidden">
                 <div class="mt-3">
-                    <h3 class="font-bold text-xl mb-2">Downpayment</h3>
+                    <h3 class="font-bold text-lg mb-2">Downpayment</h3>
                     <div class="bg-[#F6FAFF] px-4 py-4 rounded-lg" @click="downpaymentModal(true)">
                         <div class="flex gap-2 mb-5">
                             <div class=" flex-none w-36">
@@ -198,7 +198,7 @@ const balancePaymentModal = (newVal) =>{
                     </div>
                 </div>
                 <div class="mt-3">
-                    <h3 class="font-bold text-xl mb-2">Balance Downpayment</h3>
+                    <h3 class="font-bold text-lg mb-2">Balance Payment</h3>
                     <div class="bg-[#F6FAFF] px-4 py-4 rounded-lg" @click="balancePaymentModal(true)">
                         <div class="flex gap-2">
                             <div class="flex-none w-36">
@@ -214,9 +214,6 @@ const balancePaymentModal = (newVal) =>{
                                             <p class="font-normal">/ month</p>
                                         </div>
                                     </div>
-                                </div>
-                                <div class="py-1 text-sm">
-                                    <p>GMI: <b>{{ formatCurrency(loan_data.gross_monthly_income) }}</b> </p>
                                 </div>
                             </div>
                         </div>
@@ -256,13 +253,6 @@ const balancePaymentModal = (newVal) =>{
                                 <p class="text-sm">Required Monthly Income</p>
 
                             </div>
-                        </div>
-                        <div class="mt-16">
-                            <p class="text-center">Need Help in deciding what product to buy?</p>
-                            <button class="w-full p-5 mt-3 text-center border-2 border-[#5F002A] rounded-[100px] text-[#CC035C]">
-                                Go to Home Assistant
-                            </button>
-                            <p class="py-5 text-center">or</p>
                         </div>
                     </div>
                 </div>

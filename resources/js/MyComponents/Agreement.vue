@@ -6,6 +6,7 @@ const props = defineProps({
     modelValue: Boolean,
     agreement: Object,
     agreementType: String,
+    shorterModal: Boolean
 });
 
 const emit = defineEmits([
@@ -61,6 +62,12 @@ function handleInput(event) {
                     Term of Services
                 </span>
             </span>
+            <span v-else-if="(agreementType == 'Other')">
+                <span class="font-bold" @click="showModalTermOfServicesModal">
+                    Term of Services
+                </span>
+            </span>
+            
             <span v-else>
                 <span class="font-bold" @click="showModalPrivacyPolicy">
                         Privacy Policy
@@ -84,7 +91,7 @@ function handleInput(event) {
             Privacy Policy
         </template>
         <template #content_noborder>
-            <div class="h-96 overflow-y-scroll" v-html="agreement.privacy_policy">
+            <div :class="['h-[700px] overflow-y-scroll', {'h-[483px]': shorterModal}]" v-html="agreement.privacy_policy">
             </div>
         </template>
     </MyModal>
@@ -98,7 +105,7 @@ function handleInput(event) {
             Term of Use
         </template>
         <template #content_noborder>
-            <div class="h-96 overflow-y-scroll" v-html="agreement.term_of_use">
+            <div class="h-fit overflow-y-scroll" v-html="agreement.term_of_use">
             </div>
         </template>
     </MyModal>
@@ -112,7 +119,7 @@ function handleInput(event) {
             Term of Services
         </template>
         <template #content_noborder>
-            <div class="h-96 overflow-y-scroll px-6" v-html="agreement.term_of_services">
+            <div class="h-fit overflow-y-scroll px-6" v-html="agreement.term_of_services">
             </div>
         </template>
     </MyModal>

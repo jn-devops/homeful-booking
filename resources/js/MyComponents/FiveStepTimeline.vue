@@ -1,9 +1,9 @@
 <template>
-    <div class="flex px-6">
-        <div class="space-y-6 border-l-2 border-solid border-[#DFDFDF]">
+    <div class="flex px-6 text-sm">
+        <div class="space-y-5 border-l-2 border-solid border-[#DFDFDF]">
             <!-- Step 1 -->
             <div class="relative w-full">
-                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-7 w-7 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 1, 'bg-[#E5883C]': currrentStep == 1, 'bg-[#4CAF50]': currrentStep > 1 }]">
+                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-6 w-6 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 1, 'bg-[#E5883C]': currrentStep == 1, 'bg-[#4CAF50]': currrentStep > 1 }]">
                     <div v-if="currrentStep < 1">
                         &nbsp;
                     </div>
@@ -20,7 +20,7 @@
             </div>
             <!-- Step 2 -->
             <div class="relative w-full">
-                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-7 w-7 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 2, 'bg-[#E5883C]': currrentStep == 2, 'bg-[#4CAF50]': currrentStep > 2 }]">
+                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-6 w-6 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 2, 'bg-[#E5883C]': currrentStep == 2, 'bg-[#4CAF50]': currrentStep > 2 }]">
                     <div v-if="currrentStep < 2">
                         &nbsp;
                     </div>
@@ -37,7 +37,7 @@
             </div>
             <!-- Step 3 -->
             <div class="relative w-full">
-                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-7 w-7 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 3, 'bg-[#E5883C]': currrentStep == 3, 'bg-[#4CAF50]': currrentStep > 3 }]">
+                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-6 w-6 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 3, 'bg-[#E5883C]': currrentStep == 3, 'bg-[#4CAF50]': currrentStep > 3 }]">
                     <div v-if="currrentStep < 3">
                         &nbsp;
                     </div>
@@ -54,7 +54,7 @@
             </div>
             <!-- Step 4 -->
             <div class="relative w-full">
-                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-7 w-7 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 4, 'bg-[#E5883C]': currrentStep == 4, 'bg-[#4CAF50]': currrentStep > 4 }]">
+                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-6 w-6 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 4, 'bg-[#E5883C]': currrentStep == 4, 'bg-[#4CAF50]': currrentStep > 4 }]">
                     <div v-if="currrentStep < 4">
                         &nbsp;
                     </div>
@@ -71,7 +71,7 @@
             </div>
             <!-- Step 5 -->
             <div class="relative w-full">
-                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-7 w-7 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 5, 'bg-[#E5883C]': currrentStep == 5, 'bg-[#4CAF50]': currrentStep > 5 }]">
+                <div :class="['absolute -top-0.5 z-5 -ml-3.5 h-6 w-6 rounded-full', { 'bg-[#DFDFDF]': currrentStep < 5, 'bg-[#E5883C]': currrentStep == 5, 'bg-[#4CAF50]': currrentStep > 5 }]">
                     <div v-if="currrentStep < 5">
                         &nbsp;
                     </div>

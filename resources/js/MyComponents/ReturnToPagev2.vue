@@ -18,7 +18,7 @@ const showReturn = () => {
 </script> 
   
 <template>
-    <nav class="fixed top-0 left-0 w-full bg-white z-10 ">
+    <nav class="top-0 left-0 w-full bg-white z-10 ">
         <div class="flex justify-between items-center border-b-[1px] border-neutral-200 mt-14 pb-4">
             <div class="text-lg font-bold">
                 <button @click="showReturn" class="flex items-center gap-2 px-4 text-black text-2xl">

@@ -37,7 +37,7 @@ Route::get('/proceed/{sku}/{code}', [ProceedController::class, 'index'])->name('
 
 Route::get('/kwyc-verify/{sku}/{code}', [KWYCController::class, 'index'])->name('kwyc.verify'); // Step 2
 
-Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
+// Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
 
 Route::get('/payment-choices/{kwyc_code}', [PaymentChoicesController::class, 'index'])->name('payment.choices'); // Step 4
 Route::get('/payment-choices/credit-debit-card/{kwyc_code}', [PaymentChoicesController::class, 'credit_debit_card_payment'])->name('payment.card');

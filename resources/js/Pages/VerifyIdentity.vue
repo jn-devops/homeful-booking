@@ -1,11 +1,22 @@
 <template>
-    <ReturnToPage />
+    <ReturnToPagev2 :icon="supplementaryData.homefulBookingUrl"> Home Loan Consultation</ReturnToPagev2>
     <div class="bg_layout p-0 ">
-        <div class="w-full">
-            <VerifyIdentityHeaderImg class="w-full" />
+        <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
+            <!-- <VerifyIdentityHeaderImg class="w-full" /> -->
+            <div class="basis-4/12">
+                <ClientInfoHeaderImg />
+                </div>
+                <div class="basis-7/12 flex flex-col justify-center">
+                <div class="text-md font-semibold text-[#CC035C]">
+                    Step 2 of 5:
+                </div>
+                <div class="text-2xl font-extrabold">
+                    Verify your Identity
+                </div>
+            </div>
         </div>
         <div class="py-1 w-full">
-            <div class="flex flex-row p-5">
+            <!-- <div class="flex flex-row p-5">
                 <div class="basis-1/5">
                     <CircularProgress :currentProgress="2" />
                 </div>
@@ -17,9 +28,9 @@
                         Verify your Identity
                     </div>
                 </div>
-            </div>
-            <div class="px-5">
-                <ul class="px-5">
+            </div> -->
+            <div class="px-5 pt-7">
+                <ul class="px-5 pb-4 font-bold">
                     <li class="flex items-center gap-2">
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-check w-4 h-4"><path d="M20 6 9 17l-5-5"/></svg>
                         Ensure good lighting with no glares.
@@ -72,11 +83,15 @@
 
 <script setup>
 import LottiefileAnimation from '@/Logos/Animation/LottiefileAnimation.vue';
+import ClientInfoHeaderImg from '@/Logos/ClientInfoHeaderImg.vue';
+import RegisterHeaderImg from '@/Logos/RegisterHeaderImg.vue';
 import VerifyIdentityHeaderImg from '@/Logos/VerifyIdentityHeaderImg.vue';
+import VerifyIdentityImg from '@/Logos/VerifyIdentityImg.vue';
 import CircularProgress from '@/MyComponents/CircularProgress.vue';
 import FiveStepTimeline from '@/MyComponents/FiveStepTimeline.vue';
 import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 import ReturnToPage from '@/MyComponents/ReturnToPage.vue';
+import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
 import { onMounted, ref, onUpdated, nextTick } from 'vue';
 
@@ -84,6 +99,7 @@ const lottieJson = ref(null);
 const successRefModal = ref(null);
 
 const props = defineProps({
+    supplementaryData: Object,
     sku:String,
     code:String,
     url:String,
