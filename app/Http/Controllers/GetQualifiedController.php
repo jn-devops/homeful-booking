@@ -9,6 +9,13 @@ use Inertia\Inertia;
 class GetQualifiedController extends Controller
 {
     function index(){
-        return Inertia::render('GetQualified');
+
+        $supplementaryData = collect([
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+        ]);
+
+        return Inertia::render('GetQualified', [
+            'supplementaryData' => $supplementaryData,
+        ]);
     }
 }

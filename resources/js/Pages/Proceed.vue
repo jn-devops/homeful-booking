@@ -5,13 +5,24 @@
         </div>
     </div> <!-- End If -->
     <div v-else class="md:w-[415px] md:mx-auto"> <!-- Else -->
-        <ReturnToPage />
+        <ReturnToPagev2 :icon="supplementaryData.homefulBookingUrl"> Home Loan Consultation</ReturnToPagev2>
         <div class="bg_layout p-0 ">
-            <div class="w-full">
-                <ConsultingHeaderImg class="w-full" />
+            <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
+                <!-- <ConsultingHeaderImg class="w-full" /> -->
+                 <div class="basis-4/12">
+                    <RegisterHeaderImg />
+                 </div>
+                 <div class="basis-7/12 flex flex-col justify-center">
+                    <div class="text-md font-semibold text-[#CC035C]">
+                        Step 1 of 5:
+                    </div>
+                    <div class="text-3xl font-extrabold">
+                        Register
+                    </div>
+                 </div>
             </div>
             <div class="py-1 w-full">
-                <div class="flex flex-row p-5">
+                <!-- <div class="flex flex-row p-5">
                     <div class="basis-1/5">
                         <CircularProgress :currentProgress="1" />
                     </div>
@@ -23,10 +34,10 @@
                             Register
                         </div>
                     </div>
-                </div>
-                <div class="px-5">
-                    <p>
-                        Sign up with your phone number and email to receive notification about your consultation and concerns.
+                </div> -->
+                <div class="px-5 pt-6">
+                    <p class="font-semibold px-5 py-6">
+                        Sign up with your Phone Number and Email to register your Home Loan Consultation.
                     </p>
                     <div class="pt-3">
                         <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.agreement" agreementType="TermOfServices">
@@ -35,7 +46,7 @@
                             </template>
                         </Agreement>
                     </div>
-                    <div class="mb-4">
+                    <div class="mb-6">
                             <MyPrimaryButton
                                 :disabled="!isAgreementChecked"
                                 :isDisabled="!isAgreementChecked"
@@ -360,6 +371,8 @@ import ConsultingContent from  '@/Logos/ConsultingContent.vue';
 import { Link } from '@inertiajs/vue3'
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
 import { usePage } from '@inertiajs/vue3'
+import RegisterHeaderImg from '@/Logos/RegisterHeaderImg.vue';
+import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 
 const page = usePage()
 
@@ -373,12 +386,12 @@ const props = defineProps({
     homefulBookingUrl: String
 });
 
-const loading = ref(true);
+const loading = ref(false);
 const chkbox = ref(false);
 const lottieJson = ref(null);
 
 // For Modals:
-const disclaimerStatus = ref(true);
+const disclaimerStatus = ref(false);
 const consoCalculator = ref(false);
 const quickGuide = ref(false);
 const consultingContent = ref(false);
@@ -438,9 +451,9 @@ const formatCurrency = (value) => {
 };
 
 onMounted(async () => {
-    setTimeout(() => {
-        loading.value = false;
-    }, 3000);
+    // setTimeout(() => {
+    //     loading.value = false;
+    // }, 3000);
   const response = await fetch('/animation/proceed.json');
   lottieJson.value = await response.json();
 

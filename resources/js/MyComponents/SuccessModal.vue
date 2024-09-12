@@ -27,6 +27,12 @@
 import {ref, onMounted, onUnmounted, nextTick} from 'vue';
 import LottiefileAnimation from '@/Logos/Animation/LottiefileAnimation.vue';
 
+const props = defineProps({
+    afterFunction: {
+        type: Function,
+    }
+})
+
 const lottieJson = ref(null);
 const closeModalButton = ref(null);
 const seconds = ref(5);
@@ -44,6 +50,7 @@ const startTimer = () => {
         if (seconds.value === 0) {
             closeModalButton.value.click();
             clearInterval(timer);
+            props.afterFunction();
         }
     }, 1000);
 };

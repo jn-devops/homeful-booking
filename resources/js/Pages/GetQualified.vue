@@ -1,30 +1,41 @@
 <template>
-    <ReturnToPage />
+    <ReturnToPagev2 :icon="supplementaryData.homefulBookingUrl"> Home Loan Consultation</ReturnToPagev2>
     <div class="bg_layout p-0 ">
-        <div class="w-full">
-            <GetQualifiedImg class="w-full" />
+        <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
+            <!-- <GetQualifiedImg class="w-full" /> -->
+            <div class="basis-4/12">
+                <GetQualifiedHeaderImg />
+                </div>
+                <div class="basis-7/12 flex flex-col justify-center">
+                <div class="text-md font-semibold text-[#CC035C]">
+                    Step 5 of 5:
+                </div>
+                <div class="text-2xl font-extrabold">
+                    Get Qualified
+                </div>
+            </div>
         </div>
         <div class="py-1 w-full">
-            <div class="flex flex-row p-5">
+            <!-- <div class="flex flex-row p-5">
                 <div class="basis-1/5">
                     <CircularProgress :currentProgress="5" />
                 </div>
                 <div class="ps-5 basis-4/5 flex flex-col justify-center">
-                    <!-- <div class="text-md font-semibold text-[#CC035C]">
+                    <div class="text-md font-semibold text-[#CC035C]">
                         Step 5:
-                    </div> -->
+                    </div>
                     <div class="text-3xl font-extrabold">
                         Get Qualified
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="px-5">
-                <div class="px-5 font-medium mb-10">
+                <div class="px-5 font-medium my-5">
                     <p class="mb-3">
                         Congratulations Payment successful! You will receive an SMS notification with your Customer Reference Code (CRC).
                     </p>
                     <p class="mb-3">
-                        Your application will now be subject for evaluation. You will receive another SMS notification upon successful qualification.
+                        Your Home Loan Consultation will now be subject for evaluation. You will receive another SMS notification upon successful qualification.
                     </p>
                     <p class="mb-3">
                         Visit our website to learn more about us.
@@ -59,12 +70,14 @@
 </template>
 
 <script setup>
+import GetQualifiedHeaderImg from '@/Logos/GetQualifiedHeaderImg.vue';
 import GetQualifiedImg from '@/Logos/GetQualifiedImg.vue';
 import PaymentChoicesImg from '@/Logos/PaymentChoicesImg.vue';
 import CircularProgress from '@/MyComponents/CircularProgress.vue';
 import FiveStepTimeline from '@/MyComponents/FiveStepTimeline.vue';
 import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 import ReturnToPage from '@/MyComponents/ReturnToPage.vue';
+import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
 import { router } from '@inertiajs/vue3';
 import { onMounted, ref, onUpdated, nextTick } from 'vue';

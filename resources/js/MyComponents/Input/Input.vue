@@ -17,7 +17,7 @@
 </template>
 
 <script setup>
-import { ref, watch, defineProps, defineEmits } from 'vue';
+import { ref, watch, defineEmits } from 'vue';
 const props = defineProps({
     modelValue: String,
     label: String,

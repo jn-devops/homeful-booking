@@ -12,7 +12,9 @@ class KWYCController extends Controller
 {
     function index(String $sku, String $code = null, Request $request){
 
-
+        $supplementaryData = collect([
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+        ]);
        $calculator = json_decode($request->input('calculator'), true);
 
        $attribs = array_merge($calculator, [
@@ -39,6 +41,8 @@ class KWYCController extends Controller
                 'calculator' => $request->input('calculator'),
                 'reference_code' => $references->code ?? '',
                 'url' => $fullUrl ,
+                'supplementaryData' => $supplementaryData,
+
             ]);
         } catch (Exception $e) {
 

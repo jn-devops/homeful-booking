@@ -1,30 +1,57 @@
 <script setup>
 import EntryPointImg from '@/Logos/EntryPointImg.vue';
 import Agreement from '@/MyComponents/Agreement.vue';
+import ConsultationCalculator from '@/MyComponents/ConsultationCalculator.vue';
+import MyModal from '@/MyComponents/MyModal.vue';
 import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 import {ref, onMounted} from 'vue';
+import GuideRegisterLogo from '@/Logos/GuideRegisterLogo.vue';
+import GuideVerifyLogo from '@/Logos/GuideVerifyLogo.vue';
+import GuideFormLogo from '@/Logos/GuideFormLogo.vue';
+import GuideQualified from '@/Logos/GuideQualifiedLogo.vue';
+import GuideConsulting from '@/Logos/GuideConsultingLogo.vue';
+import OneLogo from '@/Logos/1Logo.vue';
+import TwoLogo from '@/Logos/2Logo.vue';
+import ThreeLogo from '@/Logos/3Logo.vue';
+import FourLogo from '@/Logos/4Logo.vue';
+import FiveLogo from '@/Logos/5Logo.vue';
+import ModalV2 from '@/MyComponents/ModalV2.vue';
+import { Inertia } from '@inertiajs/inertia';
 
 const props = defineProps({
-    homefulBookingUrl: String,
-    supplementaryData: Object
+    supplementaryData: Object,
+    calculator: Object,
+    propertyDetail: Object,
+    productDetails: Object,
+    sku:String,
+    code:String,
+    homefulBookingUrl: String
 });
 
 console.log(props.homefulBookingUrl);
 
-const loading = ref(false);
+const loading = ref(true);
 const isAgreementChecked = ref(false);
 const lottieJson = ref(null);
 const homefulAnimation = ref(null);
+const consoCalculator = ref(false);
+const quickGuide = ref(false);
 
 const showAgreement = (newVal) => {
     isAgreementChecked.value = newVal; 
 }
+const updateConsoCalculatorModal = (newVal) => {
+    consoCalculator.value = newVal;
+}
+const toggleQuickGuide = (newVal) => {
+    quickGuide.value = newVal;
+}
 
 onMounted(async () => {
-    // setTimeout(() => {
-    //     loading.value = false;
-    // }, 3000);
+    setTimeout(() => {
+        loading.value = false;
+    }, 3000);
 
 //   const response = await fetch('/animation/proceed.json');
 
@@ -33,6 +60,19 @@ onMounted(async () => {
 
 });
 
+const formatCurrency = (value) => {
+    const formatter = new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: 'PHP',
+        
+    });
+    return formatter.format(value);
+};
+
+const redirectToProceed = () => {
+    window.location.href = `/proceed/${props.sku}/${props.code}`;
+}
+
 </script>
 <template>
     <div v-if="loading" class="flex items-center justify-center h-screen"> <!-- If -->
@@ -40,15 +80,15 @@ onMounted(async () => {
             <img :src="homefulBookingUrl" class="shimmer w-full" />
         </div>
     </div>
-    <div v-else class="md:w-[415px] md:mx-auto mt-28"> <!-- Else -->
-        <ReturnToPagev2 :icon="homefulBookingUrl"> Home Loan Calculation </ReturnToPagev2>
+    <div v-else class="md:w-[415px] md:mx-auto"> <!-- Else -->
+        <ReturnToPagev2 :icon="homefulBookingUrl"> Home Loan Consultation </ReturnToPagev2>
         <div class="flex justify-center">
             <div class="w-56 text-center">
                 <EntryPointImg />
             </div>
         </div>
         <div class="text-center py-3">
-            <span class="text-[#135DBD] text-2xl font-semibold">Home Loan Calculation</span>
+            <span class="text-[#135DBD] text-2xl font-semibold">Home Loan Consultation</span>
         </div>
         <div class="px-6">
             <p>
@@ -112,7 +152,7 @@ onMounted(async () => {
 
 
         <div class="px-4 my-6">
-            <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.agreement" agreementType="TermOfServices">
+            <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.welcome_agreement" agreementType="TermOfServices">
                 <template #agreement_context>
                     By clicking the button below you are agreeing to the 
                 </template>
@@ -120,7 +160,7 @@ onMounted(async () => {
             <MyPrimaryButton
                 :disabled="!isAgreementChecked"
                 :isDisabled="!isAgreementChecked"
-                @click="showAgreement"
+                @click="updateConsoCalculatorModal(true)"
                 :class="[
                     'rounded-full p-4 mt-4 w-full text-sm md:text-md',
                     isAgreementChecked ? '' : 'bg-gray-300'
@@ -130,7 +170,146 @@ onMounted(async () => {
             </MyPrimaryButton>
         </div>
 
-    </div> 
+    </div>
+
+    <!-- Consultation Calculator-->
+    <MyModal
+    :modal-show="consoCalculator"
+    @updatemodalShow="updateConsoCalculatorModal"
+    >
+        <template #title>
+            <span class="text-lg">Home Loan Consultation Form</span>
+        </template>
+        <template #modalcontent>
+            <div class="">
+                <div class="flex gap-3 items-center justify-evenly">
+                    <div class="bg-gray-300 h-20 w-1/3 rounded-xl">
+                        <!-- img -->
+                        <img :src="propertyDetail.image" alt="Property Image" class="w-full">
+                    </div>
+                    <div class="text-sm">
+                        <p class="font-bold">{{ propertyDetail.unit_location }}</p>
+                        <p class="font-bold">{{ formatCurrency(propertyDetail.price) }}</p>
+                        <p class="text-sm text-gray-500">Total Contract Price</p>
+                    </div>
+                    <div>
+                        <button @click="showSelectUnitLoc" class="underline underline-offset-1 default_text-color text-sm bg-[#F6FAFF] p-3 rounded-full">
+                            Change
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </template>
+        <template #policy_terms>
+            <ConsultationCalculator :calculator="calculator" :formatCurrency="formatCurrency" />
+        </template>
+        <template #buttons>
+            <div class="w-full mt-auto">
+                <MyPrimaryButton
+                @click="toggleQuickGuide(true)"
+                class="w-full rounded-full p-4 mt-4"
+                >
+                    <div class="flex justify-items-center items-center text-sm md:text-md md:font-bold">
+                        Proceed
+                    </div>
+                </MyPrimaryButton>
+            </div>
+        </template>
+    </MyModal> 
+
+
+    <!-- QuickGuide -->
+    <MyModal
+        :modal-show="quickGuide"
+        @updatemodalShow="toggleQuickGuide"
+        >
+
+            <template #title>
+                Quick Guide
+            </template>
+            <template #content_noborder>
+                <div class="h-fit flex flex-col gap-7">
+                    <div class="flex gap-3">
+                        <div>
+                            <GuideRegisterLogo />
+                        </div>
+                        <div class="flex gap-2">
+                            <div>
+                                <OneLogo />
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-[#1973E8]">Register</p>
+                                <p class="text-[#5E5E5E]">Provide your email address and mobile number</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div>
+                            <GuideVerifyLogo />
+                        </div>
+                        <div class="flex gap-2">
+                            <div>
+                                <TwoLogo />
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-[#1973E8]">Verify your Identity</p>
+                                <p class="text-[#5E5E5E]">Scan a valid Government ID and complete with a selfie.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div>
+                            <GuideFormLogo />
+                        </div>
+                        <div class="flex gap-2">
+                            <div>
+                                <ThreeLogo />
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-[#1973E8]">Complete Data Form</p>
+                                <p class="text-[#5E5E5E]">Fill-out the Customer Information Sheet.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div>
+                            <GuideConsulting />
+                        </div>
+                        <div class="flex gap-2">
+                            <div>
+                                <FourLogo />
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-[#1973E8]">Pay Consulting Fee</p>
+                                <p class="text-[#5E5E5E]">Select from available payment options.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex gap-3">
+                        <div>
+                            <GuideQualified />
+                        </div>
+                        <div class="flex gap-2">
+                            <div>
+                                <FiveLogo />
+                            </div>
+                            <div>
+                                <p class="font-bold text-xl text-[#1973E8]">Get Qualified</p>
+                                <p class="text-[#5E5E5E]">Wait for notification via SMS and Email.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </template>
+            <template #buttons>
+                <MyPrimaryButton
+                    @click="redirectToProceed"
+                    class="w-full rounded-full p-4 mt-4"
+                    >
+                    Continue
+                </MyPrimaryButton>
+            </template>
+        </MyModal>
 </template>
 
 <style scoped>
