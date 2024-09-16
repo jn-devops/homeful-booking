@@ -25,6 +25,7 @@
         "@popperjs/core": "^2.11.8",
         "@preline/accordion": "^2.4.1",
         "@preline/overlay": "^2.4.1",
+        "@preline/select": "^2.4.1",
         "@selemondev/vue3-signature-pad": "^1.1.0",
         "@tailwindcss/forms": "^0.5.7",
         "@vuepic/vue-datepicker": "^9.0.2",

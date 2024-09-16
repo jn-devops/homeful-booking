@@ -78,5 +78,7 @@ Route::get('/client-info/{kwyc_code}', [\App\Http\Controllers\ClientInformationC
 Route::get('/client-information/{kwyc_code}', [\App\Http\Controllers\ClientInformationController::class, 'show'])->name('client-information.show');
 Route::post('/client-information/store/{kwyc_code}', [\App\Http\Controllers\ClientInformationController::class, 'store'])->name('client-information.store');
 
+Route::get('/kwyc/signup', [\App\Http\Controllers\KWYCController::class, 'sign_up'])->name('client-information.clienInfoLanding');
+
 
 require __DIR__.'/auth.php';

@@ -23,6 +23,8 @@ class InitialPageController extends Controller
 {
     function index(String $sku, String $code = null){
 
+        // return 404 if sku not found
+        // $product_details = Product::where('sku', $sku)->firstOrFail();
         $product_details = Product::where('sku', $sku)->first();
         $property_details = collect([
             'unit_location' => 'Phase 2 Block 7 Unit 2',

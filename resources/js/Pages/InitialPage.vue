@@ -70,7 +70,13 @@ const formatCurrency = (value) => {
 };
 
 const redirectToProceed = () => {
-    window.location.href = `/proceed/${props.sku}/${props.code}`;
+    const url = `/proceed/${props.sku}/${props.code}`;
+    const params = new URLSearchParams({
+        calculator: JSON.stringify(props.calculator),
+    });
+    console.log(params.toString());
+    console.log(`${url}?${params.toString()}`);
+    window.location.href = `${url}?${params.toString()}`;
 }
 
 </script>

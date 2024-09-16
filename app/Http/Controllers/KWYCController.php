@@ -51,4 +51,9 @@ class KWYCController extends Controller
             // return redirect()->back()->withErrors(['error' => 'There was an issue processing your request. Please try again later.']);
         }
     }
+
+    function sign_up(){
+        return Inertia::render('KWYCSignup');
+
+    }
 }

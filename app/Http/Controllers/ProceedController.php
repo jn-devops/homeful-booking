@@ -22,20 +22,8 @@ use Homeful\Mortgage\Data\MortgageData;
 
 class ProceedController extends Controller
 {
-    function index(String $sku, String $code = null){
-
-        // return 404 if sku not found
-        // $product_details = Product::where('sku', $sku)->firstOrFail();
-        $product_details = Product::where('sku', $sku)->first();
-        $property_details = collect([
-            'unit_location' => 'Phase 2 Block 7 Unit 2',
-            'regional' => false,
-            'price' => 2500000,
-            'consulting_fee' => 10000,
-            'image' => asset('images/SampleProperty.png'),
-        ]);
-        $product_details = $product_details??$property_details;
-
+    function index(String $sku, String $code = null, Request $request){
+        // dd(json_decode($request->input('calculator'), true));
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -108,52 +96,12 @@ class ProceedController extends Controller
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
 
-        $calculator = [];
-
-        $property = (new Property)
-            ->setTotalContractPrice(new Price(Money::of($tcp = $property_details['price'], 'PHP')))
-            ->setAppraisedValue(new Price(Money::of($tcp, 'PHP')));
-        $params = [
-            Input::WAGES => 110000,
-            Input::TCP => $tcp,
-            Input::PERCENT_DP => 5 / 100,
-            Input::DP_TERM => 12,
-            Input::BP_INTEREST_RATE => 7 / 100,
-            Input::PERCENT_MF => 8.5 / 100,
-            Input::LOW_CASH_OUT => 0.0,
-            Input::BP_TERM => 20,
-            Input::DOWN_PAYMENT => 100000,
-
-        ];
-
-        $mortgage = Mortgage::createWithTypicalBorrower($property, $params);
-        $data = MortgageData::fromObject($mortgage);
-
-        $calculator = [
-            'guess_down_payment_amount' => $data->down_payment,
-            'guess_dp_amortization_amount' => $data->dp_amortization,
-            'guess_partial_miscellaneous_fees' => $data->partial_miscellaneous_fees,
-            'guess_miscellaneous_fees' => $data->miscellaneous_fees,
-            'guess_balance_payment' => $data->loan_amount,
-            'age' => $data->borrower->age,
-            'guess_gross_monthly_income' => $data->borrower->gross_monthly_income,
-            'down_payment_term' => $data->dp_term,
-            'balance_payment_term' => $data->bp_term,
-            'percent_down_payment' => $data->percent_down_payment,
-            'regional' =>  $data->borrower->regional,
-            'total_contract_price' => $data->property->total_contract_price,
-            'percent_miscellaneous_fees' => $data->percent_mf,
-            'guess_monthly_amortization' => $data->loan_amortization,
-        ];
-
         return Inertia::render('Proceed', [
             'supplementaryData' => $supplementaryData,
-            'calculator' => $calculator,
+            'calculator' => json_decode($request->input('calculator'), true),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
-            'propertyDetail' => $property_details,
             'sku'=>$sku,
             'code'=>$code,
-            'productDetails' => $product_details
         ]);
     }
 }
