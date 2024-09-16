@@ -17,7 +17,12 @@ use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 use Filament\Tables\Enums\ActionsPosition;
 use Filament\Infolists;
+use Filament\Infolists\Components\Fieldset;
+use Filament\Infolists\Components\Group;
+use Filament\Infolists\Components\Section;
 use Filament\Infolists\Infolist;
+use Filament\Infolists\Components\Tabs;
+use Filament\Infolists\Components\Split;
 class ContactResource extends Resource
 {
     protected static ?string $model = Clients::class;
@@ -28,7 +33,167 @@ class ContactResource extends Resource
     {
         return $infolist
             ->schema([
-                Infolists\Components\TextEntry::make('first_name'),
+                Split::make([
+                    Section::make([
+                        Tabs::make('Tabs')
+                        ->tabs([
+                            Tabs\Tab::make('Personal Information')
+                                ->schema([
+                                    Fieldset::make('Personal Details')
+                                        ->schema([
+                                            Group::make([
+                                                Infolists\Components\TextEntry::make('full_name')
+                                                    ->extraAttributes(['class' => 'mb-1 mt-0'])
+                                                    ->label('Full Name:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('date_of_birth')
+                                                    ->label('Date of Birth:')
+                                                    ->date()
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('age')
+                                                    ->formatStateUsing(fn (string $state): string => __(number_format($state, 1) . " years old"))
+                                                    ->label('Age:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('nationality')
+                                                    ->label('Nationality:')
+                                                    ->inlineLabel(true),
+                                            ]),
+                                            Group::make([
+                                                Infolists\Components\TextEntry::make('sex')
+                                                    ->label('Gender:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('civil_status')
+                                                    ->label('Civil Status:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('email')
+                                                    ->label('Email:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('mobile')
+                                                    ->label('Mobile Number:')
+                                                    ->inlineLabel(true),
+                                            ])->grow(false),
+                                    ])->columns(2),
+                                    Fieldset::make('Present Address')->schema([
+                                        Group::make([
+                                            Infolists\Components\TextEntry::make("present_address.region")
+                                                ->label("Region:")
+                                                ->inlineLabel(true),
+                                            Infolists\Components\TextEntry::make("present_address.administrative_area")
+                                                ->label("Province:")
+                                                ->inlineLabel(true),
+                                            Infolists\Components\TextEntry::make("present_address.locality")
+                                                ->label("City:")
+                                                ->inlineLabel(true),
+                                            Infolists\Components\TextEntry::make("present_address.sublocality")
+                                                ->label("Barangay:")
+                                                ->inlineLabel(true),
+
+                                        ])->grow(false),
+                                        Group::make([
+                                            Infolists\Components\TextEntry::make("present_address.postal_code")
+                                                ->label("Zipcode:")
+                                                ->inlineLabel(true),
+//                                            Infolists\Components\TextEntry::make("present_address.country")
+//                                                ->label("Country:")
+//                                                ->inlineLabel(true),
+                                            Infolists\Components\TextEntry::make("present_address.ownership")
+                                                ->label("Home Ownership:")
+                                                ->inlineLabel(true),
+                                            Infolists\Components\TextEntry::make("present_address.length_of_stay")
+                                                ->label("Length of Stay:")
+                                                ->inlineLabel(true),
+                                            Infolists\Components\TextEntry::make("same_as_permanent_address")
+                                                ->label("Permanent Address:")
+                                                ->formatStateUsing(fn (string $state): string => __($state ? 'Yes' : 'No'))
+                                                ->inlineLabel(true),
+                                        ])->grow(false)
+                                    ])->columns(2),
+
+                                ]),
+                            Tabs\Tab::make('Employment')
+                                ->schema([
+                                    Fieldset::make('Employee Information')
+                                        ->schema([
+                                            Group::make([
+                                                Infolists\Components\TextEntry::make('buyer_employment.employment_type')
+                                                    ->label('Employment Type:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.employment_status')
+                                                    ->label('Employment Status:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.employer.name')
+                                                    ->label('Employeer/Business Name:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.employer.industry')
+                                                    ->label('Work Industry:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.current_position')
+                                                    ->label('Current Position:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.years_in_service')
+                                                    ->label('Tenure:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.rank')
+                                                    ->label('Rank:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.monthly_gross_income')
+                                                    ->formatStateUsing(fn(string $state): string => '₱ ' . number_format($state, 2))
+                                                    ->label('Monthly Gross Income:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.id.tin')
+                                                    ->label('TIN ID:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.id.sss')
+                                                    ->label('SSS ID:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.id.gsis')
+                                                    ->label('GSIS ID:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.id.pagibig')
+                                                    ->label('PAGIBIG ID:')
+                                                    ->inlineLabel(true),
+
+                                            ])
+                                        ])->columns(1)->columnSpanFull(),
+                                    Fieldset::make('Employer Information')
+                                        ->schema([
+                                            Group::make([
+                                                Infolists\Components\TextEntry::make('buyer_employment.employer.email')
+                                                    ->label('Email:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.employer.contact_no')
+                                                    ->label('Contact Number:')
+                                                    ->inlineLabel(true),
+                                                Infolists\Components\TextEntry::make('buyer_employment.employer.year_established')
+                                                    ->label('Year Established:')
+                                                    ->inlineLabel(true),
+                                                 Infolists\Components\TextEntry::make('buyer_employment.employer.address')
+                                                     ->label('Address:')
+                                                     ->inlineLabel(true),
+
+                                            ])
+                                        ])->columns(1)->columnSpanFull(),
+                                ]),
+                            Tabs\Tab::make('Consultation')
+                                ->schema([
+                                    // ...
+                                ]),
+                            Tabs\Tab::make('Documents')
+                                ->schema([
+                                    // ...
+                                ]),
+                        ])
+                        ->contained(false)
+                        ->persistTabInQueryString()
+                        ->columnSpanFull(),
+                    ]),
+                    Section::make([
+                        Infolists\Components\TextEntry::make('created_at')
+                            ->dateTime(),
+
+                    ])->grow(false),
+                ])->from('md')->columnSpanFull(),
+
             ]);
     }
 

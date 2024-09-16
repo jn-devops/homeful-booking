@@ -7,4 +7,5 @@ return [
     App\Providers\FortifyServiceProvider::class,
     Homeful\Mortgage\Providers\EventServiceProvider::class,
     Homeful\References\ReferencesServiceProvider::class,
+    \Homeful\Products\ProductsServiceProvider::class,
 ];

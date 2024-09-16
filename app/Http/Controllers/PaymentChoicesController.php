@@ -138,7 +138,7 @@ class PaymentChoicesController extends Controller
         $jsonInput = [
             "wallet" => $request->wallet, // gcash or grabpay
             "referenceCode" => $lead->meta['checkin']['body']['inputs']['code'], // alpha-numeric
-            "amount" => "200" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
+            "amount" => "100" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
         ];
         $response = $paymate->payment_wallet(new Request($jsonInput));
         // dd($response['pay_url']);
