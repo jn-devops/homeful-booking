@@ -9,6 +9,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
+use Illuminate\Support\Str;
+
 class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
@@ -25,6 +27,7 @@ class User extends Authenticatable implements FilamentUser
         'mobile',
     ];
     protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,6 +50,14 @@ class User extends Authenticatable implements FilamentUser
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
         ];
+    }
+
+    public static function boot() {
+        parent::boot();
+
+        static::creating(function ($model) {
+            $model->id = Str::uuid();
+        });
     }
 
     public function canAccessPanel(Panel $panel): bool
