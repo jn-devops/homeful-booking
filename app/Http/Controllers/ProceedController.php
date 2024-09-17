@@ -2,7 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
+use Homeful\Common\Classes\Input as InputFieldName;
+use Homeful\Contracts\Models\Contract;
+use Homeful\Contracts\States\Consulted;
+use Homeful\References\Actions\CreateReferenceAction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Brick\Money\Money;
 use Homeful\Borrower\Borrower;
@@ -22,7 +28,28 @@ use Homeful\Mortgage\Data\MortgageData;
 
 class ProceedController extends Controller
 {
-    function index(String $sku, String $code = null, Request $request){
+    function index(String $contract_id, Request $request){
+        $contract= Contract::where('id',$contract_id)->firstOrFail();
+        $action = app(CreateReferenceAction::class);
+        $calculator = json_decode($request->input('calculator'), true);
+        $attribs = array_merge($calculator, [
+            'seller_commission_code' => $contract->seller_commission_code,
+            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
+            'sku'=> $contract->inventory->sku,
+            'wages'=>110000,
+            'promo_code'=>''
+        ]);
+
+        try {
+            $action = app(CreateReferenceAction::class);
+            $reference = $action->run($attribs,[]);
+
+            $contract->state->transitionTo(Consulted::class, reference: $reference);
+
+        }catch (Exception $e){
+            Log::error('Error creating reference:', ['error' => $e->getMessage()]);
+        }
+
         // dd(json_decode($request->input('calculator'), true));
         $supplementaryData = collect([
             'agreement' => [
@@ -100,8 +127,7 @@ class ProceedController extends Controller
             'supplementaryData' => $supplementaryData,
             'calculator' => json_decode($request->input('calculator'), true),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
-            'sku'=>$sku,
-            'code'=>$code,
+            'contract'=>$contract
         ]);
     }
 }

@@ -3978,16 +3978,16 @@
         },
         {
             "name": "jn-devops/borrower",
-            "version": "v1.1.0",
+            "version": "v1.1.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/borrower.git",
-                "reference": "6908b1c1f941d29b26d3fa0a9297c49b655e736d"
+                "reference": "ed8f8a370ad824c4859f84b89195a550a18a4f5c"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/borrower/zipball/6908b1c1f941d29b26d3fa0a9297c49b655e736d",
-                "reference": "6908b1c1f941d29b26d3fa0a9297c49b655e736d",
+                "url": "https://api.github.com/repos/jn-devops/borrower/zipball/ed8f8a370ad824c4859f84b89195a550a18a4f5c",
+                "reference": "ed8f8a370ad824c4859f84b89195a550a18a4f5c",
                 "shasum": ""
             },
             "require": {
@@ -4048,7 +4048,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/borrower/issues",
-                "source": "https://github.com/jn-devops/borrower/tree/v1.1.0"
+                "source": "https://github.com/jn-devops/borrower/tree/v1.1.2"
             },
             "funding": [
                 {
@@ -4056,7 +4056,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-08-31T02:53:57+00:00"
+            "time": "2024-09-17T06:18:55+00:00"
         },
         {
             "name": "jn-devops/common",
@@ -4315,16 +4315,16 @@
         },
         {
             "name": "jn-devops/mortgage",
-            "version": "v1.0.3",
+            "version": "v1.0.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/mortgage.git",
-                "reference": "1d49bc25f4f86f33bd4e2da7df87330fa1a45688"
+                "reference": "e57652f69e950fb50dd1f7c2cc867c4352465751"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/mortgage/zipball/1d49bc25f4f86f33bd4e2da7df87330fa1a45688",
-                "reference": "1d49bc25f4f86f33bd4e2da7df87330fa1a45688",
+                "url": "https://api.github.com/repos/jn-devops/mortgage/zipball/e57652f69e950fb50dd1f7c2cc867c4352465751",
+                "reference": "e57652f69e950fb50dd1f7c2cc867c4352465751",
                 "shasum": ""
             },
             "require": {
@@ -4385,7 +4385,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/mortgage/issues",
-                "source": "https://github.com/jn-devops/mortgage/tree/v1.0.3"
+                "source": "https://github.com/jn-devops/mortgage/tree/v1.0.4"
             },
             "funding": [
                 {
@@ -4393,7 +4393,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-08T15:18:07+00:00"
+            "time": "2024-09-17T05:48:52+00:00"
         },
         {
             "name": "jn-devops/paymate",
@@ -4642,16 +4642,16 @@
         },
         {
             "name": "jn-devops/properties",
-            "version": "v1.3.0",
+            "version": "v1.3.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/properties.git",
-                "reference": "580e2933b777abf40f136aa6df23519f1426e212"
+                "reference": "97e7b631ba1a1597ad4de09a09b31f5d7ffa6f1b"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/properties/zipball/580e2933b777abf40f136aa6df23519f1426e212",
-                "reference": "580e2933b777abf40f136aa6df23519f1426e212",
+                "url": "https://api.github.com/repos/jn-devops/properties/zipball/97e7b631ba1a1597ad4de09a09b31f5d7ffa6f1b",
+                "reference": "97e7b631ba1a1597ad4de09a09b31f5d7ffa6f1b",
                 "shasum": ""
             },
             "require": {
@@ -4711,7 +4711,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/properties/issues",
-                "source": "https://github.com/jn-devops/properties/tree/v1.3.0"
+                "source": "https://github.com/jn-devops/properties/tree/v1.3.1"
             },
             "funding": [
                 {
@@ -4719,7 +4719,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-04T22:44:16+00:00"
+            "time": "2024-09-17T03:58:19+00:00"
         },
         {
             "name": "jn-devops/property",

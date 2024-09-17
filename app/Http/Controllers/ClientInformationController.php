@@ -77,8 +77,6 @@ class ClientInformationController extends Controller
 
     public function clienInfoLanding(String $kwyc_code){
 
-
-
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
             'agreement' => [

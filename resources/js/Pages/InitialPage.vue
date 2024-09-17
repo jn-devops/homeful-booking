@@ -26,7 +26,9 @@ const props = defineProps({
     productDetails: Object,
     sku:String,
     code:String,
-    homefulBookingUrl: String
+    homefulBookingUrl: String,
+    contract : Object,
+    property_image: String,
 });
 
 console.log(props.homefulBookingUrl);
@@ -39,7 +41,7 @@ const consoCalculator = ref(false);
 const quickGuide = ref(false);
 
 const showAgreement = (newVal) => {
-    isAgreementChecked.value = newVal; 
+    isAgreementChecked.value = newVal;
 }
 const updateConsoCalculatorModal = (newVal) => {
     consoCalculator.value = newVal;
@@ -49,6 +51,7 @@ const toggleQuickGuide = (newVal) => {
 }
 
 onMounted(async () => {
+    console.log();
     setTimeout(() => {
         loading.value = false;
     }, 3000);
@@ -64,13 +67,13 @@ const formatCurrency = (value) => {
     const formatter = new Intl.NumberFormat('en-PH', {
         style: 'currency',
         currency: 'PHP',
-        
+
     });
     return formatter.format(value);
 };
 
 const redirectToProceed = () => {
-    const url = `/proceed/${props.sku}/${props.code}`;
+    const url = `/proceed/${props.contract.id}`;
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
     });
@@ -118,7 +121,7 @@ const redirectToProceed = () => {
                 </button>
                 <div id="hs-basic-collapse-one" class="hs-accordion-content w-full overflow-hidden transition-[height] duration-300 px-6" role="region" aria-labelledby="hs-basic-heading-one">
                     <p class="my-3">
-                        Our home loan consultation is designed to: 
+                        Our home loan consultation is designed to:
                     </p>
                     <ol class="list-decimal list-inside text-gray-800 dark:text-white">
                         <li class="mb-2">Guide you in understanding your options and determining the best home budget.</li>
@@ -144,13 +147,13 @@ const redirectToProceed = () => {
                 </button>
                 <div id="hs-basic-collapse-two" class="hs-accordion-content hidden w-full overflow-hidden transition-[height] duration-300 px-6" role="region" aria-labelledby="hs-basic-heading-two">
                     <p class="my-3">
-                        Yes! 
+                        Yes!
                     </p>
                     <p class="my-3">
-                        The Consultation Fee shall be utilized to compensate the time and expertise in evaluating and guiding you thru your buying decision process.  
+                        The Consultation Fee shall be utilized to compensate the time and expertise in evaluating and guiding you thru your buying decision process.
                     </p>
-                    <p class="my-3"> 
-                        Should you choose to proceed with the purchase, the fee will be credited as your processing fee, which will serve to officially reserve the unit under your name. 
+                    <p class="my-3">
+                        Should you choose to proceed with the purchase, the fee will be credited as your processing fee, which will serve to officially reserve the unit under your name.
                     </p>
                 </div>
             </div>
@@ -160,7 +163,7 @@ const redirectToProceed = () => {
         <div class="px-4 my-6">
             <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.welcome_agreement" agreementType="TermOfServices">
                 <template #agreement_context>
-                    By clicking the button below you are agreeing to the 
+                    By clicking the button below you are agreeing to the
                 </template>
             </Agreement>
             <MyPrimaryButton
@@ -191,11 +194,11 @@ const redirectToProceed = () => {
                 <div class="flex gap-3 items-center justify-evenly">
                     <div class="bg-gray-300 h-20 w-1/3 rounded-xl">
                         <!-- img -->
-                        <img :src="propertyDetail.image" alt="Property Image" class="w-full">
+                        <img :src="property_image" alt="Property Image" class="w-full">
                     </div>
                     <div class="text-sm">
                         <p class="font-bold">{{ propertyDetail.unit_location }}</p>
-                        <p class="font-bold">{{ formatCurrency(propertyDetail.price) }}</p>
+                        <p class="font-bold">{{ formatCurrency(parseFloat(props.productDetails.price.total.exclusive.split('/')[0]) / parseFloat(props.productDetails.price.total.exclusive.split('/')[1]))  }}</p>
                         <p class="text-sm text-gray-500">Total Contract Price</p>
                     </div>
                     <div>
@@ -221,7 +224,7 @@ const redirectToProceed = () => {
                 </MyPrimaryButton>
             </div>
         </template>
-    </MyModal> 
+    </MyModal>
 
 
     <!-- QuickGuide -->

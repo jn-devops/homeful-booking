@@ -11,6 +11,5 @@ Should you have any questions or require further assistance, please do not hesit
 For questions about the property and services you may submit your concern/s tru: https://www.homeful.ph/contact-us<br>
 
 <i>This is an automatically generated email, please do not reply.</i><br>
-    <img src="data:image/png;base64,{{ $qrCodeBase64 }}" alt="QR Code">
-    <img src="cid:qrcode.png" alt="QR Code CID" />
+        <img src="cid:qrcode.png" alt="QR Code CID" />
 </x-mail::message>

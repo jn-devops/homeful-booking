@@ -10,12 +10,13 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
 use Homeful\Products\Models\Product;
+use Homeful\Properties\Models\Property;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ProductsImportResource extends Resource
 {
-    protected static ?string $model = Product::class;
+    protected static ?string $model = Property::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

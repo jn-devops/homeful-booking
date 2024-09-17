@@ -33,7 +33,7 @@ Route::get('/welcome/{sku}/{code}', [\App\Http\Controllers\InitialPageController
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
 Route::get('/consult/{sku}/{code}', [\App\Http\Controllers\ConsultationController::class, 'entryPoint'])->name('entry.point');
 
-Route::get('/proceed/{sku}/{code}', [ProceedController::class, 'index'])->name('proceed'); // Step 1
+Route::get('/proceed/{reference_code}', [ProceedController::class, 'index'])->name('proceed'); // Step 1
 
 Route::get('/kwyc-verify/{sku}/{code}', [KWYCController::class, 'index'])->name('kwyc.verify'); // Step 2
 
