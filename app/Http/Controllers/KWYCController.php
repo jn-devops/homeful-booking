@@ -18,22 +18,26 @@ class KWYCController extends Controller
        $calculator = json_decode($request->input('calculator'), true);
 
        $attribs = array_merge($calculator, [
+           'sku' => $sku,
            'seller_commission_code' => $code,
+           'wages' => 110000, // TODO: Get this from calculator
+           'promo_code' => '', // TODO: Get this from calculator
            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
        ]);
-
-
+       
+       
        try {
-            // Attempt to execute the action
-            $action = app(CreateReferenceAction::class);
-            $references = $action->run($attribs,[]);
-            $campaignUrl = config('kwyc-check.campaign_url');
-            $urlParams = http_build_query([
-                'identifier' => $references->code,
-                'choice' => $sku,
-                'code' => $code
+           // Attempt to execute the action
+           $action = app(CreateReferenceAction::class);
+        //    dd($attribs);
+           $references = $action->run($attribs,[]);
+           $campaignUrl = config('kwyc-check.campaign_url');
+           $urlParams = http_build_query([
+               'identifier' => $references->code,
+               'choice' => $sku,
+               'code' => $code
             ]);
-
+            
             $fullUrl = "{$campaignUrl}?{$urlParams}";
             return Inertia::render('VerifyIdentity', [
                 'sku' => $sku,
@@ -45,7 +49,7 @@ class KWYCController extends Controller
 
             ]);
         } catch (Exception $e) {
-
+            dd($e);
             Log::error('Error creating reference:', ['error' => $e->getMessage()]);
 
             // return redirect()->back()->withErrors(['error' => 'There was an issue processing your request. Please try again later.']);

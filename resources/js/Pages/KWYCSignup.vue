@@ -4,6 +4,12 @@ import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
 import { ref } from 'vue';
 
+const props = defineProps({
+    calculator: Object,
+    sku:String,
+    code:String,
+});
+
 const phoneNumber = ref('');
 const emailAddress = ref('');
 const successRefModal = ref(false);
@@ -15,14 +21,21 @@ const filterPhoneNum = () => {
     }
 };
 
-const openAndSubmitModal = () => {
+const createAccount = () => {
+    // TODO: call controller to create an account
     successRefModal.value.openSuccessModal();
 }
 
 const submit = () => {
     console.log('submit');
+    const params = new URLSearchParams({
+        calculator: JSON.stringify(props.calculator),
+    });
+    window.location.href = `/kwyc-verify/${props.sku}/${props.code}?${params.toString()}`;
     
 }
+
+
 
 </script>
 
@@ -61,7 +74,7 @@ const submit = () => {
                     </form>
                     <MyPrimaryButton
                         class="rounded-full p-4 mt-4 w-full text-sm md:text-md"
-                        @click="openAndSubmitModal"
+                        @click="createAccount"
                     >
                     Continue
                     </MyPrimaryButton>

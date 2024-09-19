@@ -39,9 +39,13 @@ const lottieJson = ref(null);
 const homefulAnimation = ref(null);
 const consoCalculator = ref(false);
 const quickGuide = ref(false);
+const changeProperty = ref(false);
 
 const showAgreement = (newVal) => {
     isAgreementChecked.value = newVal;
+}
+const updateChangeProperty = (newVal) => {
+    changeProperty.value = newVal;
 }
 const updateConsoCalculatorModal = (newVal) => {
     consoCalculator.value = newVal;
@@ -202,7 +206,7 @@ const redirectToProceed = () => {
                         <p class="text-sm text-gray-500">Total Contract Price</p>
                     </div>
                     <div>
-                        <button @click="showSelectUnitLoc" class="underline underline-offset-1 default_text-color text-sm bg-[#F6FAFF] p-3 rounded-full">
+                        <button @click="updateChangeProperty(true)" class="underline underline-offset-1 default_text-color text-sm bg-[#F6FAFF] p-3 rounded-full">
                             Change
                         </button>
                     </div>
@@ -319,6 +323,39 @@ const redirectToProceed = () => {
                 </MyPrimaryButton>
             </template>
         </MyModal>
+
+     <!-- Change Property Modal -->
+     <MyModal
+        :modal-show="changeProperty"
+        @updatemodalShow="updateChangeProperty"
+    >
+        <template #content_noborder class="">
+            <div class="flex flex-row border-b-2 border-gray-200 items-center gap-3 pb-4" @click="updateChangeProperty(false)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left text-[#FCB115]">
+                    <path d="m12 19-7-7 7-7"/>
+                    <path d="M19 12H5"/>
+                </svg>
+                <span class="text-2xl font-bold">
+                    Select Phase Block Lot
+                </span>
+            </div>
+            <div>
+                <div class="max-w-sm space-y-3">
+                    <input type="text" class="py-3 px-4 block w-full bg-[#F6F6F6] rounded-lg" placeholder="Search">
+                </div>
+                <div class="p-5 w-full text-lg">
+                    <ul>
+                        <li class="py-2 border-b-2 border-gray-200 px-2">Phase [X] Block [X] Lot [X]</li>
+                        <li class="py-2 border-b-2 border-gray-200 px-2">Phase [X] Block [X] Lot [X]</li>
+                        <li class="py-2 border-b-2 border-gray-200 px-2">Phase [X] Block [X] Lot [X]</li>
+                        <li class="py-2 border-b-2 border-gray-200 px-2">Phase [X] Block [X] Lot [X]</li>
+                        <li class="py-2 border-b-2 border-gray-200 px-2">Phase [X] Block [X] Lot [X]</li>
+                        <li class="py-2 border-b-2 border-gray-200 px-2">Phase [X] Block [X] Lot [X]</li>
+                    </ul>
+                </div>
+            </div>
+        </template>
+    </MyModal>
 </template>
 
 <style scoped>

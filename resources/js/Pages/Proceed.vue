@@ -47,6 +47,7 @@
                         </Agreement>
                     </div>
                     <div class="mb-6">
+                        <Link :href="url">
                             <MyPrimaryButton
                                 :disabled="!isAgreementChecked"
                                 :isDisabled="!isAgreementChecked"
@@ -54,7 +55,6 @@
                                     'rounded-full p-4 mt-4 w-full text-sm md:text-md',
                                     isAgreementChecked ? '' : 'bg-gray-300'
                                 ]"
-                                @click="goToKwyc"
                             >
                                 <div class="flex items-center space-x-2">
                                     <span>Proceed</span>
@@ -63,6 +63,7 @@
                                     </div>
                                 </div>
                             </MyPrimaryButton>
+                        </Link>
                     </div>
                 </div>
                 <div class="max-w-7xl sm:px-6 lg:px-8 py-2 bg-slate-100">
@@ -140,7 +141,7 @@ import MyModal from '@/MyComponents/MyModal.vue';
 import LottiefileAnimation from '@/Logos/Animation/LottiefileAnimation.vue';
 import FiveStepTimeline from '@/MyComponents/FiveStepTimeline.vue';
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
-import { usePage } from '@inertiajs/vue3'
+import { Link, usePage } from '@inertiajs/vue3'
 import RegisterHeaderImg from '@/Logos/RegisterHeaderImg.vue';
 import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 
@@ -164,10 +165,11 @@ const successRefModal = ref(null);
 
 const isDisclaimerChecked = ref(false);
 const isAgreementChecked = ref(false);
+const url = ref('');
 
 const updatemodalShow = (newVal) => {
     console.log("xxx", newVal);
-    disclaimerStatus.value = newVal;
+    disclaimerStatus.vm,alue = newVal;
 }
 const showConsoCalculator = () => {
     disclaimerStatus.value = !disclaimerStatus.value;
@@ -175,11 +177,13 @@ const showConsoCalculator = () => {
 }
 
 onMounted(async () => {
-    // setTimeout(() => {
-    //     loading.value = false;
-    // }, 3000);
-  const response = await fetch('/animation/proceed.json');
-  lottieJson.value = await response.json();
+    const response = await fetch('/animation/proceed.json');
+    lottieJson.value = await response.json();
+
+    const params = new URLSearchParams({
+        calculator: JSON.stringify(props.calculator),
+    });
+    url.value = `/kwyc/signup/${props.sku}/${props.code}?${params.toString()}`;
 
 });
 

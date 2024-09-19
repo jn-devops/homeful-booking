@@ -15,6 +15,7 @@ import FilePondPluginImagePreview from "filepond-plugin-image-preview";
 import SignaturePad from '@/Components/SignaturePad.vue';
 import CenterModal from '@/MyComponents/CenterModal.vue';
 import SuccessModal from '@/MyComponents/SuccessModal.vue';
+import country from 'country-list-js';
 
 const props = defineProps({
     name_suffixes: Object,
@@ -49,6 +50,7 @@ const buyer = reactive({
     nationality: '',
     email: '',
     mobile:'',
+    facebook_link:'',
     spouse:{
         first_name: '',
         last_name: '',
@@ -82,7 +84,15 @@ const employment = reactive({
         email: '', // Locally Employed & OFW
         contact_no: '', // Locally Employed & OFW
         country: '', // OFW & Self Employed with Business
-        employer_complete_address: '', // All
+        employer_complete_address: '', // For locally employed
+        region: '', // OFW
+        province: '', // OFW
+        city: '', // OFW
+        barangay: '', // OFW
+    },
+    character_reference: {
+        name: '',
+        mobile: '',
     }
 });
 
@@ -93,6 +103,7 @@ const presentAddress = reactive({
     barangay: '',
     zip_code: '',
     home_ownership: '',
+    home_ownership_rental_amount: '',
     years_at_present_address: '',
     address: '',
     same_as_permanent_address: 'No',
@@ -115,6 +126,12 @@ const spousePresentAddress = reactive({
     cities:({}),
     barangays:({}),
 });
+
+const country_list = ref(country.names());
+const countries = ref(country_list.value.reduce((acc, country) => {
+  acc[country] = country;
+  return acc;
+}, {}));
 
 // Signature
 const isSignaturePadOpen = ref(false);
@@ -368,6 +385,50 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
     }
 };
 
+// Employment Address
+const updateEmploymentAddressRegion = (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        const filteredProvinces = props.provinces.filter(province => province.region_code === newValue);
+        employment.employer_details.provinces = filteredProvinces.reduce((acc, province) => {
+            acc[province.province_code] = province.province_description;
+            return acc;
+        }, {});
+        employment.employer_details.region = newValue;
+        employment.employer_details.province = '';
+        employment.employer_details.city = '';
+        employment.employer_details.barangay = '';
+        employment.employer_details.cities = ({});
+        employment.employer_details.barangays = ({});
+    }
+};
+
+const updateEmploymentAddressProvince = (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        const filteredCities = props.cities.filter(city => city.province_code === newValue);
+        employment.employer_details.cities = filteredCities.reduce((acc, city) => {
+            acc[city.city_municipality_code] = city.city_municipality_description;
+            return acc;
+        }, {});
+        employment.employer_details.province = newValue;
+        employment.employer_details.city = '';
+        employment.employer_details.barangay = '';
+        employment.employer_details.barangays = ({});
+        console.log(filteredCities);
+    }
+};
+
+const updateEmploymentAddressCity = (newValue, oldValue) => {
+    if (newValue !== oldValue) {
+        const filteredBarangays = props.barangays.filter(barangay => barangay.city_municipality_code === newValue);
+        employment.employer_details.barangays = filteredBarangays.reduce((acc, barangay) => {
+            acc[barangay.barangay_code] = barangay.barangay_description;
+            return acc;
+        }, {});
+        employment.employer_details.city = newValue;
+        employment.employer_details.barangay = '';
+    }
+};
+
 </script>
 
 <template>
@@ -503,6 +564,17 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                             :required="true"
                         />
                     </div>
+                    <div class="mt-3 w-full">
+                        <TextInput
+                            id="buyer.facebook_link"
+                            label="Facebook Link"
+                            type="text"
+                            v-model="buyer.facebook_link"
+                            :errorMessage="errors?.value?.facebook_link"
+                            placeholder="Enter your FB Link"
+                            :required="false"
+                        />
+                    </div>
                 </div>
                 <!-- Present Address -->
                 <div class="mt-4 w-full">
@@ -526,7 +598,7 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                         label="Province"
                         :options="presentAddress.provinces"
                         v-model="presentAddress.province"
-                        placeholder=""
+                        placeholder="" 
                         helperText=""
                         :required="true"
                         :errorMessage="errors?.value?.presentAddress.province"
@@ -581,6 +653,19 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                         :required="true"
                         :errorMessage="errors?.value?.presentAddress.home_ownership"
                         />
+                    </div>
+                    <div :class="{'hidden':presentAddress.home_ownership != '003' }">
+                        <div class="mt-3 w-full">
+                            <TextInput
+                            id="presentAddress.home_ownership_rental_amount"
+                            label="Rental Amount"
+                            type="number"
+                            v-model="presentAddress.home_ownership_rental_amount"
+                            placeholder="Enter Amount"
+                            :required="false"
+                            :errorMessage="errors?.value?.presentAddress.home_ownership_rental_amount"
+                            />
+                        </div>
                     </div>
                     <div class="mt-3 w-full">
                         <TextInput
@@ -993,21 +1078,102 @@ const updateSpousePresentAddressCity = (newValue, oldValue) => {
                             <SelectInput
                                 id="employment.country"
                                 :label="'Country'"
-                                :options="props.countries"
+                                :options="countries"
                                 v-model="employment.country"
                                 placeholder="Select Country"
                                 helperText=""
+                                :searchable="true"
                                 :required="true"
                                 :errorMessage="errors?.value?.country"
                             />
                         </div>
+                        <div :class="{
+                            'hidden': employment.employment_type != props.employmement_types['Locally Employed'] 
+                        }">
+                            <div class="mt-3 w-full">
+                            <SelectInput
+                                id="employment.employer_details.region"
+                                label="Region"
+                                :options="props.regions"
+                                v-model="employment.employer_details.region"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.employment.employer_details.region"
+                                @update:modelValue="updateEmploymentAddressRegion"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="employment.employer_details.province"
+                                label="Province"
+                                :options="employment.employer_details.provinces"
+                                v-model="employment.employer_details.province"
+                                placeholder="" 
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.employment.employer_details.province"
+                                @update:modelValue="updateEmploymentAddressProvince"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="employment.employer_details.city"
+                                label="City"
+                                :options="employment.employer_details.cities"
+                                v-model="employment.employer_details.city"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.employment.employer_details.city"
+                                :searchable="true"
+                                @update:modelValue="updateEmploymentAddressCity"
+                                />
+                            </div>
+                            <div class="mt-3 w-full">
+                                <SelectInput
+                                id="employment.employer_details.barangay"
+                                label="Barangay"
+                                :options="employment.employer_details.barangays"
+                                v-model="employment.employer_details.barangay"
+                                placeholder=""
+                                helperText=""
+                                :required="true"
+                                :errorMessage="errors?.value?.employment.employer_details.barangay"
+                                :searchable="true"
+                                />
+                            </div>
+                        </div>
+                        <div :class="{
+                            'hidden': employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)'] 
+                        }">
+                            <TextInput
+                                id="employment.employer_details.employer_complete_address"
+                                label="Employer Complete Address"
+                                placeholder="Enter Employer Complete Address"
+                                type="text"
+                                v-model="employment.employer_details.employer_complete_address"
+                                :errorMessage="errors?.value?.employer_complete_address"
+                                :required="true"
+                            />
+                        </div>
+                    </div>
+                    <h2 class="text-base text-pink-700 uppercase">Character Reference</h2>
+                    <div class="mt-3 w-full">
                         <TextInput
-                            id="employment.employer_details.employer_complete_address"
-                            label="Employer Complete Address"
-                            placeholder="Enter Employer Complete Address"
+                            id="employment.character_reference.name"
+                            label="Name"
+                            placeholder="Enter Character Reference Name"
                             type="text"
-                            v-model="employment.employer_details.employer_complete_address"
-                            :errorMessage="errors?.value?.employer_complete_address"
+                            v-model="employment.character_reference.name"
+                            :errorMessage="errors?.value?.character_reference_name"
+                            :required="true"
+                        />
+                        <MobileInput
+                            id="employment.character_reference.mobile"
+                            label="Enter its Mobile"
+                            v-model="employment.character_reference.mobile"
+                            :errorMessage="errors?.value?.character_reference_mobile"
                             :required="true"
                         />
                     </div>

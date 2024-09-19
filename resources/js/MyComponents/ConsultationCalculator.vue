@@ -157,9 +157,9 @@ const balancePaymentModal = (newVal) =>{
      <div class="py-1 px-0 md:px-4 h-[600px] overflow-auto md:h-auto md:overflow-hidden">
             <!-- Mobile -->
             <div class="block md:hidden">
-                <div class="mt-3">
+                <div class="mt-1">
                     <h3 class="font-bold text-lg mb-2">Downpayment</h3>
-                    <div class="bg-[#F6FAFF] px-4 py-4 rounded-lg" @click="downpaymentModal(true)">
+                    <div class="bg-[#F6FAFF] px-4 py-2 rounded-lg" @click="downpaymentModal(true)">
                         <div class="flex gap-2 mb-5">
                             <div class=" flex-none w-36">
                                 <p class="text-black text-sm">Total Down Payment</p>
@@ -177,7 +177,7 @@ const balancePaymentModal = (newVal) =>{
                                 </div>
                             </div>
                         </div>
-                        <div class="flex gap-2 mb-2">
+                        <div class="flex gap-2">
                             <div class="flex-none w-36">
                                 <p class="text-black text-sm">Miscellaneous Fee</p>
                                 <p class="font-bold text-[#8B8B8B] text-lg">{{ formatCurrency(loan_data.guess_miscellaneous_fees) }}</p>
@@ -197,7 +197,7 @@ const balancePaymentModal = (newVal) =>{
                         </div>
                     </div>
                 </div>
-                <div class="mt-3">
+                <div class="mt-1">
                     <h3 class="font-bold text-lg mb-2">Balance Payment</h3>
                     <div class="bg-[#F6FAFF] px-4 py-4 rounded-lg" @click="balancePaymentModal(true)">
                         <div class="flex gap-2">
@@ -219,7 +219,7 @@ const balancePaymentModal = (newVal) =>{
                         </div>
                     </div>
                 </div>
-                <div class="mt-4 border-t-2 border-t-slate-200">
+                <div class="mt-2 border-t-2 border-t-slate-200">
                     <div class="">
                         <p class="font-semibold text-lg pt-3">Customize by Age:</p>
                         <div class="flex justify-between mb-6">

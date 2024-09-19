@@ -39,16 +39,6 @@ class InitialPageController extends Controller
         $contract->seller_commission_code = $code;
         $contract->save();
 
-//        $property_details = collect([
-//            'unit_location' => 'Phase 2 Block 7 Unit 2',
-//            'regional' => false,
-//            'price' => 2500000,
-//            'consulting_fee' => 10000,
-//            'image' => asset('images/SampleProperty.png'),
-//        ]);
-
-//        $product_details = $product_details??$property_details;
-
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -181,7 +171,8 @@ class InitialPageController extends Controller
             'code'=>$code,
             'productDetails' => $product_details,
             'contract'=>$contract,
-            'property_image'=> json_decode($product_details->facade_url)->facade,
+            // 'property_image'=> json_decode($product_details->facade_url)->facade,
+            'property_image'=> '',
         ]);
     }
 

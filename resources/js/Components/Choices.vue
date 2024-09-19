@@ -206,7 +206,7 @@ export default {
         const selectElement = document.querySelector(`#${escapedId}`);
         if (selectElement) {
             this.hsSelectInstance = new HSSelect(selectElement);
-            console.log(this.hsSelectInstance);
+            // console.log(this.hsSelectInstance);
             // this.hsSelectInstance.on('change', this.onInputChange);
             // this.hsSelectInstance.refresh();
         }

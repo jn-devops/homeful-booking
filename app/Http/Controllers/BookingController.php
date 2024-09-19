@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\CivilStatus;
+use Exception;
 use Homeful\Common\Classes\Input;
 use Homeful\Common\Classes\Input as InputFieldName;
 use Homeful\Contacts\Actions\PersistContactAction;
@@ -24,6 +24,29 @@ use Illuminate\Auth\Events\Verified;
 use Illuminate\Http\Request;
 use Illuminate\Validation\ValidationException;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\Log;
+use Brick\Money\Money;
+use Homeful\Borrower\Borrower;
+use Homeful\Payment\Class\Term;
+use Homeful\Payment\Payment;
+use Illuminate\Support\Arr;
+use Illuminate\Support\Carbon;
+use Illuminate\Support\Facades\Validator;
+use Whitecube\Price\Price;
+use function DI\string;
+use App\Models\CivilStatus;
+use App\Models\HomeOwnership;
+use App\Models\NameSuffix;
+use App\Models\Nationality;
+use App\Models\PhilippineBarangay;
+use App\Models\PhilippineCity;
+use App\Models\PhilippineProvince;
+use App\Models\PhilippineRegion;
+use App\Models\EmploymentType;
+use App\Models\EmploymentStatus;
+use App\Models\CurrentPosition;
+use App\Models\WorkIndustry;
+
 
 class BookingController extends Controller
 {
@@ -37,7 +60,6 @@ class BookingController extends Controller
         $contract->inventory = $property_details;
         $contract->seller_commission_code = $code;
         $contract->save();
-
 
         $supplementaryData = collect([
             'agreement' => [
@@ -130,6 +152,7 @@ class BookingController extends Controller
             ->setAppraisedValue($product_details->price);
         $params = [
             Input::WAGES => 110000,
+          //Input::TCP => $tcp,
             Input::TCP => $product_details->price->inclusive()->getAmount()->toFloat(),
             Input::PERCENT_DP => 5 / 100,
             Input::DP_TERM => 12,
@@ -167,7 +190,8 @@ class BookingController extends Controller
             'code'=>$code,
             'productDetails' => $product_details,
             'contract'=>$contract,
-            'property_image'=> json_decode($product_details->facade_url)->facade,
+            // 'property_image'=> json_decode($product_details->facade_url)->facade,
+            'property_image'=> '',
         ]);
     }
 
@@ -321,88 +345,7 @@ class BookingController extends Controller
         $contract->state->transitionTo(Verified::class, reference:$reference);
     }
 
-
-
-    public function clienInfoLanding(String $contract_id,String $reference_code){
-
-        $supplementaryData = collect([
-            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
-            'agreement' => [
-                'term_of_services' => 'By using KwYC Check©, you consent to the following:
-                    <ul class="list-decimal ml-6 mt-6">
-                        <li>Hyperverge® will capture an image of your ID card, extract data from it, compare it to your selfie, and temporarily store image files for 15 minutes.</li>
-                        <li>The system will transmit to Raemulan Lands, Inc.® the raw data, URL links to the images, and, when available, an electronically signed</li>
-                    </ul>',
-                'privacy_policy' => "<p>Last Updated: August 5, 2024</p>
-                    <article>
-                        <h2 class=\"font-bold text-black\">1. Introduction</h2>
-                        <p>Welcome to MOA Signing and Groundbreaking. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you register for our event. Please read this policy carefully. If you do not agree with the terms of this Privacy Policy, please do not register for the event.</p>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">2. Information We Collect</h2>
-                        <p>We may collect the following types of information when you register for our event:</p>
-                        <ul>
-                            <li>Personal Information: Name, email address, phone number, and any other information you provide during registration.</li>
-                            <li>Event-Specific Information: Attendance preferences, dietary restrictions, special accommodations, and other relevant details.</li>
-                        </ul>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">3. How We Use Your Information</h2>
-                        <p>We use the information we collect to:</p>
-                        <ul>
-                            <li>Process your registration and manage your participation in the event.</li>
-                            <li>Communicate with you about the event and related activities.</li>
-                            <li>Respond to your inquiries and provide customer support.</li>
-                            <li>Improve our event planning and logistics.</li>
-                        </ul>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">4. Disclosure of Your Information</h2>
-                        <p>We may share your information with:</p>
-                        <ul>
-                            <li>Event Partners and Sponsors: For event-related purposes, including marketing and promotional activities.</li>
-                            <li>Service Providers: To assist with event logistics and operations, such as payment processing and event management.</li>
-                            <li>Legal Compliance: If required by law, regulation, or legal process.</li>
-                        </ul>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">5. Data Security</h2>
-                        <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no data transmission over the internet or electronic storage is completely secure, so we cannot guarantee absolute security.</p>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">6. Your Rights</h2>
-                        <p>Depending on your jurisdiction, you may have the following rights regarding your personal information:</p>
-                        <ul>
-                            <li>The right to access, correct, or delete your personal information.</li>
-                            <li>The right to object to or restrict the processing of your personal information.</li>
-                            <li>The right to data portability.</li>
-                        </ul>
-                        <p>To exercise these rights, please contact us at [Contact Email].</p>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">7. Changes to This Privacy Policy</h2>
-                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on our website and updating the \"Last Updated\" date at the top of this policy. Your continued participation in the event after the changes are made will constitute your acceptance of the new policy.</p>
-                    </article>
-                    <article>
-                        <h2 class=\"font-bold text-black\">8. Contact Us</h2>
-                        <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
-                        <address>
-                            Raemulan Lands Inc. Entrance, 17 ADB Avenue, Topaz Rd, Ortigas Center, Pasig, 1600 Metro Manila
-                            <a href=\"mailto:sample@email.com\">sample@email.com</a>
-                            <a href=\"tel:+025318788\" class=\"underline\">(02) 5318 7888</a>
-                        </address>
-                    </article>",
-                'term_of_use' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-            ],
-        ]);
-        return Inertia::render('ClientInformationLanding', [
-            'supplementaryData' => $supplementaryData,
-            'contract_id' => $contract_id,
-            'reference_code'=>$reference_code
-        ]);
-    }
-
-    public function clienInfoStore(String $contract_id,String $reference_code){
+    public function client_info_store(String $contract_id,String $reference_code){
         $contract=Contract::where('id',$contract_id)->firstOrFail();
         $reference=Reference::where('code',$reference_code)->firstOrFail();
         $contactData = [
@@ -495,23 +438,9 @@ class BookingController extends Controller
                 ];
         }
 
-        // dd($contactData);
-
-        // if ( $request->input('spousePresentAddress.same_as_permanent_address') !== 'Yes') {
-        //     $contactData['addresses'][] = [
-        //         'type' => 'spouse_present',
-        //         'ownership' => $request->input('spousePresentAddress.home_ownership'),
-        //         'address1' => $request->input('spousePresentAddress.address'),
-        //         'locality' => $request->input('spousePresentAddress.city'),
-        //         'administrative_area' => $request->input('spousePresentAddress.province'),
-        //         'postal_code' => $request->input('spousePresentAddress.zip_code'),
-        //         'country' => 'PH',
-        //         'length_of_stay' => $request->input('spousePresentAddress.years_at_present_address'),
-        //     ];
-        // }
         try {
-//            $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
-//            $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
+            // $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
+            // $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
             // $contact = PersistContactAction::run($contactData);
             // $contact =  Contact::updateOrCreate([
             //     'reference_code' => $request->input('kwyc_code'),
@@ -633,8 +562,6 @@ class BookingController extends Controller
         $paymate = new Paymate();
         $cardData = $request->all();
         $jsonInput = [
-//            "buyerName" => $lead->meta['checkin']['body']['data']['fieldsExtracted']['fullName'],
-//            "email" => $lead->meta['checkin']['body']['inputs']['email'],
             "expirationMonth" => substr($cardData['expirationDate'], 0, 2),
             "expirationYear" => '20' . substr($cardData['expirationDate'], 3, 2),
             "securityCode" => $cardData['cvv'],
@@ -674,4 +601,385 @@ class BookingController extends Controller
     function paid(Request $requestq){
 
     }
+
+    function step_one(String $contract_id, Request $request){
+        $contract= Contract::where('id',$contract_id)->firstOrFail();
+        $action = app(CreateReferenceAction::class);
+        $calculator = json_decode($request->input('calculator'), true);
+        $attribs = array_merge($calculator, [
+            'seller_commission_code' => $contract->seller_commission_code,
+            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
+            'sku'=> $contract->inventory->sku,
+            'wages'=>110000,
+            'promo_code'=>''
+        ]);
+
+        try {
+            $action = app(CreateReferenceAction::class);
+            $reference = $action->run($attribs,[]);
+
+            $contract->state->transitionTo(Consulted::class, reference: $reference);
+
+        }catch (Exception $e){
+            Log::error('Error creating reference:', ['error' => $e->getMessage()]);
+        }
+
+        // dd(json_decode($request->input('calculator'), true));
+        $supplementaryData = collect([
+            'agreement' => [
+                'term_of_services' => 'By using KwYC Check©, you consent to the following:
+                    <ul class="list-decimal ml-6 mt-6">
+                        <li>Hyperverge® will capture an image of your ID card, extract data from it, compare it to your selfie, and temporarily store image files for 15 minutes.</li>
+                        <li>The system will transmit to Raemulan Lands, Inc.® the raw data, URL links to the images, and, when available, an electronically signed</li>
+                    </ul>',
+                'privacy_policy' => "<p>Last Updated: August 5, 2024</p>
+                    <article>
+                        <h2 class=\"font-bold text-black\">1. Introduction</h2>
+                        <p>Welcome to MOA Signing and Groundbreaking. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you register for our event. Please read this policy carefully. If you do not agree with the terms of this Privacy Policy, please do not register for the event.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">2. Information We Collect</h2>
+                        <p>We may collect the following types of information when you register for our event:</p>
+                        <ul>
+                            <li>Personal Information: Name, email address, phone number, and any other information you provide during registration.</li>
+                            <li>Event-Specific Information: Attendance preferences, dietary restrictions, special accommodations, and other relevant details.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">3. How We Use Your Information</h2>
+                        <p>We use the information we collect to:</p>
+                        <ul>
+                            <li>Process your registration and manage your participation in the event.</li>
+                            <li>Communicate with you about the event and related activities.</li>
+                            <li>Respond to your inquiries and provide customer support.</li>
+                            <li>Improve our event planning and logistics.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">4. Disclosure of Your Information</h2>
+                        <p>We may share your information with:</p>
+                        <ul>
+                            <li>Event Partners and Sponsors: For event-related purposes, including marketing and promotional activities.</li>
+                            <li>Service Providers: To assist with event logistics and operations, such as payment processing and event management.</li>
+                            <li>Legal Compliance: If required by law, regulation, or legal process.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">5. Data Security</h2>
+                        <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no data transmission over the internet or electronic storage is completely secure, so we cannot guarantee absolute security.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">6. Your Rights</h2>
+                        <p>Depending on your jurisdiction, you may have the following rights regarding your personal information:</p>
+                        <ul>
+                            <li>The right to access, correct, or delete your personal information.</li>
+                            <li>The right to object to or restrict the processing of your personal information.</li>
+                            <li>The right to data portability.</li>
+                        </ul>
+                        <p>To exercise these rights, please contact us at [Contact Email].</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">7. Changes to This Privacy Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on our website and updating the \"Last Updated\" date at the top of this policy. Your continued participation in the event after the changes are made will constitute your acceptance of the new policy.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">8. Contact Us</h2>
+                        <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
+                        <address>
+                            Raemulan Lands Inc. Entrance, 17 ADB Avenue, Topaz Rd, Ortigas Center, Pasig, 1600 Metro Manila
+                            <a href=\"mailto:sample@email.com\">sample@email.com</a>
+                            <a href=\"tel:+025318788\" class=\"underline\">(02) 5318 7888</a>
+                        </address>
+                    </article>",
+                'term_of_use' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            ],
+            'consulting_content_link' => asset('test.pdf'),
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+        ]);
+
+        return Inertia::render('Proceed', [
+            'supplementaryData' => $supplementaryData,
+            'calculator' => json_decode($request->input('calculator'), true),
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
+            'contract'=>$contract
+        ]);
+    }
+
+    function sign_up(String $sku, String $code = null, Request $request){
+        $calculator = json_decode($request->input('calculator'), true);
+        return Inertia::render('KWYCSignup', [
+            'calculator' => $calculator,
+            'sku' => $sku,
+            'code' => $code,
+        ]);
+    }
+
+    function step_two(String $sku, String $code = null, Request $request){
+
+        $supplementaryData = collect([
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+        ]);
+       $calculator = json_decode($request->input('calculator'), true);
+
+       $attribs = array_merge($calculator, [
+           'sku' => $sku,
+           'seller_commission_code' => $code,
+           'wages' => 110000, // TODO: Get this from calculator
+           'promo_code' => '', // TODO: Get this from calculator
+           InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
+       ]);
+       
+       
+       try {
+           // Attempt to execute the action
+           $action = app(CreateReferenceAction::class);
+        //    dd($attribs);
+           $references = $action->run($attribs,[]);
+           $campaignUrl = config('kwyc-check.campaign_url');
+           $urlParams = http_build_query([
+               'identifier' => $references->code,
+               'choice' => $sku,
+               'code' => $code
+            ]);
+            
+            $fullUrl = "{$campaignUrl}?{$urlParams}";
+            return Inertia::render('VerifyIdentity', [
+                'sku' => $sku,
+                'code' => $code,
+                'calculator' => $request->input('calculator'),
+                'reference_code' => $references->code ?? '',
+                'url' => $fullUrl ,
+                'supplementaryData' => $supplementaryData,
+
+            ]);
+        } catch (Exception $e) {
+            dd($e);
+            Log::error('Error creating reference:', ['error' => $e->getMessage()]);
+
+            // return redirect()->back()->withErrors(['error' => 'There was an issue processing your request. Please try again later.']);
+        }
+    }
+
+    public function step_three(String $kwyc_code){
+
+        $supplementaryData = collect([
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
+            'agreement' => [
+                'term_of_services' => 'By using KwYC Check©, you consent to the following:
+                    <ul class="list-decimal ml-6 mt-6">
+                        <li>Hyperverge® will capture an image of your ID card, extract data from it, compare it to your selfie, and temporarily store image files for 15 minutes.</li>
+                        <li>The system will transmit to Raemulan Lands, Inc.® the raw data, URL links to the images, and, when available, an electronically signed</li>
+                    </ul>',
+                'privacy_policy' => "<p>Last Updated: August 5, 2024</p>
+                    <article>
+                        <h2 class=\"font-bold text-black\">1. Introduction</h2>
+                        <p>Welcome to MOA Signing and Groundbreaking. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you register for our event. Please read this policy carefully. If you do not agree with the terms of this Privacy Policy, please do not register for the event.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">2. Information We Collect</h2>
+                        <p>We may collect the following types of information when you register for our event:</p>
+                        <ul>
+                            <li>Personal Information: Name, email address, phone number, and any other information you provide during registration.</li>
+                            <li>Event-Specific Information: Attendance preferences, dietary restrictions, special accommodations, and other relevant details.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">3. How We Use Your Information</h2>
+                        <p>We use the information we collect to:</p>
+                        <ul>
+                            <li>Process your registration and manage your participation in the event.</li>
+                            <li>Communicate with you about the event and related activities.</li>
+                            <li>Respond to your inquiries and provide customer support.</li>
+                            <li>Improve our event planning and logistics.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">4. Disclosure of Your Information</h2>
+                        <p>We may share your information with:</p>
+                        <ul>
+                            <li>Event Partners and Sponsors: For event-related purposes, including marketing and promotional activities.</li>
+                            <li>Service Providers: To assist with event logistics and operations, such as payment processing and event management.</li>
+                            <li>Legal Compliance: If required by law, regulation, or legal process.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">5. Data Security</h2>
+                        <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no data transmission over the internet or electronic storage is completely secure, so we cannot guarantee absolute security.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">6. Your Rights</h2>
+                        <p>Depending on your jurisdiction, you may have the following rights regarding your personal information:</p>
+                        <ul>
+                            <li>The right to access, correct, or delete your personal information.</li>
+                            <li>The right to object to or restrict the processing of your personal information.</li>
+                            <li>The right to data portability.</li>
+                        </ul>
+                        <p>To exercise these rights, please contact us at [Contact Email].</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">7. Changes to This Privacy Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on our website and updating the \"Last Updated\" date at the top of this policy. Your continued participation in the event after the changes are made will constitute your acceptance of the new policy.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">8. Contact Us</h2>
+                        <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
+                        <address>
+                            Raemulan Lands Inc. Entrance, 17 ADB Avenue, Topaz Rd, Ortigas Center, Pasig, 1600 Metro Manila
+                            <a href=\"mailto:sample@email.com\">sample@email.com</a>
+                            <a href=\"tel:+025318788\" class=\"underline\">(02) 5318 7888</a>
+                        </address>
+                    </article>",
+                'term_of_use' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            ],
+        ]);
+        return Inertia::render('ClientInformationLanding', [
+            'supplementaryData' => $supplementaryData,
+            'kwyc_code' => $kwyc_code
+        ]);
+    }
+
+    public function step_four(String $kwyc_code){
+        $supplementaryData = collect([
+            'agreement' => [
+                'term_of_services' => 'By using KwYC Check©, you consent to the following:
+                    <ul class="list-decimal ml-6 mt-6">
+                        <li>Hyperverge® will capture an image of your ID card, extract data from it, compare it to your selfie, and temporarily store image files for 15 minutes.</li>
+                        <li>The system will transmit to Raemulan Lands, Inc.® the raw data, URL links to the images, and, when available, an electronically signed</li>
+                    </ul>',
+                'privacy_policy' => "<p>Last Updated: August 5, 2024</p>
+                    <article>
+                        <h2 class=\"font-bold text-black\">1. Introduction</h2>
+                        <p>Welcome to MOA Signing and Groundbreaking. We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, disclose, and safeguard your information when you register for our event. Please read this policy carefully. If you do not agree with the terms of this Privacy Policy, please do not register for the event.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">2. Information We Collect</h2>
+                        <p>We may collect the following types of information when you register for our event:</p>
+                        <ul>
+                            <li>Personal Information: Name, email address, phone number, and any other information you provide during registration.</li>
+                            <li>Event-Specific Information: Attendance preferences, dietary restrictions, special accommodations, and other relevant details.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">3. How We Use Your Information</h2>
+                        <p>We use the information we collect to:</p>
+                        <ul>
+                            <li>Process your registration and manage your participation in the event.</li>
+                            <li>Communicate with you about the event and related activities.</li>
+                            <li>Respond to your inquiries and provide customer support.</li>
+                            <li>Improve our event planning and logistics.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">4. Disclosure of Your Information</h2>
+                        <p>We may share your information with:</p>
+                        <ul>
+                            <li>Event Partners and Sponsors: For event-related purposes, including marketing and promotional activities.</li>
+                            <li>Service Providers: To assist with event logistics and operations, such as payment processing and event management.</li>
+                            <li>Legal Compliance: If required by law, regulation, or legal process.</li>
+                        </ul>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">5. Data Security</h2>
+                        <p>We implement appropriate technical and organizational measures to protect your personal information from unauthorized access, disclosure, alteration, or destruction. However, no data transmission over the internet or electronic storage is completely secure, so we cannot guarantee absolute security.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">6. Your Rights</h2>
+                        <p>Depending on your jurisdiction, you may have the following rights regarding your personal information:</p>
+                        <ul>
+                            <li>The right to access, correct, or delete your personal information.</li>
+                            <li>The right to object to or restrict the processing of your personal information.</li>
+                            <li>The right to data portability.</li>
+                        </ul>
+                        <p>To exercise these rights, please contact us at [Contact Email].</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">7. Changes to This Privacy Policy</h2>
+                        <p>We may update this Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on our website and updating the \"Last Updated\" date at the top of this policy. Your continued participation in the event after the changes are made will constitute your acceptance of the new policy.</p>
+                    </article>
+                    <article>
+                        <h2 class=\"font-bold text-black\">8. Contact Us</h2>
+                        <p>If you have any questions about this Privacy Policy or our data practices, please contact us at:</p>
+                        <address>
+                            Raemulan Lands Inc. Entrance, 17 ADB Avenue, Topaz Rd, Ortigas Center, Pasig, 1600 Metro Manila
+                            <a href=\"mailto:sample@email.com\">sample@email.com</a>
+                            <a href=\"tel:+025318788\" class=\"underline\">(02) 5318 7888</a>
+                        </address>
+                    </article>",
+                'term_of_use' => "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+            ],
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+        ]);
+        return Inertia::render('PaymentChoices', [
+            'supplementaryData' => $supplementaryData,
+            'kwyc_code' => $kwyc_code
+        ]);
+    }
+
+    public function step_five(){
+
+        $supplementaryData = collect([
+            'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+        ]);
+
+        return Inertia::render('GetQualified', [
+            'supplementaryData' => $supplementaryData,
+        ]);
+    }
+
+    public function entryPoint(String $sku, String $code = null)
+    {
+        return redirect()->route('proceed',[$sku, $code]);
+    }
+
+    public function client_info_show(String $kwyc_code)
+    {
+        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'] ?? null;
+
+        $provinces = PhilippineProvince::all()->map(function($province) {
+            return [
+                'region_code' => $province->region_code,
+                'province_code' => $province->province_code,
+                'province_description' => $province->province_description,
+            ];
+        })->toArray();
+
+        $cities = PhilippineCity::all()->map(function($city) {
+            return [
+                'province_code' => $city->province_code,
+                'city_municipality_code' => $city->city_municipality_code,
+                'city_municipality_description' => $city->city_municipality_description,
+            ];
+        })->toArray();
+
+        $barangays = PhilippineBarangay::all()->map(function($barangay) {
+            return [
+                'city_municipality_code' => $barangay->city_municipality_code,
+                'barangay_code' => $barangay->barangay_code,
+                'barangay_description' => $barangay->barangay_description,
+            ];
+        })->toArray();
+
+        return Inertia::render('ClientInformation', [
+            'name_suffixes'=>NameSuffix::all()->pluck('code','description')->toArray(),
+            'nationalities'=>Nationality::all()->pluck('code','description')->toArray(),
+            'civil_statuses'=>CivilStatus::all()->pluck('code','description')->toArray(),
+            'home_ownerships'=>HomeOwnership::all()->pluck('code','description')->toArray(),
+            'regions'=>PhilippineRegion::all()->pluck('region_code','region_description')->toArray(),
+            'employmement_types'=>EmploymentType::all()->pluck('code','description')->toArray(),
+            'employmement_statuses'=>EmploymentStatus::all()->pluck('code','description')->toArray(),
+            'current_positions'=>CurrentPosition::all()->pluck('code','description')->toArray(),
+            'work_industries'=>WorkIndustry::all()->pluck('code','description')->toArray(),
+            // 'countries'=>Country::all()->pluck('code','description')->toArray(), TODO: Make Country Model
+            'countries' => collect([]),
+            'genders'=>['Male'=>'Male','Female'=>'Female'],
+            'provinces' => $provinces,
+            'cities' => $cities,
+            'barangays' => $barangays,
+            'contact' => $lead->contact ?? null,
+            'fieldsExtracted' => $fieldsExtracted,
+            'kwyc_code' => $kwyc_code
+        ]);
+    }
+
 }
