@@ -47,10 +47,11 @@
                         </Agreement>
                     </div>
                     <div class="mb-6">
-                        <Link :href="url">
+                        <!-- <Link :href="url"> -->
                             <MyPrimaryButton
                                 :disabled="!isAgreementChecked"
                                 :isDisabled="!isAgreementChecked"
+                                @click="goToKwycSignUp"
                                 :class="[
                                     'rounded-full p-4 mt-4 w-full text-sm md:text-md',
                                     isAgreementChecked ? '' : 'bg-gray-300'
@@ -63,7 +64,7 @@
                                     </div>
                                 </div>
                             </MyPrimaryButton>
-                        </Link>
+                        <!-- </Link> -->
                     </div>
                 </div>
                 <div class="max-w-7xl sm:px-6 lg:px-8 py-2 bg-slate-100">
@@ -150,9 +151,8 @@ const page = usePage()
 const props = defineProps({
     supplementaryData: Object,
     calculator: Object,
-    sku:String,
-    code:String,
-    homefulBookingUrl: String
+    homefulBookingUrl: String,
+    referenceCode: String,
 });
 
 const loading = ref(false);
@@ -183,9 +183,13 @@ onMounted(async () => {
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
     });
-    url.value = `/kwyc/signup/${props.sku}/${props.code}?${params.toString()}`;
+    url.value = `/kwyc/signup/${props.referenceCode}?${params.toString()}`;
 
 });
+
+const goToKwycSignUp = () => {
+    window.location.href = url.value;
+}
 
 const goToKwyc = () => {
     const url = `/kwyc-verify/${props.sku}/${props.code}`;

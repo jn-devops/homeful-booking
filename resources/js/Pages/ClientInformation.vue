@@ -34,7 +34,7 @@ const props = defineProps({
     home_ownerships: Object,
     contact: Object,
     fieldsExtracted : Object,
-    kwyc_code: String,
+    reference_code: String,
 });
 
 const currentStep = ref(0);
@@ -42,7 +42,7 @@ const buyer = reactive({
     first_name: '',
     last_name: '',
     middle_name: '',
-    hasNoMiddleName: false,
+    noMiddleName: false,
     name_suffix: '',
     civil_status: '',
     gender: '',
@@ -97,6 +97,7 @@ const employment = reactive({
 });
 
 const presentAddress = reactive({
+    country: '',
     region: '',
     province: '',
     city: '',
@@ -195,8 +196,6 @@ const submit = async () => {
     errors.value = {}; // Reset errors
     
     try {
-        formData.append('kwyc_code', props.kwyc_code);
-        
         appendFormData(buyer);
         appendFormData(employment);
         appendFormData(presentAddress, 'present_address_');
@@ -212,7 +211,7 @@ const submit = async () => {
             formData.append('bir_certificate', bir_certificate.value[0]); 
         }
         console.log('Sample', formData);
-        router.post(`/client-information/store/${props.kwyc_code}`, formData, {
+        router.post(`/client-information/store/${props.reference_code}`, formData, {
             onError: (error) => {
                 if (error.response.status === 422) {
                     errors.value = error.response.data.errors;
@@ -483,7 +482,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                             :required="true"
                         />
                     </div>
-                    <div class="mt-3 w-full">
+                    <!-- <div class="mt-3 w-full">
                         <SelectInput
                         id="buyer.name_suffix"
                         :label="'Name Suffix'"
@@ -494,7 +493,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                         :required="false"
                         :errorMessage="errors?.value?.name_suffix"
                         />
-                    </div>
+                    </div> -->
                     <div class="mt-3 w-full">
                         <SelectInput
                         id="buyer.civil_status"
@@ -510,7 +509,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                     <div class="mt-3 w-full">
                         <SelectInput
                         id="buyer.gender"
-                        label="Gender"
+                        label="Sex"
                         :options="props.genders"
                         v-model="buyer.gender"
                         placeholder=""
@@ -544,11 +543,11 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                     </div>
                 </div>
                 <div class="mt-4 w-full">
-                    <h2 class="text-base text-pink-700 uppercase">Contact Information</h2>
+                    <h2 class="text-base text-pink-700 uppercase">Contact Details:</h2>
                     <div class="mt-3 w-full">
                         <TextInput
                             id="buyer.email"
-                            label="E-Mail"
+                            label="Email"
                             type="email"
                             v-model="buyer.email"
                             :errorMessage="errors?.value?.email"
@@ -558,13 +557,13 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                     <div class="mt-4 w-full">
                         <MobileInput
                             id="buyer.mobile"
-                            label="Mobile"
+                            label="Mobile Number"
                             v-model="buyer.mobile"
                             :errorMessage="errors?.value?.mobile"
                             :required="true"
                         />
                     </div>
-                    <div class="mt-3 w-full">
+                    <!-- <div class="mt-3 w-full">
                         <TextInput
                             id="buyer.facebook_link"
                             label="Facebook Link"
@@ -574,11 +573,25 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                             placeholder="Enter your FB Link"
                             :required="false"
                         />
-                    </div>
+                    </div> -->
                 </div>
                 <!-- Present Address -->
                 <div class="mt-4 w-full">
-                    <h2 class="text-base text-pink-700 uppercase">PRESENT ADDRESS</h2>
+                    <h2 class="text-base font-normal text-gray-700">Present Address</h2>
+                    
+                    <div class="mt-3 w-full">
+                        <SelectInput
+                            id="presentAddress.country"
+                            :label="'Country'"
+                            :options="countries"
+                            v-model="presentAddress.country"
+                            placeholder="Select Country"
+                            helperText=""
+                            :searchable="true"
+                            :required="true"
+                            :errorMessage="errors?.value?.presentAddress.country"
+                        />
+                    </div>
                     <div class="mt-3 w-full">
                         <SelectInput
                         id="presentAddress.region"
@@ -1061,12 +1074,9 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                                 :errorMessage="errors?.value?.email"
                                 :required="true"
                             />
-                            <TextInput
+                            <MobileInput
                                 id="employment.employer_details.contact_no"
-                                label="Contact Number"
-                                placeholder="Enter Contact Number"
-                                type="text"
-                                prefix="+63"
+                                label="Enter its Mobile"
                                 v-model="employment.employer_details.contact_no"
                                 :errorMessage="errors?.value?.contact_no"
                                 :required="true"

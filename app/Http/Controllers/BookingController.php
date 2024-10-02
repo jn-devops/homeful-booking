@@ -221,7 +221,7 @@ class BookingController extends Controller
         }catch (Exception $e){
             Log::error('Error creating reference:', ['error' => $e->getMessage()]);
         }
-        return redirect()->route('proceed', ['reference_code' => $reference->code]);
+        return redirect()->route('proceed', ['reference_code' => $reference->code, 'calculator' => json_decode($request->input('calculator'), true),]);
     }
 
     function proceed(String $contract_id,String $reference_code){
@@ -345,7 +345,8 @@ class BookingController extends Controller
         $contract->state->transitionTo(Verified::class, reference:$reference);
     }
 
-    public function client_info_store(String $contract_id,String $reference_code){
+    public function client_info_store(String $reference_code = null, Request $request){
+        dd($request->all());
         $contract=Contract::where('id',$contract_id)->firstOrFail();
         $reference=Reference::where('code',$reference_code)->firstOrFail();
         $contactData = [
@@ -547,16 +548,15 @@ class BookingController extends Controller
         ]);
     }
 
-    function credit_debit_card_payment(String $contract_id,String $reference_code){
+    function credit_debit_card_payment(String $reference_code = null){
         return Inertia::render('CreditDebitCardPayment',[
-            'contract_id'=>$contract_id,
-            'reference_code'=>$reference_code,
+            'referenceCode' => $reference_code,
         ]);
     }
 
-    function cardPayment(String $contract_id,String $reference_code, Request $request){
+    function cardPayment(String $reference_code, Request $request){
 
-        $contract=Contract::where('id',$contract_id)->firstOrFail();
+        // $contract=Contract::where('id',$contract_id)->firstOrFail();
         $reference=Reference::where('code',$reference_code)->firstOrFail();
 
         $paymate = new Paymate();
@@ -571,10 +571,9 @@ class BookingController extends Controller
         ];
         $response = $paymate->payment_online(new Request($jsonInput));
 
-        dd($response);
     }
 
-    function qrPayment(String $contract_id,String $reference_code){
+    function qrPayment(String $reference_code){
         $paymate = new Paymate();
         $jsonInput = [
             "referenceCode" => $reference_code, // alpha-numeric
@@ -586,7 +585,7 @@ class BookingController extends Controller
         return response()->json($response['code_url']);
     }
 
-    function digitalWalletPayment(String $contract_id,String $reference_code,Request $request){
+    function digitalWalletPayment(String $reference_code, Request $request){
         $paymate = new Paymate();
         $jsonInput = [
             "wallet" => $request->wallet, // gcash or grabpay
@@ -602,29 +601,29 @@ class BookingController extends Controller
 
     }
 
-    function step_one(String $contract_id, Request $request){
-        $contract= Contract::where('id',$contract_id)->firstOrFail();
-        $action = app(CreateReferenceAction::class);
-        $calculator = json_decode($request->input('calculator'), true);
-        $attribs = array_merge($calculator, [
-            'seller_commission_code' => $contract->seller_commission_code,
-            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
-            'sku'=> $contract->inventory->sku,
-            'wages'=>110000,
-            'promo_code'=>''
-        ]);
+    function step_one(String $reference_code, Request $request){
+        // $contract= Contract::where('id',$contract_id)->firstOrFail();
+        // $action = app(CreateReferenceAction::class);
+        // $calculator = json_decode($request->input('calculator'), true);
+        // $attribs = array_merge($calculator, [
+        //     'seller_commission_code' => $contract->seller_commission_code,
+        //     InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
+        //     'sku'=> $contract->inventory->sku,
+        //     'wages'=>110000,
+        //     'promo_code'=>''
+        // ]);
 
-        try {
-            $action = app(CreateReferenceAction::class);
-            $reference = $action->run($attribs,[]);
+        // try {
+        //     $action = app(CreateReferenceAction::class);
+        //     $reference = $action->run($attribs,[]);
 
-            $contract->state->transitionTo(Consulted::class, reference: $reference);
+        //     $contract->state->transitionTo(Consulted::class, reference: $reference);
 
-        }catch (Exception $e){
-            Log::error('Error creating reference:', ['error' => $e->getMessage()]);
-        }
+        // }catch (Exception $e){
+        //     Log::error('Error creating reference:', ['error' => $e->getMessage()]);
+        // }
 
-        // dd(json_decode($request->input('calculator'), true));
+        // dd($reference_code);
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -696,30 +695,32 @@ class BookingController extends Controller
             'consulting_content_link' => asset('test.pdf'),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
-
         return Inertia::render('Proceed', [
             'supplementaryData' => $supplementaryData,
-            'calculator' => json_decode($request->input('calculator'), true),
+            'calculator' => $request->input('calculator'),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
-            'contract'=>$contract
+            'referenceCode' => $reference_code,
+            // 'contract'=>$contract
         ]);
     }
 
-    function sign_up(String $sku, String $code = null, Request $request){
+    function sign_up(String $reference_code, Request $request){
         $calculator = json_decode($request->input('calculator'), true);
         return Inertia::render('KWYCSignup', [
             'calculator' => $calculator,
-            'sku' => $sku,
-            'code' => $code,
+            'reference_code' => $reference_code,
         ]);
     }
 
-    function step_two(String $sku, String $code = null, Request $request){
+    function step_two(String $reference_code = null, Request $request){
 
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
        $calculator = json_decode($request->input('calculator'), true);
+
+       $sku = "JN-AGM-CL-HLDUS-GRN-70-a"; // TODO: Update this
+       $code = "AGM-01-038-011"; // TODO: Update this
 
        $attribs = array_merge($calculator, [
            'sku' => $sku,
@@ -753,14 +754,13 @@ class BookingController extends Controller
 
             ]);
         } catch (Exception $e) {
-            dd($e);
             Log::error('Error creating reference:', ['error' => $e->getMessage()]);
 
             // return redirect()->back()->withErrors(['error' => 'There was an issue processing your request. Please try again later.']);
         }
     }
 
-    public function step_three(String $kwyc_code){
+    public function step_three(String $reference_code){
 
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
@@ -834,11 +834,11 @@ class BookingController extends Controller
         ]);
         return Inertia::render('ClientInformationLanding', [
             'supplementaryData' => $supplementaryData,
-            'kwyc_code' => $kwyc_code
+            'referenceCode' => $reference_code,
         ]);
     }
 
-    public function step_four(String $kwyc_code){
+    public function step_four(String $reference_code){
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -909,13 +909,14 @@ class BookingController extends Controller
             ],
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
+
         return Inertia::render('PaymentChoices', [
             'supplementaryData' => $supplementaryData,
-            'kwyc_code' => $kwyc_code
+            'referenceCode' => $reference_code
         ]);
     }
 
-    public function step_five(){
+    public function step_five(String $reference_code){
 
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
@@ -931,10 +932,10 @@ class BookingController extends Controller
         return redirect()->route('proceed',[$sku, $code]);
     }
 
-    public function client_info_show(String $kwyc_code)
+    public function client_info_show(String $reference_code)
     {
-        $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
-        $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'] ?? null;
+        // $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
+        // $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'] ?? null;
 
         $provinces = PhilippineProvince::all()->map(function($province) {
             return [
@@ -977,8 +978,8 @@ class BookingController extends Controller
             'cities' => $cities,
             'barangays' => $barangays,
             'contact' => $lead->contact ?? null,
-            'fieldsExtracted' => $fieldsExtracted,
-            'kwyc_code' => $kwyc_code
+            'fieldsExtracted' => $fieldsExtracted ?? null,
+            'referenceCode' => $reference_code,
         ]);
     }
 

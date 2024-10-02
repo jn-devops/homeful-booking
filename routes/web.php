@@ -12,9 +12,6 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>";
-});
 
 // Route::middleware('auth', 'verified')->group(function (){
 // });
@@ -29,27 +26,22 @@ Route::middleware('auth')->group(function () {
 
 // Initial page to show before entry point
 Route::get('/welcome/{sku}/{code}', [BookingController::class, 'index'])->name('initial.entry.point');
-
+Route::get('/avail/{contract_id}', [BookingController::class, 'availed'])->name('avail');
 
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
 Route::get('/consult/{sku}/{code}', [BookingController::class, 'entryPoint'])->name('entry.point');
-
 Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
-
-Route::get('/kwyc-verify/{sku}/{code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
-
+Route::get('/kwyc/signup/{reference_code}', [BookingController::class, 'sign_up'])->name('client-information.clienInfoLanding');
+Route::get('/kwyc-verify/{reference_code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
 // Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
-
-Route::get('/payment-choices/{kwyc_code}', [BookingController::class, 'step_four'])->name('payment.choices'); // Step 4
-Route::get('/payment-choices/credit-debit-card/{kwyc_code}', [BookingController::class, 'credit_debit_card_payment'])->name('payment.card');
-
-
-Route::get('/payment-choices/wallet/pay/{kwyc_code}', [BookingController::class, 'digitalWalletPayment'])->name('payment.digitalWalletPayment');
-Route::get('/payment-choices/qr/pay/{kwyc_code}', [BookingController::class, 'qrPayment'])->name('payment.qrPayment');
-Route::get('/payment-choices/card/pay/{kwyc_code}', [BookingController::class, 'cardPayment'])->name('payment.cardPayment');
+Route::get('/payment-choices/{reference_code}', [BookingController::class, 'step_four'])->name('payment.choices'); // Step 4
+Route::get('/payment-choices/credit-debit-card/{reference_code}', [BookingController::class, 'credit_debit_card_payment'])->name('payment.card');
+Route::get('/payment-choices/wallet/pay/{reference_code}', [BookingController::class, 'digitalWalletPayment'])->name('payment.digitalWalletPayment');
+Route::get('/payment-choices/qr/pay/{reference_code}', [BookingController::class, 'qrPayment'])->name('payment.qrPayment');
+Route::get('/payment-choices/card/pay/{reference_code}', [BookingController::class, 'cardPayment'])->name('payment.cardPayment');
 
 
-Route::get('/get-qualified/{kwyc_code}', [BookingController::class, 'step_five'])->name('get.qualified'); // Step 5
+Route::get('/get-qualified/{reference_code}', [BookingController::class, 'step_five'])->name('get.qualified'); // Step 5
 
 Route::get('/details', function () {
     return Inertia::render('Details');
@@ -72,11 +64,8 @@ Route::get('/test', [\App\Http\Controllers\LoanCalculatorController::class, 'tes
 Route::post('/file-pond/upload', [FilePondController::class, 'upload']);
 Route::delete('/file-pond/revert', [FilePondController::class, 'revert']);
 
-Route::get('/client-info/{kwyc_code}', [BookingController::class, 'step_three'])->name('client-information.clienInfoLanding');
-Route::get('/client-information/{kwyc_code}', [BookingController::class, 'client_info_show'])->name('client-information.show');
-Route::post('/client-information/store/{kwyc_code}', [BookingController::class, 'client_info_store'])->name('client-information.store');
-
-Route::get('/kwyc/signup/{sku}/{code}', [BookingController::class, 'sign_up'])->name('client-information.clienInfoLanding');
-
+Route::get('/client-info/{reference_code}', [BookingController::class, 'step_three'])->name('client-information.clienInfoLanding');
+Route::get('/client-information/{reference_code}', [BookingController::class, 'client_info_show'])->name('client-information.show');
+Route::post('/client-information/store/{reference_code}', [BookingController::class, 'client_info_store'])->name('client-information.store');
 
 require __DIR__.'/auth.php';

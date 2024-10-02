@@ -31,8 +31,6 @@ const props = defineProps({
     property_image: String,
 });
 
-console.log(props.homefulBookingUrl);
-
 const loading = ref(true);
 const isAgreementChecked = ref(false);
 const lottieJson = ref(null);
@@ -55,15 +53,9 @@ const toggleQuickGuide = (newVal) => {
 }
 
 onMounted(async () => {
-    console.log();
     setTimeout(() => {
         loading.value = false;
     }, 3000);
-
-//   const response = await fetch('/animation/proceed.json');
-
-//   lottieJson.value = await response.json();
-//   homefulAnimation.value = await homefulMainAnimation.json();
 
 });
 
@@ -77,7 +69,7 @@ const formatCurrency = (value) => {
 };
 
 const redirectToProceed = () => {
-    const url = `/proceed/${props.contract.id}`;
+    const url = `/avail/${props.contract.id}`;
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
     });
@@ -88,12 +80,12 @@ const redirectToProceed = () => {
 
 </script>
 <template>
-    <div v-if="loading" class="flex items-center justify-center h-screen"> <!-- If -->
+    <div :class="['flex items-center justify-center h-screen', { 'hidden' : !loading }]"> <!-- If -->
         <div class="w-2/6">
             <img :src="homefulBookingUrl" class="shimmer w-full" />
         </div>
     </div>
-    <div v-else class="md:w-[415px] md:mx-auto"> <!-- Else -->
+    <div :class="['md:w-[415px] md:mx-auto', { 'hidden' : loading }]"> <!-- Else -->
         <ReturnToPagev2 :icon="homefulBookingUrl"> Home Loan Consultation </ReturnToPagev2>
         <div class="flex justify-center">
             <div class="w-56 text-center">

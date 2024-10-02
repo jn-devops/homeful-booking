@@ -6,6 +6,7 @@ import { ref } from 'vue';
 
 const props = defineProps({
     calculator: Object,
+    reference_code: String,
     sku:String,
     code:String,
 });
@@ -27,11 +28,10 @@ const createAccount = () => {
 }
 
 const submit = () => {
-    console.log('submit');
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
     });
-    window.location.href = `/kwyc-verify/${props.sku}/${props.code}?${params.toString()}`;
+    window.location.href = `/kwyc-verify/${props.reference_code}?${params.toString()}`;
     
 }
 

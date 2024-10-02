@@ -176,7 +176,7 @@ import ReturnToPagev2 from '@/MyComponents/ReturnToPagev2.vue';
 import PaymentChoicesHeaderImg from '@/Logos/PaymentChoicesHeaderImg.vue';
 const props = defineProps({
     supplementaryData: Object,
-    kwyc_code: String
+    referenceCode: String,
 });
 
 const paymentOption = ref(false);
@@ -203,12 +203,12 @@ const choosePaymentMethod = (pm) => {
 const payNow =async () => {
     switch(selectedPaymentMethod.value){
         case 1:
-            router.get(`/payment-choices/credit-debit-card/${props.kwyc_code}`);
+            router.get(`/payment-choices/credit-debit-card/${props.referenceCode}`);
             break;
         case 2:
             try {
                 // Make the request to get the payment URL
-                const response = await axios.get(`/payment-choices/wallet/pay/${props.kwyc_code}?wallet=gcash`);
+                const response = await axios.get(`/payment-choices/wallet/pay/${props.referenceCode}?wallet=gcash`);
 
                 if (response.data) {
                     window.location.href = response.data;
@@ -224,7 +224,7 @@ const payNow =async () => {
                 // Make the request to get the payment URL
                 instaPayQrModal.value = true;
 
-                const response = await axios.get(`/payment-choices/qr/pay/${props.kwyc_code}`);
+                const response = await axios.get(`/payment-choices/qr/pay/${props.reference_code}`);
                 if (response.data) {
                     instaPayQr.value=response.data;
                     console.log(instaPayQr.value)

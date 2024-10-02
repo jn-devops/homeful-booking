@@ -4,7 +4,7 @@
         <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
             <!-- <ClientInfoImg class="w-full" /> -->
             <div class="basis-4/12">
-                <VerifyIdentityImg />
+                <ClientInfoHeaderImg />
                 </div>
                 <div class="basis-7/12 flex flex-col justify-center">
                 <div class="text-md font-semibold text-[#CC035C]">
@@ -28,26 +28,25 @@
                     </Agreement>
                 </div>
                 <div class="mb-4">
-                    <Link :href="`/client-information/${props.kwyc_code}`"> <!-- TODO: Update the link -->
-                        <MyPrimaryButton
-                            :disabled="!isAgreementChecked"
-                            :isDisabled="!isAgreementChecked"
-                            :class="[
-                                'rounded-full p-4 mt-4 w-full text-sm md:text-md',
-                                isAgreementChecked ? '' : 'bg-gray-300'
-                            ]"
-                        >
-                            <div class="flex items-center space-x-2">
-                                <span>Proceed</span>
-                                <div class="w-8 h-8 flex items-center justify-center p-0 text-white">
-                                    <!-- <LottiefileAnimation :animationData="lottieJson"  :class="{
-                                        'hidden': lottieJson,
-                                    }"/> -->
-                                       <LottiefileAnimation v-if="lottieJson" :animationData="lottieJson" />
-                                </div>
+                    <MyPrimaryButton
+                        :disabled="!isAgreementChecked"
+                        :isDisabled="!isAgreementChecked"
+                        @click="proceed"
+                        :class="[
+                            'rounded-full p-4 mt-4 w-full text-sm md:text-md',
+                            isAgreementChecked ? '' : 'bg-gray-300'
+                        ]"
+                    >
+                        <div class="flex items-center space-x-2">
+                            <span>Proceed</span>
+                            <div class="w-8 h-8 flex items-center justify-center p-0 text-white">
+                                <!-- <LottiefileAnimation :animationData="lottieJson"  :class="{
+                                    'hidden': lottieJson,
+                                }"/> -->
+                                    <LottiefileAnimation v-if="lottieJson" :animationData="lottieJson" />
                             </div>
-                        </MyPrimaryButton>
-                    </Link>
+                        </div>
+                    </MyPrimaryButton>
                 </div>
             </div>
             <div class="max-w-7xl sm:px-6 lg:px-8 py-2 bg-slate-100">
@@ -66,7 +65,7 @@
 <script setup>
 import LottiefileAnimation from '@/Logos/Animation/LottiefileAnimation.vue';
 import ClientInfoImg from '@/Logos/ClientInfoImg.vue';
-import VerifyIdentityImg from '@/Logos/VerifyIdentityImg.vue';
+import ClientInfoHeaderImg from '@/Logos/ClientInfoHeaderImg.vue';
 import Agreement from '@/MyComponents/Agreement.vue';
 import CircularProgress from '@/MyComponents/CircularProgress.vue';
 import FiveStepTimeline from '@/MyComponents/FiveStepTimeline.vue';
@@ -79,12 +78,17 @@ import { onMounted, ref, onUpdated, nextTick } from 'vue';
 
 const props = defineProps({
     supplementaryData: Object,
-    kwyc_code: String,
+    referenceCode: String,
 });
 
 const lottieJson = ref(null);
 const successRefModal = ref(null);
 const isAgreementChecked = ref(false);
+
+const proceed = () => {
+    const url = `/client-information/${props.referenceCode}`;
+    window.location.href = url;
+}
 
 onMounted(async () => {
     const response = await fetch('/animation/proceed.json');

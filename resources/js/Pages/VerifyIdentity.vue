@@ -4,7 +4,7 @@
         <div class="w-full bg-[#F3F4F6] p-8 flex flex-row gap-4">
             <!-- <VerifyIdentityHeaderImg class="w-full" /> -->
             <div class="basis-4/12">
-                <ClientInfoHeaderImg />
+                <VerifyIdentityImg />
                 </div>
                 <div class="basis-7/12 flex flex-col justify-center">
                 <div class="text-md font-semibold text-[#CC035C]">

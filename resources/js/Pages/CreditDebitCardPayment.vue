@@ -1,5 +1,5 @@
 <template>
-    <Return link="/payment-choices"> Credit Card Payment</Return>
+    <Return :link="`/payment-choices/${referenceCode}`"> Credit Card Payment</Return>
     <div class="bg-stone-100 h-screen">
         &nbsp;
         <div class="mt-24 px-3">
@@ -54,6 +54,7 @@
                 <div class="text-xl w-full font-semibold flex-none pb-6 justify-center text-center">
                     <MyPrimaryButton
                         @click="payNow"
+                        v-if="isFormValid"
                         :class="[
                             'rounded-full w-full p-4 mt-4 text-sm md:text-md',
                             // isFormValid ? '' : 'bg-gray-300'
@@ -71,7 +72,7 @@
 import PaymentCards from '@/Logos/PaymentCards.vue';
 import Input from '@/MyComponents/Input/Input.vue';
 import Return from '@/MyComponents/Return.vue';
-import { ref, computed } from 'vue';
+import { ref, computed, watch } from 'vue';
 import { router } from '@inertiajs/vue3';
 import MyPrimaryButton from '@/MyComponents/MyPrimaryButton.vue';
 
@@ -82,8 +83,10 @@ const cardNumberError = ref('');
 const expirationDateError = ref('');
 const cvvError = ref('');
 
+const isFormValid = ref(false);
+
 const props = defineProps({
-    kwyc_code: String
+    referenceCode: String
 });
 
 // Mask and validation functions
@@ -129,13 +132,16 @@ const maskCvv = () => {
 };
 
 // Form validation
-const isFormValid = computed(() => {
-    return cardNumberError.value === '' && expirationDateError.value === '' && cvvError.value === '' &&
-        cardNumber.value !== '' && expirationDate.value !== '' && cvv.value !== '';
+// const isFormValid = computed(() => {
+//     return cardNumberError.value === '' && expirationDateError.value === '' && cvvError.value === '' &&
+//         cardNumber.value !== '' && expirationDate.value !== '' && cvv.value !== '';
+// });
+watch([cardNumber, expirationDate, cvv], ([newCardNumber, newExpirationDate, newCvv]) => {
+    isFormValid.value = newCardNumber.trim() !== '' && newExpirationDate.trim() !== '' && newCvv.trim() !== '';
 });
 
 const payNow = async () => {
-    router.get(`/payment-choices/card/pay/${props.kwyc_code}?cardNumber=${encodeURIComponent(cardNumber.value)}&expirationDate=${encodeURIComponent(expirationDate.value)}&cvv=${encodeURIComponent(cvv.value)}`);
+    router.get(`/payment-choices/card/pay/${props.referenceCode}?cardNumber=${encodeURIComponent(cardNumber.value)}&expirationDate=${encodeURIComponent(expirationDate.value)}&cvv=${encodeURIComponent(cvv.value)}`);
     if (isFormValid.value) {
     }
 };
