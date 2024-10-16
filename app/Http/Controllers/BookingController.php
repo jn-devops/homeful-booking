@@ -52,6 +52,7 @@ class BookingController extends Controller
 {
     function index(String $sku, String $code = null){
 
+//        dd($sku);
         // return 404 if sku not found
         $product_details = Product::where('sku', $sku)->firstOrFail();
         $property_details = \Homeful\Properties\Models\Property::where('sku', $sku)->firstOrFail();
@@ -728,8 +729,8 @@ class BookingController extends Controller
            'promo_code' => '', // TODO: Get this from calculator
            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
        ]);
-       
-       
+
+
        try {
            // Attempt to execute the action
            $action = app(CreateReferenceAction::class);
@@ -741,7 +742,7 @@ class BookingController extends Controller
                'choice' => $sku,
                'code' => $code
             ]);
-            
+
             $fullUrl = "{$campaignUrl}?{$urlParams}";
             return Inertia::render('VerifyIdentity', [
                 'sku' => $sku,
@@ -926,10 +927,10 @@ class BookingController extends Controller
         ]);
     }
 
-    public function entryPoint(String $sku, String $code = null)
-    {
-        return redirect()->route('proceed',[$sku, $code]);
-    }
+//    public function entryPoint(String $sku, String $code = null)
+//    {
+//        return redirect()->route('proceed',[$sku, $code]);
+//    }
 
     public function client_info_show(String $kwyc_code)
     {

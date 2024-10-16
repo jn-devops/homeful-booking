@@ -12,9 +12,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
-Route::get('/', function () {
-    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>";
-});
+//Route::get('/', function () {
+//    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>";
+//});
 
 // Route::middleware('auth', 'verified')->group(function (){
 // });
@@ -32,9 +32,9 @@ Route::get('/welcome/{sku}/{code}', [BookingController::class, 'index'])->name('
 
 
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
-Route::get('/consult/{sku}/{code}', [BookingController::class, 'entryPoint'])->name('entry.point');
+Route::get('/consult/{sku}/{code}', [BookingController::class, 'index']);
 
-Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
+//Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
 
 Route::get('/kwyc-verify/{sku}/{code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
 
