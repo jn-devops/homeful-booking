@@ -128,6 +128,10 @@ const spousePresentAddress = reactive({
     barangays:({}),
 });
 
+const dependents = reactive({
+    ages: [''],
+});
+
 const country_list = ref(country.names());
 const countries = ref(country_list.value.reduce((acc, country) => {
   acc[country] = country;
@@ -150,6 +154,18 @@ const clearSignature = () => {
 }
 
 const successRefModal = ref(false);
+
+const addDependents = () => {
+    if(dependents.ages.length < 5 && dependents.ages.length >= 0){
+        dependents.ages.push('');
+    }
+}
+
+const removeDependent = (index) => {
+    if(dependents.ages.length <= 5 && dependents.ages.length > 1){
+        dependents.ages.splice(index, 1);
+    }
+}
 
 //Attachments
 const company_id = ref([]);
@@ -197,6 +213,7 @@ const submit = async () => {
     
     try {
         appendFormData(buyer);
+        appendFormData(dependents, 'dependent_');
         appendFormData(employment);
         appendFormData(presentAddress, 'present_address_');
         appendFormData(spousePresentAddress, 'spouse_present_address_');
@@ -541,6 +558,30 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                         :searchable="true"
                         />
                     </div>
+
+                    <div v-for="(age, index) in dependents.ages" :key="index" class="mb-4 flex flex-col">
+                        <label class="mb-2" :for="'age-' + index">Dependent {{ index + 1 }} Age:</label>
+                        <div class="flex flex-row border border-stone-300 ps-2 rounded-lg  focus-within:ring-2 focus-within:ring-blue-500">
+                            <input
+                                type="number"
+                                v-model="dependents.ages[index]"
+                                :id="'age-' + index"
+                                class="grow py-2 ps-3 focus:outline-none"
+                                placeholder="Enter Age"
+                            />
+                            <svg @click="removeDependent(index)" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-x flex-none m-2 text-stone-500"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg>
+                        </div>
+                    </div>
+
+                    <div class="w-full" @click="addDependents">
+                        <div class="w-full border border-stone-300 rounded-lg text-center py-2">
+                            Add Dependent
+                        </div>
+                        <span class="text-stone-700">
+                            Maximum of 5 Dependents
+                        </span>
+                    </div>
+
                 </div>
                 <div class="mt-4 w-full">
                     <h2 class="text-base text-pink-700 uppercase">Contact Details:</h2>

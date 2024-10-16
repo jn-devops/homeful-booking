@@ -12,7 +12,10 @@ const props = defineProps({
 });
 
 const phoneNumber = ref('');
+const phoneNumberErrors = ref([]);
 const emailAddress = ref('');
+const emailAddressErrors = ref(true);
+const params = ref('');
 const successRefModal = ref(false);
 
 const filterPhoneNum = () => {
@@ -22,16 +25,51 @@ const filterPhoneNum = () => {
     }
 };
 
+const validateEmail = () => {
+    emailAddressErrors.value = [];
+    if(emailAddress.value == '' || emailAddress.value == null){
+        emailAddressErrors.value.push("Email Address is required");
+        return false;
+    }else if(!/^[^@]+@\w+(\.\w+)+\w$/.test(emailAddress.value)){
+        emailAddressErrors.value.push("Invalid Email");
+        return false;
+    }
+    return true;
+}
+const validatePhoneNum = () => {
+    phoneNumberErrors.value = [];
+    if(phoneNumber.value == '' || phoneNumber.value == null){
+        phoneNumberErrors.value.push("Phone Number is required");
+        return false;
+    }
+    if(phoneNumber.value.length != 10){
+        phoneNumberErrors.value.push("Invalid phone number");
+        return false;
+    }
+    return true;
+}
+
 const createAccount = () => {
-    // TODO: call controller to create an account
-    successRefModal.value.openSuccessModal();
+    // Check if valid input
+    if(validatePhoneNum() && validateEmail()){
+        const kwycData = {
+            kwyc_data: {
+                phone_number: phoneNumber.value,
+                email: emailAddress.value
+            },
+        };
+        const data = Object.assign({}, props.calculator, kwycData);
+        // TODO: call controller to create an account
+        params.value = new URLSearchParams({
+            calculator: JSON.stringify(data),
+        });
+        console.log(params.value);
+        successRefModal.value.openSuccessModal();
+    }
 }
 
 const submit = () => {
-    const params = new URLSearchParams({
-        calculator: JSON.stringify(props.calculator),
-    });
-    window.location.href = `/kwyc-verify/${props.reference_code}?${params.toString()}`;
+    window.location.href = `/kwyc-verify/${props.reference_code}?${params.value.toString()}`;
     
 }
 
@@ -51,25 +89,33 @@ const submit = () => {
                     <form>
                         <div class="mt-5">
                             <label for="phone_number" class="font-semibold text-base">Philippine Mobile Number (10 digits)</label>
-                            <div tabindex="0" class="w-full border border-2 rounded-full text-base px-6 flex flex-row items-center my-3 focus-within:ring-2 focus-within:ring-orange-300">
+                            <div tabindex="0" class="w-full border border-2 rounded-full text-base px-6 flex flex-row items-center mt-3 focus-within:ring-2 focus-within:ring-orange-300">
                                 <div class="w-14 border-r-2 text-gray-400">+63</div>
                                 <input 
                                     type="text" 
                                     id="phone_number" 
                                     class=" w-full px-3 py-2 focus:outline-none" 
                                     v-model="phoneNumber"
+                                    required
                                     @input="filterPhoneNum" />
                             </div>
+                            <p v-if="phoneNumberErrors.length > 0" class="text-red-500 italic">
+                                {{ phoneNumberErrors[0] }}
+                            </p>
                         </div>
                         <div class="mt-5">
                             <label for="email_address" class="font-semibold text-base">Email Address</label>
-                            <div tabindex="0" class="w-full border border-2 rounded-full text-base px-6 flex flex-row items-center my-3 focus-within:ring-2 focus-within:ring-orange-300">
+                            <div tabindex="0" class="w-full border border-2 rounded-full text-base px-6 flex flex-row items-center mt-3 focus-within:ring-2 focus-within:ring-orange-300">
                                 <input 
                                     type="email" 
                                     id="email_address" 
                                     class=" w-full px-3 py-2 focus:outline-none" 
+                                    required
                                     v-model="emailAddress" />
                             </div>
+                            <p v-if="emailAddressErrors.length > 0" class="text-red-500 italic">
+                                {{ emailAddressErrors[0] }}
+                            </p>
                         </div>
                     </form>
                     <MyPrimaryButton

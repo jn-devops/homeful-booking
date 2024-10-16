@@ -346,7 +346,7 @@ class BookingController extends Controller
     }
 
     public function client_info_store(String $reference_code = null, Request $request){
-        dd($request->all());
+        // dd($request->all());
         $contract=Contract::where('id',$contract_id)->firstOrFail();
         $reference=Reference::where('code',$reference_code)->firstOrFail();
         $contactData = [
@@ -424,18 +424,18 @@ class BookingController extends Controller
                         'locality' => $request->input('present_address_city'),
                         'administrative_area' => $request->input('present_address_province'),
                         'postal_code' => $request->input('present_address_zip_code'),
-                        'country' => 'PH',
+                        'country' => $request->input('present_address_country'),
                         'length_of_stay' =>(string) $request->input('present_address_years_at_present_address'),
                     ],[
-                    'type' => 'spouse',
-                    'ownership' => $request->input('spouse_present_address_home_ownership'),
-                    'address1' => $request->input('spouse_present_address_address'),
-                    'locality' => $request->input('spouse_present_address_city'),
-                    'administrative_area' => $request->input('spouse_present_address_province'),
-                    'postal_code' => $request->input('spouse_present_address_zip_code'),
-                    'country' => 'PH',
-                    'length_of_stay' =>(string) $request->input('spouse_present_address_years_at_present_address'),
-                ],
+                        'type' => 'spouse',
+                        'ownership' => $request->input('spouse_present_address_home_ownership'),
+                        'address1' => $request->input('spouse_present_address_address'),
+                        'locality' => $request->input('spouse_present_address_city'),
+                        'administrative_area' => $request->input('spouse_present_address_province'),
+                        'postal_code' => $request->input('spouse_present_address_zip_code'),
+                        'country' => 'PH',
+                        'length_of_stay' =>(string) $request->input('spouse_present_address_years_at_present_address'),
+                    ],
                 ];
         }
 
