@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->string('current_status')->nullable();
-            $table->string('current_status_code')->nullable();
+//            $table->string('current_status')->nullable();
+//            $table->string('current_status_code')->nullable();
         });
     }
 
