@@ -26,15 +26,15 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-
-// Initial page to show before entry point
-Route::get('/welcome/{sku}/{code}', [BookingController::class, 'index'])->name('initial.entry.point');
+//
+//// Initial page to show before entry point
+//Route::get('/welcome/{sku}/{code}', [BookingController::class, 'index'])->name('initial.entry.point');
 
 
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
 Route::get('/consult/{sku}/{code}', [BookingController::class, 'index']);
 
-//Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
+Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
 
 Route::get('/kwyc-verify/{sku}/{code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
 

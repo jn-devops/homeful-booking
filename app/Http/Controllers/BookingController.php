@@ -225,7 +225,7 @@ class BookingController extends Controller
         return redirect()->route('proceed', ['reference_code' => $reference->code]);
     }
 
-    function proceed(String $contract_id,String $reference_code){
+    function proceed(String $contract_id,String $reference_code,Request $request){
 
         $supplementaryData = collect([
             'agreement' => [
@@ -740,7 +740,9 @@ class BookingController extends Controller
            $urlParams = http_build_query([
                'identifier' => $references->code,
                'choice' => $sku,
-               'code' => $code
+               'code' => $code,
+	           'mobile'=>$request->input('mobile'),
+	           'email'=>$request->input('email')
             ]);
 
             $fullUrl = "{$campaignUrl}?{$urlParams}";
@@ -751,6 +753,8 @@ class BookingController extends Controller
                 'reference_code' => $references->code ?? '',
                 'url' => $fullUrl ,
                 'supplementaryData' => $supplementaryData,
+	            'mobile'=>$request->input('mobile'),
+	            'email'=>$request->input('email')
 
             ]);
         } catch (Exception $e) {

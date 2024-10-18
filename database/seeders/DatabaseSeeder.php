@@ -33,6 +33,7 @@ class DatabaseSeeder extends Seeder
            HomeOwnershipSeeder::class,
            NationalitySeeder::class,
            StatusSeeder::class,
+           CountrySeeder::class,
        ]);
     }
 }

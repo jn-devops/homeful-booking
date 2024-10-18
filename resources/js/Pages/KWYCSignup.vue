@@ -30,9 +30,11 @@ const submit = () => {
     console.log('submit');
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
+        mobile:phoneNumber.value,
+        email:emailAddress.value
     });
     window.location.href = `/kwyc-verify/${props.sku}/${props.code}?${params.toString()}`;
-    
+
 }
 
 
@@ -53,10 +55,10 @@ const submit = () => {
                             <label for="phone_number" class="font-semibold text-base">Philippine Mobile Number (10 digits)</label>
                             <div tabindex="0" class="w-full border border-2 rounded-full text-base px-6 flex flex-row items-center my-3 focus-within:ring-2 focus-within:ring-orange-300">
                                 <div class="w-14 border-r-2 text-gray-400">+63</div>
-                                <input 
-                                    type="text" 
-                                    id="phone_number" 
-                                    class=" w-full px-3 py-2 focus:outline-none" 
+                                <input
+                                    type="text"
+                                    id="phone_number"
+                                    class=" w-full px-3 py-2 focus:outline-none"
                                     v-model="phoneNumber"
                                     @input="filterPhoneNum" />
                             </div>
@@ -64,10 +66,10 @@ const submit = () => {
                         <div class="mt-5">
                             <label for="email_address" class="font-semibold text-base">Email Address</label>
                             <div tabindex="0" class="w-full border border-2 rounded-full text-base px-6 flex flex-row items-center my-3 focus-within:ring-2 focus-within:ring-orange-300">
-                                <input 
-                                    type="email" 
-                                    id="email_address" 
-                                    class=" w-full px-3 py-2 focus:outline-none" 
+                                <input
+                                    type="email"
+                                    id="email_address"
+                                    class=" w-full px-3 py-2 focus:outline-none"
                                     v-model="emailAddress" />
                             </div>
                         </div>
@@ -81,11 +83,11 @@ const submit = () => {
                 </div>
             </div>
         </div>
-        
+
     </div>
 
     <SuccessModal
-        ref="successRefModal" 
+        ref="successRefModal"
         :afterFunction="submit"
     >
     Registration Successful</SuccessModal>
