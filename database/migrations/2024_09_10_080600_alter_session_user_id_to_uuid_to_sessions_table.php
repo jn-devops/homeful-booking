@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('sessions', function (Blueprint $table) {
-            $table->uuid('user_id')->change();
+//            $table->uuid('user_id')->change();
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('sessions', function (Blueprint $table) {
-            $table->integer('user_id')->change();
+//            $table->integer('user_id')->change();
         });
     }
 };
