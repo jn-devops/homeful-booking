@@ -9,12 +9,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
-use Illuminate\Support\Str;
+//use Illuminate\Support\Str;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable implements FilamentUser
 {
     use HasFactory, Notifiable;
-    use HasUuids;
+//    use HasUuids;
+    use HasRoles;
     /**
      * The attributes that are mass assignable.
      *
@@ -26,8 +28,8 @@ class User extends Authenticatable implements FilamentUser
         'password',
         'mobile',
     ];
-    protected $keyType = 'string';
-    public $incrementing = false;
+//    protected $keyType = 'string';
+    public $incrementing = true;
 
     /**
      * The attributes that should be hidden for serialization.
@@ -56,9 +58,11 @@ class User extends Authenticatable implements FilamentUser
         parent::boot();
 
         static::creating(function ($model) {
-            $model->id = Str::uuid();
+            $latestModel = $model->latest()->first();
+            $model->id = $latestModel ? $latestModel->id + 1 : 1;
         });
     }
+
 
     public function canAccessPanel(Panel $panel): bool
     {
