@@ -18,7 +18,7 @@ class DatabaseSeeder extends Seeder
     {
 
        $this->call([
-           ContactSeeder::class,
+//           ContactSeeder::class,
            PhilippineStandardGeographicalCodeSeeder::class,
            SuffixSeeder::class,
            CivilStatusSeeder::class,
