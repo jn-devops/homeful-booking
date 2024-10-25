@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('sessions', function (Blueprint $table) {
-//            $table->uuid('user_id')->change();
+        Schema::create('countries', function (Blueprint $table) {
+            $table->id();
+            $table->string('code');
+            $table->string('description');
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('sessions', function (Blueprint $table) {
-//            $table->integer('user_id')->change();
-        });
+        Schema::dropIfExists('countries');
     }
 };

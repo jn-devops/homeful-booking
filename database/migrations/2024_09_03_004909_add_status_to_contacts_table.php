@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->string('current_status')->nullable();
-            $table->string('current_status_code')->nullable();
+//            $table->string('current_status')->nullable();
+//            $table->string('current_status_code')->nullable();
         });
     }
 
@@ -23,7 +23,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
-            $table->dropColumn(['current_status', 'current_status_code']);
+//            $table->dropColumn(['current_status', 'current_status_code']);
         });
     }
 };

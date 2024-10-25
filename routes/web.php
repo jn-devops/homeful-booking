@@ -12,6 +12,9 @@ use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 
+//Route::get('/', function () {
+//    echo "Go to <a href='/proceed/JN-AGM-HLDUS-GRN'>proceed</a>";
+//});
 
 // Route::middleware('auth', 'verified')->group(function (){
 // });
@@ -26,10 +29,11 @@ Route::middleware('auth')->group(function () {
 
 // Initial page to show before entry point
 Route::get('/welcome/{sku}/{code}', [BookingController::class, 'index'])->name('initial.entry.point');
-Route::get('/avail/{contract_id}', [BookingController::class, 'availed'])->name('avail');
+
 
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
 Route::get('/consult/{sku}/{code}', [BookingController::class, 'entryPoint'])->name('entry.point');
+
 Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
 Route::get('/kwyc/signup/{reference_code}', [BookingController::class, 'sign_up'])->name('client-information.clienInfoLanding');
 Route::get('/kwyc-verify/{reference_code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2

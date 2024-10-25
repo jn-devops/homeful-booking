@@ -14,6 +14,7 @@ return new class extends Migration
 
         // Modify the 'imports' table first
         Schema::table('imports', function (Blueprint $table) {
+            $table->dropForeign(['user_id']);
             $table->uuid('user_id')->change();
         });
 

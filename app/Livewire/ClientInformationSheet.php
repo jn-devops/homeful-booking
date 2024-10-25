@@ -54,6 +54,7 @@ class ClientInformationSheet extends Component  implements HasForms
     public function form(Form $form): Form
     {
         return $form
+            ->inlineLabel()
             ->schema([
                 Wizard::make([
                    Wizard\Step::make('Buyer')
@@ -128,48 +129,48 @@ class ClientInformationSheet extends Component  implements HasForms
                                     Fieldset::make('Present')->schema([
                                         Select::make('buyer.address.present.region')
                                             ->searchable()
-                                            ->options(PhilippineRegion::all()->pluck('region_description','region_code'))
+                                            ->options(PhilippineRegion::all()->pluck('region_description', 'region_code'))
                                             ->required()
                                             ->native(false)
                                             ->live()
-                                            ->afterStateUpdated(function(Set $set, $state){
-                                                $set('buyer.address.present.province','');
-                                                $set('buyer.address.present.city','');
-                                                $set('buyer.address.present.barangay','');
+                                            ->afterStateUpdated(function (Set $set, $state) {
+                                                $set('buyer.address.present.province', '');
+                                                $set('buyer.address.present.city', '');
+                                                $set('buyer.address.present.barangay', '');
                                             })
                                             ->columnSpan(3),
                                         Select::make('buyer.address.present.province')
                                             ->searchable()
-                                            ->options(fn (Get $get): Collection => PhilippineProvince::query()
+                                            ->options(fn(Get $get): Collection => PhilippineProvince::query()
                                                 ->where('region_code', $get('buyer.address.present.region'))
                                                 ->pluck('province_description', 'province_code'))
                                             ->required()
                                             ->native(false)
                                             ->live()
-                                            ->afterStateUpdated(function(Set $set, $state){
-                                                $set('buyer.address.present.city','');
-                                                $set('buyer.address.present.barangay','');
+                                            ->afterStateUpdated(function (Set $set, $state) {
+                                                $set('buyer.address.present.city', '');
+                                                $set('buyer.address.present.barangay', '');
                                             })
                                             ->columnSpan(3),
                                         Select::make('buyer.address.present.city')
                                             ->searchable()
-                                            ->options(fn (Get $get): Collection => PhilippineCity::query()
+                                            ->options(fn(Get $get): Collection => PhilippineCity::query()
                                                 ->where('province_code', $get('buyer.address.present.province'))
                                                 ->pluck('city_municipality_description', 'city_municipality_code'))
                                             ->required()
                                             ->native(false)
                                             ->live()
-                                            ->afterStateUpdated(function(Set $set, $state){
-                                                $set('buyer.address.present.barangay','');
+                                            ->afterStateUpdated(function (Set $set, $state) {
+                                                $set('buyer.address.present.barangay', '');
                                             })
                                             ->columnSpan(3),
                                         Select::make('buyer.address.present.barangay')
                                             ->searchable()
-                                            ->options(fn (Get $get): Collection =>PhilippineBarangay::query()
-                                                    ->where('region_code', $get('buyer.address.present.region'))
+                                            ->options(fn(Get $get): Collection => PhilippineBarangay::query()
+                                                ->where('region_code', $get('buyer.address.present.region'))
 //                                                    ->where('province_code', $get('buyer.address.present.province'))                                            ->where('province_code', $get('province'))
-                                                    ->where('city_municipality_code', $get('buyer.address.present.city'))
-                                                    ->pluck('barangay_description', 'barangay_code')
+                                                ->where('city_municipality_code', $get('buyer.address.present.city'))
+                                                ->pluck('barangay_description', 'barangay_code')
                                             )
                                             ->required()
                                             ->native(false)
@@ -209,48 +210,48 @@ class ClientInformationSheet extends Component  implements HasForms
 
                                     ])->columns(12)->columnSpanFull(),
                                     Group::make()->schema(
-                                        fn(Get $get)=>$get('buyer.address.present.same_as_permanent')==null?[
+                                        fn(Get $get) => $get('buyer.address.present.same_as_permanent') == null ? [
                                             Fieldset::make('Permanent')->schema([
                                                 Select::make('buyer.address.permanent.region')
                                                     ->searchable()
-                                                    ->options(PhilippineRegion::all()->pluck('region_description','region_code'))
+                                                    ->options(PhilippineRegion::all()->pluck('region_description', 'region_code'))
                                                     ->required()
                                                     ->native(false)
                                                     ->live()
-                                                    ->afterStateUpdated(function(Set $set, $state){
-                                                        $set('buyer.address.permanent.province','');
-                                                        $set('buyer.address.permanent.city','');
-                                                        $set('buyer.address.permanent.barangay','');
+                                                    ->afterStateUpdated(function (Set $set, $state) {
+                                                        $set('buyer.address.permanent.province', '');
+                                                        $set('buyer.address.permanent.city', '');
+                                                        $set('buyer.address.permanent.barangay', '');
                                                     })
                                                     ->columnSpan(3),
                                                 Select::make('buyer.address.permanent.province')
                                                     ->searchable()
-                                                    ->options(fn (Get $get): Collection => PhilippineProvince::query()
+                                                    ->options(fn(Get $get): Collection => PhilippineProvince::query()
                                                         ->where('region_code', $get('buyer.address.permanent.region'))
                                                         ->pluck('province_description', 'province_code'))
                                                     ->required()
                                                     ->native(false)
                                                     ->live()
-                                                    ->afterStateUpdated(function(Set $set, $state){
-                                                        $set('buyer.address.permanent.city','');
-                                                        $set('buyer.address.permanent.barangay','');
+                                                    ->afterStateUpdated(function (Set $set, $state) {
+                                                        $set('buyer.address.permanent.city', '');
+                                                        $set('buyer.address.permanent.barangay', '');
                                                     })
                                                     ->columnSpan(3),
                                                 Select::make('buyer.address.permanent.city')
                                                     ->searchable()
-                                                    ->options(fn (Get $get): Collection => PhilippineCity::query()
+                                                    ->options(fn(Get $get): Collection => PhilippineCity::query()
                                                         ->where('province_code', $get('buyer.address.permanent.province'))
                                                         ->pluck('city_municipality_description', 'city_municipality_code'))
                                                     ->required()
                                                     ->native(false)
                                                     ->live()
-                                                    ->afterStateUpdated(function(Set $set, $state){
-                                                        $set('buyer.address.permanent.barangay','');
+                                                    ->afterStateUpdated(function (Set $set, $state) {
+                                                        $set('buyer.address.permanent.barangay', '');
                                                     })
                                                     ->columnSpan(3),
                                                 Select::make('buyer.address.permanent.barangay')
                                                     ->searchable()
-                                                    ->options(fn (Get $get): Collection =>PhilippineBarangay::query()
+                                                    ->options(fn(Get $get): Collection => PhilippineBarangay::query()
                                                         ->where('region_code', $get('buyer.address.permanent.region'))
 //                                                    ->where('province_code', $get('buyer.address.present.province'))                                            ->where('province_code', $get('province'))
                                                         ->where('city_municipality_code', $get('buyer.address.permanent.city'))
@@ -289,7 +290,7 @@ class ClientInformationSheet extends Component  implements HasForms
 
 
                                             ])->columns(12)->columnSpanFull(),
-                                        ]:[]
+                                        ] : []
                                     )->columns(12)->columnSpanFull(),
                                 ])->columns(12)->columnSpanFull(),
 

@@ -52,6 +52,7 @@ class BookingController extends Controller
 {
     function index(String $sku, String $code = null){
 
+//        dd($sku);
         // return 404 if sku not found
         $product_details = Product::where('sku', $sku)->firstOrFail();
         $property_details = \Homeful\Properties\Models\Property::where('sku', $sku)->firstOrFail();
@@ -224,7 +225,7 @@ class BookingController extends Controller
         return redirect()->route('proceed', ['reference_code' => $reference->code, 'calculator' => json_decode($request->input('calculator'), true),]);
     }
 
-    function proceed(String $contract_id,String $reference_code){
+    function proceed(String $contract_id,String $reference_code,Request $request){
 
         $supplementaryData = collect([
             'agreement' => [
@@ -729,8 +730,8 @@ class BookingController extends Controller
            'promo_code' => '', // TODO: Get this from calculator
            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
        ]);
-       
-       
+
+
        try {
            // Attempt to execute the action
            $action = app(CreateReferenceAction::class);
@@ -740,9 +741,11 @@ class BookingController extends Controller
            $urlParams = http_build_query([
                'identifier' => $references->code,
                'choice' => $sku,
-               'code' => $code
+               'code' => $code,
+	           'mobile'=>$request->input('mobile'),
+	           'email'=>$request->input('email')
             ]);
-            
+
             $fullUrl = "{$campaignUrl}?{$urlParams}";
             return Inertia::render('VerifyIdentity', [
                 'sku' => $sku,
@@ -751,6 +754,8 @@ class BookingController extends Controller
                 'reference_code' => $references->code ?? '',
                 'url' => $fullUrl ,
                 'supplementaryData' => $supplementaryData,
+	            'mobile'=>$request->input('mobile'),
+	            'email'=>$request->input('email')
 
             ]);
         } catch (Exception $e) {
@@ -927,10 +932,10 @@ class BookingController extends Controller
         ]);
     }
 
-    public function entryPoint(String $sku, String $code = null)
-    {
-        return redirect()->route('proceed',[$sku, $code]);
-    }
+//    public function entryPoint(String $sku, String $code = null)
+//    {
+//        return redirect()->route('proceed',[$sku, $code]);
+//    }
 
     public function client_info_show(String $reference_code)
     {
