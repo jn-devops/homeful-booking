@@ -2,9 +2,9 @@
 
 namespace App\Filament\Resources;
 
-use App\Filament\Resources\PhilippineRegionResource\Pages;
-use App\Filament\Resources\PhilippineRegionResource\RelationManagers;
-use App\Models\PhilippineRegion;
+use App\Filament\Resources\DocumentsResource\Pages;
+use App\Filament\Resources\DocumentsResource\RelationManagers;
+use App\Models\Documents;
 use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -13,9 +13,9 @@ use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
 
-class PhilippineRegionResource extends Resource
+class DocumentsResource extends Resource
 {
-    protected static ?string $model = PhilippineRegion::class;
+    protected static ?string $model = Documents::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
     protected static ?string $navigationGroup = 'Admin';
@@ -27,13 +27,10 @@ class PhilippineRegionResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('psgc_code')
+                Forms\Components\TextInput::make('code')
                     ->required()
                     ->maxLength(255),
-                Forms\Components\TextInput::make('region_description')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('region_code')
+                Forms\Components\TextInput::make('description')
                     ->required()
                     ->maxLength(255),
             ]);
@@ -43,11 +40,9 @@ class PhilippineRegionResource extends Resource
     {
         return $table
             ->columns([
-                Tables\Columns\TextColumn::make('psgc_code')
+                Tables\Columns\TextColumn::make('code')
                     ->searchable(),
-                Tables\Columns\TextColumn::make('region_description')
-                    ->searchable(),
-                Tables\Columns\TextColumn::make('region_code')
+                Tables\Columns\TextColumn::make('description')
                     ->searchable(),
                 Tables\Columns\TextColumn::make('created_at')
                     ->dateTime()
@@ -75,7 +70,7 @@ class PhilippineRegionResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ManagePhilippineRegions::route('/'),
+            'index' => Pages\ManageDocuments::route('/'),
         ];
     }
 }

@@ -28,7 +28,10 @@ class ContactResource extends Resource
     protected static ?string $model = Clients::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-
+    public static function getNavigationBadge(): ?string
+    {
+        return static::getModel()::count();
+    }
     public static function infolist(Infolist $infolist): Infolist
     {
         return $infolist

@@ -316,16 +316,17 @@ class BookingController extends Controller
     }
 
     function kwyc(String $contract_id,String $reference_code,Request $request){
+		dd($request->all());
         $contract=Contract::where('id',$contract_id)->firstOrFail();
         $reference=Reference::where('code',$reference_code)->firstOrFail();
         $campaignUrl = config('kwyc-check.campaign_url');
         $urlParams = http_build_query([
-            'identifier' => $reference->code,
-            'contract_id'=>$contract->id,
-            'choice' =>$contract->inventory->sku,
             'code' => $contract->seller_commission_code,
-            'email'=>$request->email,
-            'mobile'=>$request->mobile
+            'identifier' => $reference->code,
+            'choice' =>$contract->inventory->sku,
+            'contract_id'=>$contract->id,
+//            'email'=>$request->email,
+//            'mobile'=>$request->mobile
         ]);
 
         $fullUrl = "{$campaignUrl}?{$urlParams}";
@@ -697,12 +698,14 @@ class BookingController extends Controller
             'consulting_content_link' => asset('test.pdf'),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
-
         return Inertia::render('Proceed', [
             'supplementaryData' => $supplementaryData,
             'calculator' => json_decode($request->input('calculator'), true),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
-            'contract'=>$contract
+            'contract'=>$contract,
+	        'sku'=> $contract->inventory->sku,
+	        'seller_commission_code' => $contract->seller_commission_code,
+	        'code' => $contract->seller_commission_code,
         ]);
     }
 
@@ -717,6 +720,7 @@ class BookingController extends Controller
 
     function step_two(String $sku, String $code = null, Request $request){
 
+//		dd($request->all());
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
@@ -738,9 +742,9 @@ class BookingController extends Controller
            $references = $action->run($attribs,[]);
            $campaignUrl = config('kwyc-check.campaign_url');
            $urlParams = http_build_query([
+               'code' => $code,
                'identifier' => $references->code,
                'choice' => $sku,
-               'code' => $code,
 	           'mobile'=>$request->input('mobile'),
 	           'email'=>$request->input('email')
             ]);
@@ -755,7 +759,6 @@ class BookingController extends Controller
                 'supplementaryData' => $supplementaryData,
 	            'mobile'=>$request->input('mobile'),
 	            'email'=>$request->input('email')
-
             ]);
         } catch (Exception $e) {
             dd($e);
