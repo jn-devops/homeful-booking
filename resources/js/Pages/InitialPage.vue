@@ -18,6 +18,8 @@ import FourLogo from '@/Logos/4Logo.vue';
 import FiveLogo from '@/Logos/5Logo.vue';
 import ModalV2 from '@/MyComponents/ModalV2.vue';
 import { Inertia } from '@inertiajs/inertia';
+import CenterModal from '@/MyComponents/CenterModal.vue';
+import WelcomeHomefulImg from '@/Logos/WelcomeHomefulImg.vue';
 
 const props = defineProps({
     supplementaryData: Object,
@@ -31,13 +33,14 @@ const props = defineProps({
     property_image: String,
 });
 
-const loading = ref(true);
+const loading = ref(false);
 const isAgreementChecked = ref(false);
 const lottieJson = ref(null);
 const homefulAnimation = ref(null);
 const consoCalculator = ref(false);
 const quickGuide = ref(false);
 const changeProperty = ref(false);
+const welcomeModal = ref(true);
 
 const showAgreement = (newVal) => {
     isAgreementChecked.value = newVal;
@@ -53,9 +56,9 @@ const toggleQuickGuide = (newVal) => {
 }
 
 onMounted(async () => {
-    setTimeout(() => {
-        loading.value = false;
-    }, 3000);
+    // setTimeout(() => {
+    //     loading.value = false;
+    // }, 3000);
 
 });
 
@@ -76,6 +79,10 @@ const redirectToProceed = () => {
     console.log(params.toString());
     console.log(`${url}?${params.toString()}`);
     window.location.href = `${url}?${params.toString()}`;
+}
+
+const toggleWelcomeModal = () => {
+    welcomeModal.value = !welcomeModal.value
 }
 
 </script>
@@ -321,7 +328,7 @@ const redirectToProceed = () => {
         :modal-show="changeProperty"
         @updatemodalShow="updateChangeProperty"
     >
-        <template #content_noborder class="">
+        <template #content_noborder>
             <div class="flex flex-row border-b-2 border-gray-200 items-center gap-3 pb-4" @click="updateChangeProperty(false)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-left text-[#FCB115]">
                     <path d="m12 19-7-7 7-7"/>
@@ -348,6 +355,31 @@ const redirectToProceed = () => {
             </div>
         </template>
     </MyModal>
+
+    <CenterModal :isOpen="welcomeModal">
+        <div>
+            <h2 class="text-xl font-bold text-center mb-3">Welcome to Homeful</h2>
+            <div class="w-full">
+                <WelcomeHomefulImg />
+            </div>
+            <p class="m-2">
+                HOMEFUL is an e-commerce platform featuring real estate projects in both Northern & Southern Luzon.
+            </p>
+            <p class="m-2">
+                We showcase diverse range of properties from developer Raemulan Lands Inc.
+            </p>
+        </div>
+        <MyPrimaryButton
+            :disabled="false"
+            @click="toggleWelcomeModal()"
+            :class="[
+                'rounded-full p-4 mt-4 w-full text-sm md:text-md',
+                isAgreementChecked ? '' : 'bg-gray-300'
+            ]"
+        >
+            Continue
+        </MyPrimaryButton>
+    </CenterModal>
 </template>
 
 <style scoped>

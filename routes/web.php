@@ -28,13 +28,13 @@ Route::middleware('auth')->group(function () {
 });
 
 // Initial page to show before entry point
-Route::get('/welcome/{sku}/{code}', [BookingController::class, 'index'])->name('initial.entry.point');
+Route::get('/consult/{sku}/{code}', [BookingController::class, 'index'])->name('initial.entry.point');
 
 
 // Consult / SKU / Optional Promo(Affiliate) or Seller Code
-Route::get('/consult/{sku}/{code}', [BookingController::class, 'entryPoint'])->name('entry.point');
+// Route::get('/consult/{sku}/{code}', [BookingController::class, 'entryPoint'])->name('entry.point');
 
-Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
+Route::get('/avail/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
 Route::get('/kwyc/signup/{reference_code}', [BookingController::class, 'sign_up'])->name('client-information.clienInfoLanding');
 Route::get('/kwyc-verify/{reference_code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
 // Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3

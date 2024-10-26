@@ -149,8 +149,10 @@ class BookingController extends Controller
 
         $calculator = [];
         $property = (new Property)
-            ->setTotalContractPrice($product_details->price)
-            ->setAppraisedValue($product_details->price);
+            ->setTotalContractPrice(2500000)
+            ->setAppraisedValue(2500000);
+            // ->setTotalContractPrice($product_details->price)
+            // ->setAppraisedValue($product_details->price);
         $params = [
             Input::WAGES => 110000,
           //Input::TCP => $tcp,

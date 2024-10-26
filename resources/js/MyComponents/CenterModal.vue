@@ -2,7 +2,7 @@
     <div v-show="isOpen" class="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-30">
         <transition name="modal-fade" @before-enter="beforeEnter" @enter="enter" @leave="leave">
             <div v-if="isOpen">
-                <div class="relative bg-white p-6 rounded-2xl shadow-lg mx-4">
+                <div class="relative bg-white p-4 rounded-2xl shadow-lg mx-4">
                     <slot></slot>
                 </div>
             </div>
