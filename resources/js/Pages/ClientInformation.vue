@@ -251,7 +251,10 @@ const setButtonText = (step) => {
             buttonText = "Go to Attachment";
             break;
         case 3:
-            buttonText = "Submit & Proceed to Payment";
+            buttonText = "Proceed to Review";
+            break;
+        case 4:
+            buttonText = "Submit and Proceed to Payment";
             break;
     }
 }
@@ -261,10 +264,10 @@ const toggleDisplayButton = () =>{
 }
 
 const nextStep = () => {
-    if (currentStep.value == 2){
+    if (currentStep.value == 3){
         successRefModal.value.openSuccessModal();
     }
-    if (currentStep.value < 2) {
+    if (currentStep.value < 3) {
         currentStep.value++;
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
@@ -277,6 +280,30 @@ const previousStep = () => {
         currentStep.value--;
     }
     setButtonText(currentStep.value);
+};
+
+const formattedDate = (originalDate) => {
+    return new Date(originalDate).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+}
+
+const getObjectName = (value, propsVar) => {
+    return Object.keys(propsVar).find(key => propsVar[key] === value) || '';
+}
+
+const capitalize = (str) => {
+    return str.toLowerCase().replace(/\b\w/g, char => char.toUpperCase());
+}
+
+const formatCurrency = (value) => {
+    const formatter = new Intl.NumberFormat('en-PH', {
+        style: 'currency',
+        currency: 'PHP',
+    });
+    return formatter.format(value);
 };
 
 const onSelectChange = (value) => {
@@ -1085,15 +1112,19 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                             :errorMessage="errors?.value?.employer_name"
                             :required="true"
                         />
-                        <TextInput
-                            id="employment.employer_details.years_of_operation"
-                            label="Years of Operation"
-                            placeholder="Enter Years of Operation"
-                            type="text"
-                            v-model="employment.employer_details.years_of_operation"
-                            :errorMessage="errors?.value?.years_of_operation"
-                            :required="true"
-                        />
+                        <SelectInput
+                                id="employment.employer_details.years_of_operation"
+                                :label="'Years of Operation'"
+                                :options="{
+                                    '1 - 2 Years': '1 - 2 Years',
+                                    'More than 3 ears': 'More than 3 ears',
+                                }"
+                                v-model="employment.employer_details.years_of_operation"
+                                placeholder="Select Years of Operation"
+                                helperText=""
+                                :errorMessage="errors?.value?.years_of_operation"
+                                :required="true"
+                            />
                         <div :class="{
                             'hidden': employment.employment_type != props.employmement_types['Locally Employed'] && employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)']
                         }">
@@ -1295,6 +1326,63 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                 <p class="text-[#B4173A] underline underline-offset-4 mt-1" @click="clearSignature">
                     Clear Signature
                 </p>
+            </div>
+            <!-- Step 4 -->
+            <div :class="{
+                'hidden': (currentStep + 1) != 4
+            }">
+                <h2 class="text-base text-pink-700 uppercase my-2">Personal Details</h2>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Full Name</p>
+                    <div>{{ buyer.first_name + ' ' + buyer.middle_name + ' ' + buyer.last_name + ' ' + buyer.name_suffix }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Date of Birth</p>
+                    <div>{{ formattedDate(buyer.date_of_birth)  }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Gender</p>
+                    <div class="">{{ buyer.gender }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Nationality</p>
+                    <div class="">{{ getObjectName(buyer.nationality, nationalities) }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Civil Status</p>
+                    <div class="">{{ getObjectName(buyer.civil_status, civil_statuses) }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Mobile Number</p>
+                    <div>{{ buyer.mobile  }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Email</p>
+                    <div class="">{{ buyer.email }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Address</p>
+                    <div class="capitalize">{{ capitalize(presentAddress.address + ', ' + presentAddress.barangays[presentAddress.barangay] + ', ' + presentAddress.cities[presentAddress.city] + ', ' + presentAddress.provinces[presentAddress.province] + ', ' + presentAddress.zip_code + ', ' + getObjectName(presentAddress.region, regions) + ', ' + presentAddress.country) }}</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Home Ownership</p>
+                    <div class="">
+                        {{ getObjectName(presentAddress.home_ownership, home_ownerships) }}
+                        <span :class="{'hidden':presentAddress.home_ownership != '003' }">
+                            - ({{ formatCurrency(presentAddress.home_ownership_rental_amount) }})
+                        </span>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Years at Present Address</p>
+                    <div class="">{{ presentAddress.years_at_present_address }} Years</div>
+                </div>
+                <div class="mb-3">
+                    <p class="text-stone-600 text-sm">Dependents Ages</p>
+                    <li class="" v-for="(item, index) in dependents.ages" :key="index">
+                        {{ item }} Years Old
+                    </li>
+                </div>
             </div>
         </form>
     </section>

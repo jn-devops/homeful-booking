@@ -41,8 +41,8 @@ watch(currentStep, (newVal, oldVal) => {
                 </div>
             </div>
 
-            <!-- Step 3 -->
-            <div v-if="currentStep === 2" class="relative size-20">
+            <!-- Step 3 or 4 -->
+            <div v-if="currentStep === 2 || currentStep === 3" class="relative size-20">
                 <svg class="size-full -rotate-90" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-stone-300 dark:text-neutral-700" stroke-width="2"></circle>
                     <circle cx="18" cy="18" r="16" fill="none" class="stroke-current text-green-600 dark:text-blue-500" stroke-width="2" stroke-dasharray="100" stroke-dashoffset="0" stroke-linecap="round"></circle>
@@ -62,6 +62,10 @@ watch(currentStep, (newVal, oldVal) => {
                 </div>
                 <div v-if="currentStep === 2">
                     <h1 class="font-bold">Attachment</h1>
+                    <p class="text-xs/relaxed">Review and Submit</p>
+                </div>
+                <div v-if="currentStep === 3">
+                    <h1 class="font-bold">Review Details</h1>
                     <p class="text-xs/relaxed">Review and Submit</p>
                 </div>
             </div>
