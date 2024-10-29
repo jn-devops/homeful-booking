@@ -560,10 +560,10 @@ class BookingController extends Controller
         ]);
     }
 
-    function cardPayment(String $contract_id,String $reference_code, Request $request){
+    function cardPayment(String $reference_code, Request $request){
 
-        $contract=Contract::where('id',$contract_id)->firstOrFail();
-        $reference=Reference::where('code',$reference_code)->firstOrFail();
+//        $contract=Contract::where('id',$contract_id)->firstOrFail();
+//        $reference=Reference::where('code',$reference_code)->firstOrFail();
 
         $paymate = new Paymate();
         $cardData = $request->all();
