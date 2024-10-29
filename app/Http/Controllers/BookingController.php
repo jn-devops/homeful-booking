@@ -601,7 +601,7 @@ class BookingController extends Controller
         return response()->json($response['pay_url']);
     }
 
-    function paid(Request $requestq){
+    function paid(Request $request){
 
     }
 
@@ -721,7 +721,6 @@ class BookingController extends Controller
 
     function step_two(String $sku, String $code = null, Request $request){
 
-//		dd($request->all());
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
@@ -991,6 +990,7 @@ class BookingController extends Controller
             'fieldsExtracted' => $fieldsExtracted,
             'kwyc_code' => $kwyc_code,
 	        'default_data'=>Contact::latest()->get()->toArray(),
+            'identifier'=>$lead->identifier,
         ]);
     }
 

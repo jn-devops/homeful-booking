@@ -212,15 +212,14 @@ const submit = async () => {
         if (bir_certificate.value.length > 0) {
             formData.append('bir_certificate', bir_certificate.value[0]);
         }
-        console.log('Sample', formData);
-        console.log(`/client-information/store/${props.kwyc_code}`);
-        router.post(`/client-information/store/${props.kwyc_code}`, formData, {
-            onError: (error) => {
-                if (error.response.status === 422) {
-                    errors.value = error.response.data.errors;
-                }
-            }
-        });
+        console.log('kwyc_code', props.kwyc_code);
+        // router.post(`/client-information/store/${props.kwyc_code}`, formData, {
+        //     onError: (error) => {
+        //         if (error.response.status === 422) {
+        //             errors.value = error.response.data.errors;
+        //         }
+        //     }
+        // });
     } catch (error) {
         console.error("An error occurred during submission:", error);
     }
