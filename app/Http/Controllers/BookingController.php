@@ -664,7 +664,7 @@ class BookingController extends Controller
             "amount" => "100" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
         ];
         $response = $paymate->payment_qrph(new Request($jsonInput));
-//        dd($response);
+        dd($response);
         return response()->json($response['code_url']);
     }
 
@@ -936,7 +936,7 @@ class BookingController extends Controller
         ]);
     }
 
-    public function step_four(String $kwyc_code){
+    public function step_four(String $reference_code){
         $supplementaryData = collect([
             'agreement' => [
                 'term_of_services' => 'By using KwYC Check©, you consent to the following:
@@ -1009,7 +1009,7 @@ class BookingController extends Controller
         ]);
         return Inertia::render('PaymentChoices', [
             'supplementaryData' => $supplementaryData,
-            'kwyc_code' => $kwyc_code
+            'kwyc_code' => $reference_code
         ]);
     }
 
