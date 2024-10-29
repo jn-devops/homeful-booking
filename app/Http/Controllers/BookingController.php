@@ -622,7 +622,7 @@ class BookingController extends Controller
             $action = app(CreateReferenceAction::class);
             $reference = $action->run($attribs,[]);
 
-            $reference->addEntiry($contract);
+            $reference->addEntities($contract);
             $contract->state->transitionTo(Consulted::class, reference: $reference);
 
         }catch (Exception $e){
