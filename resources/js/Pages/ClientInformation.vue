@@ -35,6 +35,7 @@ const props = defineProps({
     contact: Object,
     fieldsExtracted : Object,
     kwyc_code: String,
+    default_data:Object,
 });
 
 const currentStep = ref(0);
@@ -168,7 +169,7 @@ const bir_certificate = ref([]);
 // });
 
 const companyIdFileUpdate = (fileItems) => {
-    company_id.value = fileItems.map(fileItem => fileItem.file);    
+    company_id.value = fileItems.map(fileItem => fileItem.file);
 }
 const governmentIdFileUpdate = (fileItems) => {
     government_id.value = fileItems.map(fileItem => fileItem.file);
@@ -193,25 +194,26 @@ const appendFormData = (data, prefix = '') => {
 
 const submit = async () => {
     errors.value = {}; // Reset errors
-    
+
     try {
         formData.append('kwyc_code', props.kwyc_code);
-        
+
         appendFormData(buyer);
         appendFormData(employment);
         appendFormData(presentAddress, 'present_address_');
         appendFormData(spousePresentAddress, 'spouse_present_address_');
-        
+
         if (company_id.value.length > 0) {
-            formData.append('company_id', company_id.value[0]); 
+            formData.append('company_id', company_id.value[0]);
         }
         if (government_id.value.length > 0) {
-            formData.append('government_id', government_id.value[0]); 
+            formData.append('government_id', government_id.value[0]);
         }
         if (bir_certificate.value.length > 0) {
-            formData.append('bir_certificate', bir_certificate.value[0]); 
+            formData.append('bir_certificate', bir_certificate.value[0]);
         }
         console.log('Sample', formData);
+        console.log(`/client-information/store/${props.kwyc_code}`);
         router.post(`/client-information/store/${props.kwyc_code}`, formData, {
             onError: (error) => {
                 if (error.response.status === 422) {
@@ -225,7 +227,7 @@ const submit = async () => {
 };
 
 let buttonText = ref('Go to Employment Information');
-let showButton = ref(false); 
+let showButton = ref(false);
 const setButtonText = (step) => {
     switch (step + 1){
         case 1:
@@ -288,6 +290,115 @@ onMounted(() => {
   if (pondRef.value) {
     handleFilePondInit();
   }
+    if (props.default_data && props.default_data.length > 0) {
+        const data = props.default_data[0];
+
+        // Buyer Information
+        buyer.first_name = data.first_name || '';
+        buyer.middle_name = data.middle_name || '';
+        buyer.last_name = data.last_name || '';
+        buyer.name_suffix = data.name_suffix || '';
+        buyer.civil_status = data.civil_status || '';
+        buyer.sex = data.sex || '';
+        buyer.nationality = data.nationality || '';
+        buyer.date_of_birth = data.date_of_birth || '';
+        buyer.email = data.email || '';
+        buyer.mobile = data.mobile || '';
+        buyer.other_mobile = data.other_mobile || '';
+        buyer.help_number = data.help_number || '';
+        buyer.landline = data.landline || '';
+        buyer.mothers_maiden_name = data.mothers_maiden_name || '';
+
+        // Spouse Information
+        buyer.spouse = {
+            first_name: data.spouse?.first_name || '',
+            middle_name: data.spouse?.middle_name || '',
+            last_name: data.spouse?.last_name || '',
+            name_suffix: data.spouse?.name_suffix || '',
+            sex: data.spouse?.sex || '',
+            nationality: data.spouse?.nationality || '',
+            civil_status: data.spouse?.civil_status || '',
+            date_of_birth: data.spouse?.date_of_birth || '',
+            email: data.spouse?.email || '',
+            mobile: data.spouse?.mobile || '',
+            other_mobile: data.spouse?.other_mobile || '',
+            help_number: data.spouse?.help_number || '',
+            landline: data.spouse?.landline || '',
+            mothers_maiden_name: data.spouse?.mothers_maiden_name || ''
+        };
+
+        // Addresses (initialize for each address object if available)
+        buyer.addresses = (data.addresses || []).map(address => ({
+            lot: address.lot || '',
+            type: address.type || '',
+            unit: address.unit || '',
+            block: address.block || '',
+            floor: address.floor || '',
+            street: address.street || '',
+            country: address.country || '',
+            address1: address.address1 || '',
+            address2: address.address2 || '',
+            building: address.building || '',
+            locality: address.locality || '',
+            ownership: address.ownership || '',
+            postal_code: address.postal_code || '',
+            sublocality: address.sublocality || '',
+            full_address: address.full_address || '',
+            sorting_code: address.sorting_code || '',
+            length_of_stay: address.length_of_stay || '',
+            administrative_area: address.administrative_area || ''
+        }));
+
+        // Employment Information
+        buyer.employment = (data.employment || []).map(employment => ({
+            type: employment.type || '',
+            employment_type: employment.employment_type || '',
+            current_position: employment.current_position || '',
+            employment_status: employment.employment_status || '',
+            monthly_gross_income: employment.monthly_gross_income || 0,
+            id: {
+                sss: employment.id?.sss || '',
+                tin: employment.id?.tin || '',
+                gsis: employment.id?.gsis || '',
+                pagibig: employment.id?.pagibig || ''
+            },
+            employer: {
+                name: employment.employer?.name || '',
+                address: {
+                    address1: employment.employer?.address?.address1 || '',
+                    locality: employment.employer?.address?.locality || '',
+                    postal_code: employment.employer?.address?.postal_code || '',
+                    type: employment.employer?.address?.type || '',
+                    country: employment.employer?.address?.country || '',
+                    ownership: employment.employer?.address?.ownership || ''
+                },
+                industry: employment.employer?.industry || '',
+                contact_no: employment.employer?.contact_no || '',
+                nationality: employment.employer?.nationality || ''
+            }
+        }));
+
+        // Co-Borrowers Information
+        buyer.co_borrowers = (data.co_borrowers || []).map(co_borrower => ({
+            first_name: co_borrower.first_name || '',
+            middle_name: co_borrower.middle_name || '',
+            last_name: co_borrower.last_name || '',
+            name_suffix: co_borrower.name_suffix || '',
+            sex: co_borrower.sex || '',
+            nationality: co_borrower.nationality || '',
+            civil_status: co_borrower.civil_status || '',
+            date_of_birth: co_borrower.date_of_birth || '',
+            email: co_borrower.email || '',
+            mobile: co_borrower.mobile || ''
+        }));
+
+        // Order Information
+        buyer.order = {
+            sku: data.order?.sku || '',
+            property_code: data.order?.property_code || '',
+            seller_commission_code: data.order?.seller_commission_code || ''
+        };
+    }
 });
 
 watch(
@@ -598,7 +709,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                         label="Province"
                         :options="presentAddress.provinces"
                         v-model="presentAddress.province"
-                        placeholder="" 
+                        placeholder=""
                         helperText=""
                         :required="true"
                         :errorMessage="errors?.value?.presentAddress.province"
@@ -1088,7 +1199,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                             />
                         </div>
                         <div :class="{
-                            'hidden': employment.employment_type != props.employmement_types['Locally Employed'] 
+                            'hidden': employment.employment_type != props.employmement_types['Locally Employed']
                         }">
                             <div class="mt-3 w-full">
                             <SelectInput
@@ -1109,7 +1220,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                                 label="Province"
                                 :options="employment.employer_details.provinces"
                                 v-model="employment.employer_details.province"
-                                placeholder="" 
+                                placeholder=""
                                 helperText=""
                                 :required="true"
                                 :errorMessage="errors?.value?.employment.employer_details.province"
@@ -1145,7 +1256,7 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
                             </div>
                         </div>
                         <div :class="{
-                            'hidden': employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)'] 
+                            'hidden': employment.employment_type != props.employmement_types['Overseas Filipino Worker (OFW)']
                         }">
                             <TextInput
                                 id="employment.employer_details.employer_complete_address"
@@ -1278,10 +1389,10 @@ const updateEmploymentAddressCity = (newValue, oldValue) => {
 
     <CenterModal :isOpen="isSignaturePadOpen" @update:isOpen="isSignaturePadOpen = $event">
         <div>
-            <SignaturePad 
-                :signatureVal="buyer.signature" 
-                :isSignaturePadOpen="isSignaturePadOpen" 
-                @update="updateSignature"  
+            <SignaturePad
+                :signatureVal="buyer.signature"
+                :isSignaturePadOpen="isSignaturePadOpen"
+                @update="updateSignature"
             />
         </div>
     </CenterModal>

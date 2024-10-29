@@ -135,6 +135,7 @@ function goToKwyc(){
 }
 onMounted(async () => {
     proceedWithAnimation();
+    console.log(props.url);
 });
 
 </script>

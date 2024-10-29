@@ -330,6 +330,7 @@ class BookingController extends Controller
         ]);
 
         $fullUrl = "{$campaignUrl}?{$urlParams}";
+        dd($fullUrl,'kwyc');
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
@@ -749,7 +750,9 @@ class BookingController extends Controller
 	           'email'=>$request->input('email')
             ]);
 
-            $fullUrl = "{$campaignUrl}?{$urlParams}";
+           $fullUrl = "{$campaignUrl}?{$urlParams}";
+//           $fullUrl = "{$campaignUrl}";
+//            dd($fullUrl,'step_two');
             return Inertia::render('VerifyIdentity', [
                 'sku' => $sku,
                 'code' => $code,
@@ -968,6 +971,7 @@ class BookingController extends Controller
             ];
         })->toArray();
 
+
         return Inertia::render('ClientInformation', [
             'name_suffixes'=>NameSuffix::all()->pluck('code','description')->toArray(),
             'nationalities'=>Nationality::all()->pluck('code','description')->toArray(),
@@ -985,7 +989,8 @@ class BookingController extends Controller
             'barangays' => $barangays,
             'contact' => $lead->contact ?? null,
             'fieldsExtracted' => $fieldsExtracted,
-            'kwyc_code' => $kwyc_code
+            'kwyc_code' => $kwyc_code,
+	        'default_data'=>Contact::latest()->get()->toArray(),
         ]);
     }
 
