@@ -580,7 +580,7 @@ class BookingController extends Controller
         dd($response);
     }
 
-    function qrPayment(String $contract_id,String $reference_code){
+    function qrPayment(String $reference_code){
         $paymate = new Paymate();
         $jsonInput = [
             "referenceCode" => $reference_code, // alpha-numeric
@@ -592,7 +592,7 @@ class BookingController extends Controller
         return response()->json($response['code_url']);
     }
 
-    function digitalWalletPayment(String $contract_id,String $reference_code,Request $request){
+    function digitalWalletPayment(String $reference_code,Request $request){
         $paymate = new Paymate();
         $jsonInput = [
             "wallet" => $request->wallet, // gcash or grabpay
