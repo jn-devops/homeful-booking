@@ -19,4 +19,19 @@ class Profile extends Page
         $client = Clients::where('email',auth()->user()->email)->first();
         return $client->toData();
     }
+
+    protected function getFormSchema(): array
+    {
+        return [
+            Forms\Components\TextInput::make('first_name')->required(),
+            Forms\Components\TextInput::make('last_name')->required(),
+            Forms\Components\TextInput::make('email')->required()->email(),
+        ];
+    }
+
+    public function submit()
+    {
+        // Handle form submission logic
+    }
+
 }

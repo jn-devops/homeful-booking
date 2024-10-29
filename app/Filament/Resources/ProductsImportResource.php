@@ -21,6 +21,7 @@ class ProductsImportResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
     protected static ?string $navigationLabel = 'Products';
+    protected static ?string $navigationGroup='Admin';
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();

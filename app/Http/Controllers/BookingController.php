@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Country;
 use Exception;
 use Homeful\Common\Classes\Input;
 use Homeful\Common\Classes\Input as InputFieldName;
@@ -316,7 +317,6 @@ class BookingController extends Controller
     }
 
     function kwyc(String $contract_id,String $reference_code,Request $request){
-		dd($request->all());
         $contract=Contract::where('id',$contract_id)->firstOrFail();
         $reference=Reference::where('code',$reference_code)->firstOrFail();
         $campaignUrl = config('kwyc-check.campaign_url');
@@ -325,8 +325,8 @@ class BookingController extends Controller
             'identifier' => $reference->code,
             'choice' =>$contract->inventory->sku,
             'contract_id'=>$contract->id,
-//            'email'=>$request->email,
-//            'mobile'=>$request->mobile
+            'email'=>$request->email,
+            'mobile'=>$request->mobile
         ]);
 
         $fullUrl = "{$campaignUrl}?{$urlParams}";
@@ -978,8 +978,7 @@ class BookingController extends Controller
             'employmement_statuses'=>EmploymentStatus::all()->pluck('code','description')->toArray(),
             'current_positions'=>CurrentPosition::all()->pluck('code','description')->toArray(),
             'work_industries'=>WorkIndustry::all()->pluck('code','description')->toArray(),
-            // 'countries'=>Country::all()->pluck('code','description')->toArray(), TODO: Make Country Model
-            'countries' => collect([]),
+	        'countries'=>Country::all()->pluck('code','description')->toArray(),
             'genders'=>['Male'=>'Male','Female'=>'Female'],
             'provinces' => $provinces,
             'cities' => $cities,

@@ -1,4 +1,17 @@
 <x-filament-panels::page>
+    <x-filament::tabs>
+        <x-filament::tabs.item label="Form Example">
+            <div class="px-6 py-3 bg-white rounded-lg shadow-lg w-full">
+                <h2 class="text-lg font-semibold mb-4">Edit Account</h2>
+                <x-filament::form :schema="[
+                    Forms\Components\TextInput::make('first_name')->label('First Name')->required(),
+                    Forms\Components\TextInput::make('last_name')->label('Last Name')->required(),
+                    Forms\Components\TextInput::make('email')->label('Email')->email()->required(),
+                ]" />
+            </div>
+        </x-filament::tabs.item>
+    </x-filament::tabs>
+
     <div class="px-6 py-3 bg-white rounded-lg shadow-lg w-full">
         <h2 class="text-lg font-semibold mb-4">Account Details</h2>
         <table class="w-full table-fixed">

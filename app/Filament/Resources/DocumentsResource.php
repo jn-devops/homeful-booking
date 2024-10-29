@@ -18,7 +18,7 @@ class DocumentsResource extends Resource
     protected static ?string $model = Documents::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
-    protected static ?string $navigationGroup = 'Admin';
+    protected static ?string $navigationGroup = 'Dropdowns';
     public static function getNavigationBadge(): ?string
     {
         return static::getModel()::count();
