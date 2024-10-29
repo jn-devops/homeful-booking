@@ -752,9 +752,9 @@ class BookingController extends Controller
            $references = $action->run($attribs,[]);
            $campaignUrl = config('kwyc-check.campaign_url');
            $urlParams = http_build_query([
-               'code' => $code,
+               'code' => $contract->seller_commission_code,
                'identifier' => $references->code,
-               'choice' => $sku,
+               'choice' => $contract->inventory->sku,
 	           'mobile'=>$request->input('mobile'),
 	           'email'=>$request->input('email')
             ]);
@@ -763,8 +763,8 @@ class BookingController extends Controller
 //           $fullUrl = "{$campaignUrl}";
 //            dd($fullUrl,'step_two');
             return Inertia::render('VerifyIdentity', [
-                'sku' => $sku,
-                'code' => $code,
+                'sku' => $contract->inventory->sku,
+                'code' => $contract->seller_commission_code,
                 'calculator' => $request->input('calculator'),
                 'reference_code' => $references->code ?? '',
                 'url' => $fullUrl ,
