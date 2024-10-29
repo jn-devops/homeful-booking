@@ -474,7 +474,7 @@ class BookingController extends Controller
         $contract->state->transitionTo(Onboarded::class, reference:$reference);
     }
 
-    function payment_choices(String $contract_id,String $reference_code)
+    function payment_choices(String $reference_code)
     {
         $supplementaryData = collect([
             'agreement' => [
@@ -548,7 +548,7 @@ class BookingController extends Controller
         ]);
         return Inertia::render('PaymentChoices', [
             'supplementaryData' => $supplementaryData,
-            'contract_id'=>$contract_id,
+            'contract_id'=>'',
             'reference_code'=>$reference_code,
         ]);
     }
@@ -587,7 +587,7 @@ class BookingController extends Controller
             "amount" => "100" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
         ];
         $response = $paymate->payment_qrph(new Request($jsonInput));
-
+//        dd($response);
         return response()->json($response['code_url']);
     }
 
@@ -599,6 +599,7 @@ class BookingController extends Controller
             "amount" => "100" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
         ];
         $response = $paymate->payment_wallet(new Request($jsonInput));
+//        dd($response);
         return response()->json($response['pay_url']);
     }
 

@@ -204,9 +204,11 @@ const payNow =async () => {
     switch(selectedPaymentMethod.value){
         case 1:
             router.get(`/payment-choices/credit-debit-card/${props.kwyc_code}`);
+            // router.get(`/api/payment-cashier?reference_code=${props.kwyc_code}`);
             break;
         case 2:
             try {
+                console.log(`/payment-choices/wallet/pay/${props.kwyc_code}?wallet=gcash`)
                 // Make the request to get the payment URL
                 const response = await axios.get(`/payment-choices/wallet/pay/${props.kwyc_code}?wallet=gcash`);
 
@@ -223,7 +225,7 @@ const payNow =async () => {
             try {
                 // Make the request to get the payment URL
                 instaPayQrModal.value = true;
-
+                console.log(`/payment-choices/qr/pay/${props.kwyc_code}`)
                 const response = await axios.get(`/payment-choices/qr/pay/${props.kwyc_code}`);
                 if (response.data) {
                     instaPayQr.value=response.data;

@@ -4398,16 +4398,16 @@
         },
         {
             "name": "jn-devops/paymate",
-            "version": "v1.1.4",
+            "version": "v1.1.5",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jn-devops/paymate.git",
-                "reference": "5a881b7de3e097df4791801e12066017f59cc831"
+                "reference": "7e4803ba97df98e1111758ce44379de64222aff7"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jn-devops/paymate/zipball/5a881b7de3e097df4791801e12066017f59cc831",
-                "reference": "5a881b7de3e097df4791801e12066017f59cc831",
+                "url": "https://api.github.com/repos/jn-devops/paymate/zipball/7e4803ba97df98e1111758ce44379de64222aff7",
+                "reference": "7e4803ba97df98e1111758ce44379de64222aff7",
                 "shasum": ""
             },
             "require": {
@@ -4467,7 +4467,7 @@
             ],
             "support": {
                 "issues": "https://github.com/jn-devops/paymate/issues",
-                "source": "https://github.com/jn-devops/paymate/tree/v1.1.4"
+                "source": "https://github.com/jn-devops/paymate/tree/v1.1.5"
             },
             "funding": [
                 {
@@ -4475,7 +4475,7 @@
                     "type": "github"
                 }
             ],
-            "time": "2024-09-05T08:13:25+00:00"
+            "time": "2024-10-08T05:57:14+00:00"
         },
         {
             "name": "jn-devops/payment",
