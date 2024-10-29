@@ -448,7 +448,7 @@ class BookingController extends Controller
         try {
              $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
 //             $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
-             $contact = PersistContactAction::run($contactData);
+//             $contact = PersistContactAction::run($contactData);
              $contact =  Contact::updateOrCreate([
                  'reference_code' => $reference_code,
              ],$contactData);
