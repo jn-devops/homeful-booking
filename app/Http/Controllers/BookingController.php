@@ -553,9 +553,9 @@ class BookingController extends Controller
         ]);
     }
 
-    function credit_debit_card_payment(String $contract_id,String $reference_code){
+    function credit_debit_card_payment(String $reference_code){
         return Inertia::render('CreditDebitCardPayment',[
-            'contract_id'=>$contract_id,
+            'contract_id'=>'',
             'reference_code'=>$reference_code,
         ]);
     }
