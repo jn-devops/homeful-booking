@@ -729,16 +729,16 @@ class BookingController extends Controller
         ]);
     }
 
-    function step_two(String $sku, String $code = null, Request $request){
-
+    function step_two(String $contract_id, String $reference_code = null, Request $request){
+        $contract = Contract::find($contract_id)->firstOrFail();
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
         ]);
        $calculator = json_decode($request->input('calculator'), true);
 
        $attribs = array_merge($calculator, [
-           'sku' => $sku,
-           'seller_commission_code' => $code,
+           'sku' => $contract->inventory->sku,
+           'seller_commission_code' => $contract->seller_commission_code,
            'wages' => 110000, // TODO: Get this from calculator
            'promo_code' => '', // TODO: Get this from calculator
            InputFieldName::BP_INTEREST_RATE =>config('mortgage.default_interest_rate'),
