@@ -947,7 +947,7 @@ class BookingController extends Controller
 //        return redirect()->route('proceed',[$sku, $code]);
 //    }
 
-    public function client_info_show(String $kwyc_code)
+    public function client_info_show(String $kwyc_code, String $identifier)
     {
         $lead = Lead::where('meta->checkin->body->code', $kwyc_code)->first();
         $fieldsExtracted = $lead->meta['checkin']['body']['data']['fieldsExtracted'] ?? null;
@@ -996,7 +996,7 @@ class BookingController extends Controller
             'fieldsExtracted' => $fieldsExtracted,
             'kwyc_code' => $kwyc_code,
 	        'default_data'=>Contact::latest()->get()->toArray(),
-            'identifier'=>$lead->identifier,
+            'identifier'=>$identifier,
         ]);
     }
 

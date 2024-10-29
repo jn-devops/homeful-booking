@@ -73,7 +73,7 @@ Route::post('/file-pond/upload', [FilePondController::class, 'upload']);
 Route::delete('/file-pond/revert', [FilePondController::class, 'revert']);
 
 Route::get('/client-info/{kwyc_code}', [BookingController::class, 'step_three'])->name('client-information.clienInfoLanding');
-Route::get('/client-information/{kwyc_code}', [BookingController::class, 'client_info_show'])->name('client-information.show');
+Route::get('/client-information/{kwyc_code}/{identifier}', [BookingController::class, 'client_info_show'])->name('client-information.show');
 Route::post('/client-information/store/{kwyc_code}/{identifier}', [BookingController::class, 'client_info_store'])->name('client-information.store');
 
 
