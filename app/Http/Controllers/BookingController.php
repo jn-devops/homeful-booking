@@ -1083,7 +1083,9 @@ class BookingController extends Controller
             'contact' => $lead->contact ?? null,
             'fieldsExtracted' => $fieldsExtracted,
             'kwyc_code' => $kwyc_code,
-	        'default_data'=>Contact::latest()->get()->toArray(),
+            // TODO: get the contact data of the user
+	        // 'default_data'=>Contact::latest()->get()->toArray(), 
+	        'default_data'=> null,
             'identifier'=>$identifier,
         ]);
     }

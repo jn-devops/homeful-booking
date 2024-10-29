@@ -35,7 +35,10 @@ const props = defineProps({
     contact: Object,
     fieldsExtracted : Object,
     kwyc_code: String,
-    default_data:Object,
+    default_data:{
+            type: Object,
+            default: null,
+        },
     identifier:String
 });
 
