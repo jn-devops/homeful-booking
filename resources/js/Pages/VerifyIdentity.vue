@@ -103,6 +103,8 @@ const props = defineProps({
     sku:String,
     code:String,
     url:String,
+    mobile:String,
+    email:String
 });
 async function proceedWithAnimation() {
     try {
