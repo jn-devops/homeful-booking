@@ -40,7 +40,7 @@ Route::get('/kwyc-verify/{contract_id}/{reference_code}', [BookingController::cl
 
 // Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
 
-Route::get('/payment-choices/{kwyc_code}', [BookingController::class, 'step_four'])->name('payment.choices'); // Step 4
+Route::get('/payment-choices/{reference_code}', [BookingController::class, 'step_four'])->name('payment.choices'); // Step 4
 Route::get('/payment-choices/credit-debit-card/{kwyc_code}', [BookingController::class, 'credit_debit_card_payment'])->name('payment.card');
 
 

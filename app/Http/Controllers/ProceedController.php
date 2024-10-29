@@ -21,7 +21,6 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Validator;
 use Whitecube\Price\Price;
-use function DI\string;
 use Homeful\Products\Models\Product;
 use Homeful\Mortgage\Data\MortgageData;
 

@@ -249,8 +249,6 @@ const payNow =async () => {
                         }
                     });
 
-
-
                     console.log(document.getElementById("instaPayQRCode"));
                     qrCode.append(document.getElementById("instaPayQRCode"));
 
