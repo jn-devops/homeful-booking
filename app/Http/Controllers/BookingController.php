@@ -458,10 +458,10 @@ class BookingController extends Controller
             $this->onboarded($contract_id,$reference_code);
             return redirect()->route('payment.choices',['kwyc_code' => $request->input('kwyc_code')]);
         } catch (ValidationException $e) {
-            dd($e);
+            dd($e->getMessage());
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            dd($e);
+            dd($e->getMessage());
             return back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
         }
     }
