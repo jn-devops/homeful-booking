@@ -624,9 +624,13 @@ class BookingController extends Controller
             $reference = $action->run($attribs,[]);
 
             $reference->addEntities($contract);
-            $contract->state->transitionTo(Consulted::class, reference: $reference);
+
+            if (!$contract->consulted_at){
+                $contract->state->transitionTo(Consulted::class);
+            }
 
         }catch (Exception $e){
+            dd($e->getMessage());
             Log::error('Error creating reference:', ['error' => $e->getMessage()]);
         }
 
