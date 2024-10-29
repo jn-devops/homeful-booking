@@ -350,9 +350,9 @@ class BookingController extends Controller
     }
 
     public function client_info_store(String $kwyc_code,String $reference_code,Request $request){
-        $reference =  Reference::all();
-        dd($reference);
-//        $reference = Reference::where('code', $reference_code)->orderBy('created_at', 'desc')->firstOrFail();
+//        $reference =  Reference::all();
+//        dd($reference);
+        $reference = Reference::where('code', $reference_code)->orderBy('created_at', 'desc')->firstOrFail();
         $contract = $reference->getContract();
         $contactData = [
             'reference_code' => $request->input('kwyc_code'),
