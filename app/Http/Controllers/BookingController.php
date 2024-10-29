@@ -534,7 +534,7 @@ class BookingController extends Controller
             ]);
             return Inertia::render('PaymentChoices', [
                 'supplementaryData' => $supplementaryData,
-                'kwyc_code' => $kwyc_code
+                'kwyc_code' => $reference_code
             ]);
         } catch (ValidationException $e) {
             dd($e->getMessage());
