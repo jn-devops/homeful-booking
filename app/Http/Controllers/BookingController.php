@@ -455,6 +455,7 @@ class BookingController extends Controller
             // dd($updated_lead,$contactData,$request->all());
 
             // Return response or redirect
+            dd($contract,$reference,$reference->getContract());
             $contract->customer = PersistContactAction::run($contactData);
             $this->onboarded($contract_id,$reference_code);
             return redirect()->route('payment.choices',['kwyc_code' => $request->input('kwyc_code')]);
