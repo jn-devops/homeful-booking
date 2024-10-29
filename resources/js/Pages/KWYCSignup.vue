@@ -9,7 +9,9 @@ const props = defineProps({
     sku:String,
     code:String,
     contract_id:String,
-    reference_code:String
+    reference_code:String,
+    mobile:String,
+    email:String
 });
 
 const phoneNumber = ref('');

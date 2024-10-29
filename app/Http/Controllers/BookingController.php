@@ -361,7 +361,8 @@ class BookingController extends Controller
             'civil_status' =>  $request->input('civil_status'),
             'sex' =>  $request->input('gender'),
             'nationality' =>  $request->input('nationality')?? 'Filipino',
-            'date_of_birth' =>  $request->input('date_of_birth'),
+//            'date_of_birth' =>  $request->input('date_of_birth'),
+            'date_of_birth' =>  '2024-10-28',
             'email' =>  $request->input('email'),
             'mobile' =>  $request->input('mobile'),
             'addresses' => [
