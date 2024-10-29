@@ -307,14 +307,15 @@ class BookingController extends Controller
         ]);
     }
 
-    function kwyc_sign_up(String $contract_id,String $reference_code){
-        $contract=Contract::where('id',$contract_id)->firstOrFail();
-        $reference=Reference::where('code',$reference_code)->firstOrFail();
-        return Inertia::render('KWYCSignup',[
-            'reference'=>$reference,
-            'contract'=> $contract
-        ]);
-    }
+//    function kwyc_sign_up(String $contract_id,Request $request){
+//        dd($request->all(),$contract_id);
+////        $contract=Contract::where('id',$contract_id)->firstOrFail();
+////        $reference=Reference::where('code',$reference_code)->firstOrFail();
+//        return Inertia::render('KWYCSignup',[
+//            'reference'=>$reference,
+//            'contract'=> $contract
+//        ]);
+//    }
 
     function kwyc(String $contract_id,String $reference_code,Request $request){
         $contract=Contract::where('id',$contract_id)->firstOrFail();
@@ -348,9 +349,9 @@ class BookingController extends Controller
         $contract->state->transitionTo(Verified::class, reference:$reference);
     }
 
-    public function client_info_store(String $contract_id,String $reference_code){
-        $contract=Contract::where('id',$contract_id)->firstOrFail();
+    public function client_info_store(String $kwyc_code,String $reference_code,Request $request){
         $reference=Reference::where('code',$reference_code)->firstOrFail();
+        $contract = $reference->getContract();
         $contactData = [
             'reference_code' => $request->input('kwyc_code'),
             'first_name' =>  $request->input('first_name'),
@@ -705,18 +706,21 @@ class BookingController extends Controller
             'calculator' => json_decode($request->input('calculator'), true),
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
             'contract'=>$contract,
+            'contract_id'=>$contract->id,
+            'reference_code'=>$reference->code,
 	        'sku'=> $contract->inventory->sku,
 	        'seller_commission_code' => $contract->seller_commission_code,
 	        'code' => $contract->seller_commission_code,
         ]);
     }
 
-    function sign_up(String $sku, String $code = null, Request $request){
+    function sign_up(String $contract_id,String $reference_code, Request $request){
         $calculator = json_decode($request->input('calculator'), true);
+        $contract = Contract::find($contract_id)->firstOrFail();
         return Inertia::render('KWYCSignup', [
             'calculator' => $calculator,
-            'sku' => $sku,
-            'code' => $code,
+            'contract_id'=>$contract_id,
+            'reference_code'=>$reference_code,
         ]);
     }
 
@@ -771,7 +775,7 @@ class BookingController extends Controller
         }
     }
 
-    public function step_three(String $kwyc_code){
+    public function step_three(String $kwyc_code,Request $request){
 
         $supplementaryData = collect([
             'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg'),
@@ -845,7 +849,8 @@ class BookingController extends Controller
         ]);
         return Inertia::render('ClientInformationLanding', [
             'supplementaryData' => $supplementaryData,
-            'kwyc_code' => $kwyc_code
+            'kwyc_code' => $kwyc_code,
+            'identifier'=>$request->identifier
         ]);
     }
 

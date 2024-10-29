@@ -152,7 +152,10 @@ const props = defineProps({
     calculator: Object,
     sku:String,
     code:String,
-    homefulBookingUrl: String
+    homefulBookingUrl: String,
+    contract:Object,
+    contract_id:String,
+    reference_code:String
 });
 
 const loading = ref(false);
@@ -182,8 +185,11 @@ onMounted(async () => {
 
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
+        contract: JSON.stringify(props.contract),
+        contract_id: props.contract_id,
+        reference_code:props.reference_code,
     });
-    url.value = `/kwyc/signup/${props.sku}/${props.code}?${params.toString()}`;
+    url.value = `/kwyc/signup/${props.contract_id}/${props.reference_code}?${params.toString()}`;
 
 });
 
@@ -192,6 +198,8 @@ const goToKwyc = () => {
 
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
+        contract: JSON.stringify(props.contract),
+        contract_id: props.contract_id
     });
     console.log(params.toString());
     console.log(`${url}?${params.toString()}`);

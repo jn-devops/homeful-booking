@@ -36,7 +36,7 @@ Route::get('/consult/{sku}/{code}', [BookingController::class, 'index']);
 
 Route::get('/proceed/{reference_code}', [BookingController::class, 'step_one'])->name('proceed'); // Step 1
 
-Route::get('/kwyc-verify/{sku}/{code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
+Route::get('/kwyc-verify/{contract_id}/{reference_code}', [BookingController::class, 'step_two'])->name('kwyc.verify'); // Step 2
 
 // Route::get('/client-info/{kwyc_code}', [ClientInformationController::class, 'show'])->name('client.info'); // Step 3
 
@@ -74,9 +74,10 @@ Route::delete('/file-pond/revert', [FilePondController::class, 'revert']);
 
 Route::get('/client-info/{kwyc_code}', [BookingController::class, 'step_three'])->name('client-information.clienInfoLanding');
 Route::get('/client-information/{kwyc_code}', [BookingController::class, 'client_info_show'])->name('client-information.show');
-Route::post('/client-information/store/{kwyc_code}', [BookingController::class, 'client_info_store'])->name('client-information.store');
+Route::post('/client-information/store/{kwyc_code}/{identifier}', [BookingController::class, 'client_info_store'])->name('client-information.store');
 
-Route::get('/kwyc/signup/{sku}/{code}', [BookingController::class, 'sign_up'])->name('client-information.clienInfoLanding');
+
+Route::get('/kwyc/signup/{contract_id}/{reference_code}', [BookingController::class, 'sign_up'])->name('kwyc.signup');
 
 
 require __DIR__.'/auth.php';

@@ -18,7 +18,7 @@
         <div class="py-1 w-full">
             <div class="px-5 pt-9">
                 <p class="font-bold ps-4 pb-5">
-                    You will be redirected to the Customer Information Form to provide additional details for your Home Loan Consultation 
+                    You will be redirected to the Customer Information Form to provide additional details for your Home Loan Consultation
                 </p>
                 <div class="pt-3">
                     <Agreement v-model="isAgreementChecked" :agreement="supplementaryData.agreement">
@@ -28,7 +28,7 @@
                     </Agreement>
                 </div>
                 <div class="mb-4">
-                    <Link :href="`/client-information/${props.kwyc_code}`"> <!-- TODO: Update the link -->
+                    <Link :href="`/client-information/${props.kwyc_code}/${props.identifier}`"> <!-- TODO: Update the link -->
                         <MyPrimaryButton
                             :disabled="!isAgreementChecked"
                             :isDisabled="!isAgreementChecked"
@@ -80,6 +80,7 @@ import { onMounted, ref, onUpdated, nextTick } from 'vue';
 const props = defineProps({
     supplementaryData: Object,
     kwyc_code: String,
+    identifier:String
 });
 
 const lottieJson = ref(null);

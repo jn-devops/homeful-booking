@@ -8,6 +8,8 @@ const props = defineProps({
     calculator: Object,
     sku:String,
     code:String,
+    contract_id:String,
+    reference_code:String
 });
 
 const phoneNumber = ref('');
@@ -31,9 +33,11 @@ const submit = () => {
     const params = new URLSearchParams({
         calculator: JSON.stringify(props.calculator),
         mobile:phoneNumber.value,
-        email:emailAddress.value
+        email:emailAddress.value,
+        contract_id:props.contract_id,
+        reference_code:props.reference_code
     });
-    window.location.href = `/kwyc-verify/${props.sku}/${props.code}?${params.toString()}`;
+    window.location.href = `/kwyc-verify/${props.contract_id}/${props.reference_code}?${params.toString()}`;
 
 }
 
