@@ -444,20 +444,20 @@ class BookingController extends Controller
         }
 
         try {
-            // $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
-            // $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
-            // $contact = PersistContactAction::run($contactData);
-            // $contact =  Contact::updateOrCreate([
-            //     'reference_code' => $request->input('kwyc_code'),
-            // ],$contactData);
-            // $lead->contact=$contact;
+             $lead = Lead::where('meta->checkin->body->code',$request->input('kwyc_code'))->first();
+//             $updated_lead = CreateLeadContactAction::run($lead ,$contactData);
+             $contact = PersistContactAction::run($contactData);
+             $contact =  Contact::updateOrCreate([
+                 'reference_code' => $kwyc_code,
+             ],$contactData);
+             $lead->contact=$contact;
             // $lead->save();
             // dd($updated_lead,$contactData,$request->all());
 
             // Return response or redirect
-            dd($contract,$reference,$reference->getContract());
-            $contract->customer = PersistContactAction::run($contactData);
-            $this->onboarded($contract_id,$reference_code);
+//            dd($contract,$reference,$reference->getContract());
+//            $contract->customer = PersistContactAction::run($contactData);
+//            $this->onboarded($contract_id,$reference_code);
             return redirect()->route('payment.choices',['kwyc_code' => $request->input('kwyc_code')]);
         } catch (ValidationException $e) {
             dd($e->getMessage());
