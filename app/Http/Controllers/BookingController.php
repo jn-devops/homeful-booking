@@ -532,10 +532,16 @@ class BookingController extends Controller
                 ],
                 'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
             ]);
-            return Inertia::render('PaymentChoices', [
-                'supplementaryData' => $supplementaryData,
-                'kwyc_code' => $reference_code
+            // return Inertia::render('PaymentChoices', [
+            //     'supplementaryData' => $supplementaryData,
+            //     'kwyc_code' => $reference_code
+            // ]);
+            return Inertia::render('GetQualified', [
+                'supplementaryData' => collect([
+                    'homefulBookingUrl' => asset('images/HomefulBookingIcon.jpeg')
+                ]),
             ]);
+
         } catch (ValidationException $e) {
             dd($e->getMessage());
             return back()->withErrors($e->errors())->withInput();
