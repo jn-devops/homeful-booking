@@ -664,7 +664,7 @@ class BookingController extends Controller
             "amount" => "100" // integer include two decimal w/o '.' ; Ex. 100 = 1.00
         ];
         $response = $paymate->payment_qrph(new Request($jsonInput));
-        dd($response);
+//        dd($response);
         return response()->json($response['code_url']);
     }
 
