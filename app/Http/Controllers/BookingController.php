@@ -458,6 +458,7 @@ class BookingController extends Controller
 //            dd($contract,$reference,$reference->getContract());
 //            $contract->customer = PersistContactAction::run($contactData);
 //            $this->onboarded($contract_id,$reference_code);
+            dd('before redirect');
             return redirect()->route('payment.choices',['reference_code' => $reference_code]);
         } catch (ValidationException $e) {
             dd($e->getMessage());
