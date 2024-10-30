@@ -553,10 +553,10 @@ class BookingController extends Controller
 
         } catch (ValidationException $e) {
 //            dd($e->getMessage());
-            return back()->withErrors($e->errors())->withInput();
+            return back()->withErrors($e->errors());
         } catch (\Exception $e) {
 //            dd($e->getMessage());
-            return back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
+            return back()->with('error', 'An unexpected error occurred. Please try again.');
         }
     }
 
