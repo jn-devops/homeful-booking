@@ -352,8 +352,17 @@ class BookingController extends Controller
     public function client_info_store(String $kwyc_code,String $reference_code,Request $request){
 //        $reference =  Reference::all();
 //        dd($reference);
-        $reference = Reference::where('code', $reference_code)->orderBy('created_at', 'desc')->firstOrFail();
-        $contract = $reference->getContract();
+//        $reference = Reference::where('code', $reference_code)->orderBy('created_at', 'desc')->first();
+//
+//        if (!$reference) {
+//            $reference = Reference::create([
+//                'code' => $reference_code,
+//                'created_at' => now(), // Add additional attributes if needed for creation
+//            ]);
+//        }else{
+//            $contract = $reference->getContract();
+//        }
+
         $contactData = [
             'reference_code' => $request->input('kwyc_code'),
             'first_name' =>  $request->input('first_name'),
@@ -543,10 +552,10 @@ class BookingController extends Controller
             ]);
 
         } catch (ValidationException $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
             return back()->withErrors($e->errors())->withInput();
         } catch (\Exception $e) {
-            dd($e->getMessage());
+//            dd($e->getMessage());
             return back()->with('error', 'An unexpected error occurred. Please try again.')->withInput();
         }
     }
@@ -1084,7 +1093,7 @@ class BookingController extends Controller
             'fieldsExtracted' => $fieldsExtracted,
             'kwyc_code' => $kwyc_code,
             // TODO: get the contact data of the user
-	        // 'default_data'=>Contact::latest()->get()->toArray(), 
+	        // 'default_data'=>Contact::latest()->get()->toArray(),
 	        'default_data'=> null,
             'identifier'=>$identifier,
         ]);
